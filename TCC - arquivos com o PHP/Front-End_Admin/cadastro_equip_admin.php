@@ -93,6 +93,81 @@
     .btn-primary:hover {
       background-color: #0e78a9;
     }
+
+    @media (max-width:768px) {
+      .header {
+        padding: 10px 0;
+      }
+
+      .logo-container {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-icons {
+        gap: 15px;
+      }
+
+      .nav-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .welcome-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+      }
+
+      .dashboard-card {
+        padding: 20px;
+        margin-bottom: 15px;
+        }
+      }
+
+      @media (max-width:576px) {
+        .welcome-title {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+
+        .dashboard-card {
+          padding: 15px;
+        }
+      }
+
+
+      @media (max-width:768px) {
+        header {
+          padding: 0 1rem;
+          height: 100px;
+        }
+
+        .logo-circle {
+          width: 60px;
+          height: 60px;
+        }
+
+        .nav-icon {
+          width: 35px;
+          height: 35px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+          margin-bottom: 1.5rem;
+        }
+      }
+
+        @media (max-width:576px) {
+          .nav-icon {
+            width: 30px;
+            height: 30px;
+          }
+
+          h1 {
+            font-size: 1.4rem;
+          }
+        }
   </style>
 </head>
 
