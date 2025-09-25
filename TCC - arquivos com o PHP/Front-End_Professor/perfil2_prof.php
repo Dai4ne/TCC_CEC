@@ -189,12 +189,11 @@
                 height: 30px;
             }
         }
-
     </style>
 </head>
 
 <body>
-    
+
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -218,66 +217,86 @@
     </header>
 
     <div class="container my-4">
-    <div class="row g-4">
-        <main class="col-12 col-lg-8">
-            <div class="topo-cinza"></div>
+        <div class="row g-4">
+            <main class="col-12 col-lg-8">
+                <div class="topo-cinza"></div>
 
-            <section class="conteudo text-center">
-            <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
-            <p class="nome">Nome</p>
+                <section class="conteudo text-center">
+                    <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
+                    <p class="nome">Nome</p>
 
-                <div class="dados">
-                    <h2>DADOS PESSOAIS</h2>
+                    <div class="dados">
+                        <h2>DADOS PESSOAIS</h2>
 
-                    <div class="campo">
-                    <label>NOME:</label>
-                    <p class="valor">Nome completo</p>
+                        <div class="campo">
+                            <label>NOME:</label>
+                            <p class="valor">Nome completo</p>
+                        </div>
+
+                        <div class="campo">
+                            <label>EMAIL:</label>
+                            <p class="valor">email@exemplo.com</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="col-12 col-lg-4">
+                <div class="historico-container">
+                    <div class="tabela">
+                        <div class="titulo-tabela">HISTÓRICO</div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>APARELHO</th>
+                                    <th>DATA</th>
+                                    <th>HORA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Notebook</td>
+                                    <td>01/08</td>
+                                    <td>10:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Smartphone</td>
+                                    <td>02/08</td>
+                                    <td>12:30</td>
+                                </tr>
+                                <tr>
+                                    <td>Tablet</td>
+                                    <td>03/08</td>
+                                    <td>14:15</td>
+                                </tr>
+                                <tr>
+                                    <td>PC</td>
+                                    <td>04/08</td>
+                                    <td>09:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Notebook</td>
+                                    <td>05/08</td>
+                                    <td>16:45</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
-                    <div class="campo">
-                    <label>EMAIL:</label>
-                    <p class="valor">email@exemplo.com</p>
+                    <div class="botoes">
+                        <button class="btn">
+                            <i class="bi bi-gear-fill"></i> Configurações
+                        </button>
+
+                        <button class="btn">
+                            <i class="bi bi-box-arrow-right"></i> Sair
+                        </button>
                     </div>
                 </div>
-            </section>
-        </main>
+            </aside>
 
-    <aside class="col-12 col-lg-4">
-        <div class="historico-container">
-            <div class="tabela">
-                <div class="titulo-tabela">HISTÓRICO</div>
-
-                <table>
-                    <thead>
-                        <tr>
-                        <th>APARELHO</th>
-                        <th>DATA</th>
-                        <th>HORA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr> <td>Notebook</td><td>01/08</td><td>10:00</td> </tr>
-                        <tr> <td>Smartphone</td><td>02/08</td><td>12:30</td> </tr>
-                        <tr> <td>Tablet</td><td>03/08</td><td>14:15</td> </tr>
-                        <tr> <td>PC</td><td>04/08</td><td>09:00</td> </tr>
-                        <tr> <td>Notebook</td><td>05/08</td><td>16:45</td> </tr>
-                    </tbody>
-                </table>
-            </div>
-
-          <div class="botoes">
-                <button class="btn">
-                <i class="bi bi-gear-fill"></i> Configurações
-                </button>
-
-                <button class="btn">
-                <i class="bi bi-box-arrow-right"></i> Sair
-                </button>
-          </div>
         </div>
-    </aside>
-      
-    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
