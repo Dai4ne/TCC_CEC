@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="h-auto">
         <!-- Formulário aponta para login.php -->
         <form action="login.php" method="post" class="py-4 px-3">
-
+            <h3 class="fw-bold text-center mb-3">Inspetor</h3>
             <!--Input do email-->
             <div class="form-floating d-flex justify-content-center">
                 <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="seu-email@gmail.com" required>
