@@ -53,50 +53,90 @@
             color: #1e3a8a;
         }
 
-        main {
-            padding: 2rem;
-        }
+
 
         h1 {
             font-size: 2rem;
             font-weight: bold;
+            margin-top: 2rem;
             margin-bottom: 2rem;
             color: #1f2937;
         }
 
-        .table-section {
+
+        .dashboard-card {
+            height: 400px;
             background: #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
         }
 
-        .table-title {
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #374151;
             text-align: center;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
+        .card-content {
+            padding-left: 20px;
+            color: #374151;
+            font-style: normal;
+            list-style-type: disc;
         }
 
-        td, th {
-            text-align: center;
-            padding: .6rem;
-            border: 1px solid #e5e7eb;
+        @media (max-width:768px) {
+            .header {
+                padding: 10px 0;
+            }
+
+            .logo-container {
+                width: 50px;
+                height: 50px;
+            }
+
+            .nav-icons {
+                gap: 15px;
+            }
+
+            .nav-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .welcome-title {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+
+            .dashboard-card {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
         }
 
-        .empty-state {
-            text-align: center;
-            color: #9ca3af;
-            font-style: italic;
-            padding: 1rem;
+        @media (max-width:576px) {
+            .welcome-title {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .dashboard-card {
+                padding: 15px;
+            }
         }
+
 
         @media (max-width:768px) {
             header {
@@ -145,58 +185,52 @@
             <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
         </div>
         <div class="nav-icons">
-            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- Home -->
+
+            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- Configurações -->
+
+            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
+
+            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- Notificações -->
+
+            <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- Perfil -->
+
+            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!--  -->
+
+            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- Equipamentos  -->
         </div>
     </header>
 
-    <main>
-        <h1>BEM-VINDO, FULANO!</h1>
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
-                <div class="table-section">
-                    <div class="table-title">HISTÓRICO RECENTE</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Professor</th>
-                                <th>Aparelho</th>
-                                <th>Data</th>
-                                <th>Hora</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="4" class="empty-state">...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+    <main class="main-content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="welcome-title">BEM-VINDO, ADMINISTRADOR!</h1>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="table-section">
-                    <div class="table-title">ATRASOS</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Professor</th>
-                                <th>Aparelho</th>
-                                <th>Data</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="4" class="empty-state">...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+            <div class="row justify-content-center"> <!-- Centralização horizontal dos dashboard-card -->
+
+                <div class="col-12 col-lg-4">
+
+                    <div class="dashboard-card">
+                        <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
+                    </div>
+
                 </div>
+
+                <div class="col-12 col-lg-4">
+
+                    <div class="dashboard-card">
+                        <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>PENDÊNCIAS</h2>
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
     </main>
 

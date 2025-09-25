@@ -155,7 +155,7 @@
     </header>
 
     <main>
-        <h1>BEM-VINDO, FULANO!</h1>
+        <h1>BEM-VINDO, INSPETOR!</h1>
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="table-section">

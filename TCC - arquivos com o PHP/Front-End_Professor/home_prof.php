@@ -79,6 +79,7 @@
         }
 
         .dashboard-card {
+            height: 300px;
             background: #e5e7eb;
             border-radius: 12px;
             padding: 30px;
@@ -115,8 +116,8 @@
             }
 
             .logo-container {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
             }
 
             .nav-icons {
@@ -177,32 +178,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="welcome-title">BEM-VINDO, FULANO!</h1>
+                    <h1 class="welcome-title">BEM-VINDO, PROFESSOR!</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
-                        <ul class="card-content">
-                            <li>Nova tarefa khan</li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-laptop-fill me-2"></i>EMPRESTADOS</h2>
-                        <ul class="card-content">
-                            <li>20 tablets</li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>RECADOS</h2>
-                        <ul class="card-content">
-                            <li>Provao Paulista</li>
-                        </ul>
+
                     </div>
                 </div>
             </div>
