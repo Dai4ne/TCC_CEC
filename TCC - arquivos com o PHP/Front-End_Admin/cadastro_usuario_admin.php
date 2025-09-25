@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
 
-    $sql = "INSERT INTO usuarios (nome, email, senha, tipo_usuario) 
+    $sql = "INSERT INTO usuarios (nome, email, senha, tipo_usuario)
             VALUES ('$nome', '$email', SHA1('$senha'), '$tipo')";
 
     if ($con->query($sql)) {
@@ -23,12 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CEC - Cadastro</title>
+  <title>CEC - Cadastro Usuário</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -40,14 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
       background: #f8f9fa;
       font-family: 'Poppins', sans-serif;
     }
+
     header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+      background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
       height: 100px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 2rem;
     }
+
     .logo-circle {
       width: 80px;
       height: 80px;
@@ -57,10 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
       align-items: center;
       justify-content: center;
     }
+
     .nav-icons {
       display: flex;
       gap: 1rem;
     }
+
     .nav-icon {
       width: 40px;
       height: 40px;
@@ -71,32 +76,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
       justify-content: center;
       cursor: pointer;
     }
+
     .nav-icon i {
       font-size: 1.4rem;
       color: #1e3a8a;
     }
-    .form-container {
-      max-width: 400px;
-      margin: 80px auto;
+
+    .page-title {
+      text-align: center; 
+      font-size: 1.8rem; 
+      font-weight: bold; 
+      margin-bottom: 2rem; 
+      background-color: #d0d0d0;
     }
+
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
     .form-card {
       padding: 2rem;
       border-radius: 12px;
       background-color: #ffffff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
     .form-card h3 {
       text-align: center;
       margin-bottom: 1.5rem;
       color: #1e3a8a;
     }
+
     .btn-primary {
       background-color: #1e3a8a;
+      box-shadow: 1px 1px  5px rgba(0, 0, 0, 0.51);
       border: none;
+      width: 200px;
     }
+
     .btn-primary:hover {
-      background-color: #3b82f6;
+      background-color: #0e78a9;
     }
+
   </style>
 </head>
 
@@ -107,17 +129,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
     <div class="nav-icons">
       <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+
       <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+
+      <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
+      
       <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+
       <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+
       <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+
       <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
     </div>
   </header>
 
+  <h1 class="page-title p-4">CADASTRO DE USUÁRIO</h1>
+
   <div class="form-container">
     <div class="form-card">
-      <h3 class="fw-bold">Cadastro de usuário</h3>
 
       <form action="cadastro_usuario_admin.php" method="post">
         <div class="mb-3">
@@ -127,12 +157,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email do usuário" required />
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
         </div>
 
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha do usuário" required />
+          <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required />
         </div>
 
         <div class="mb-4">
@@ -145,9 +175,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
           </select>
         </div>
 
-        <div class="d-grid">
+        <div class="d-grid justify-content-center">
           <button type="submit" name="action" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
         </div>
+        
       </form>
     </div>
   </div>

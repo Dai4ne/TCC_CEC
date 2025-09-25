@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Set-2025 às 01:50
+-- Tempo de geração: 25-Set-2025 às 03:23
 -- Versão do servidor: 10.4.19-MariaDB
 -- versão do PHP: 8.0.7
 
@@ -46,7 +46,7 @@ CREATE TABLE `equipamento` (
   `id_equipamento` int(11) NOT NULL,
   `tipo` char(1) NOT NULL,
   `marca` char(1) NOT NULL,
-  `numeracao` char(3) DEFAULT NULL,
+  `numeracao` char(3) NOT NULL,
   `descricao` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -61,7 +61,7 @@ CREATE TABLE `usuario` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(120) NOT NULL,
   `senha` varchar(50) NOT NULL,
-  `tipo` char(1) DEFAULT NULL,
+  `tipo` char(1) NOT NULL,
   `data_registro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -87,7 +87,8 @@ ALTER TABLE `equipamento`
 -- Índices para tabela `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`);
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas

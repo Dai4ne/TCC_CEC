@@ -14,7 +14,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
             height: 120px;
             display: flex;
             align-items: center;
