@@ -73,11 +73,31 @@
         }
 
         @media (max-width: 768px) {
-        .logo-circle { width: 50px; height: 50px; }
-        .logo-circle img { width: 80%; height: 80%; }
-        .nav-icons .btn { width: 35px; height: 35px; font-size: 16px; margin-left: 5px; }
-        .page-title { font-size: 1.5rem; }
-        .action-buttons { flex-direction: column; gap: 5px; }
+            .logo-circle {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-circle img {
+                width: 80%;
+                height: 80%;
+            }
+
+            .nav-icons .btn {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                margin-left: 5px;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
         }
     </style>
 </head>

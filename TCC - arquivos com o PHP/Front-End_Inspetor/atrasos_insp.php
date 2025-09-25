@@ -1,97 +1,123 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEC</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-<style>
-    :root {
-        --primary-blue: #1e3a8a;
-        --secondary-blue: #3b82f6;
-        --light-gray: #f8f9fa;
-        --medium-gray: #e9ecef;
-    }
-
-
-    .header {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
-        padding: 15px 0;
-        display: flex;
-        align-items: center;
-    }
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+        }
 
 
-    .logo-circle {
-        width: 60px;
-        height: 60px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+        }
 
 
-    .logo-circle img {
-        width: 80%;
-        height: 80%;
-        object-fit: contain;
-    }
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
 
-    .nav-icons .btn {
-        background: white;
-        border-radius: 8px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 10px;
-        font-size: 18px;
-        color: var(--primary-blue);
-    }
+        .logo-circle img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
 
 
-    .nav-icons .btn:hover {
-        background: var(--medium-gray);
-    }
+        .nav-icons .btn {
+            background: white;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            font-size: 18px;
+            color: var(--primary-blue);
+        }
 
 
-    .main-content { padding: 2rem 0; }
-    .page-title { text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 2rem; }
+        .nav-icons .btn:hover {
+            background: var(--medium-gray);
+        }
 
 
-    .requests-table {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
 
 
-    .table thead th {
-        background: var(--medium-gray);
-        text-align: center;
-    }
-    
+        .requests-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .table tbody td { 
-        text-align: center; vertical-align: middle; 
-        border: 1px solid var(--medium-gray);
-    }
-    
 
-    @media (max-width: 768px) {
-        .logo-circle { width: 50px; height: 50px; }
-        .logo-circle img { width: 80%; height: 80%; }
-        .nav-icons .btn { width: 35px; height: 35px; font-size: 16px; margin-left: 5px; }
-        .page-title { font-size: 1.5rem; }
-    }
-</style>
+        .table thead th {
+            background: var(--medium-gray);
+            text-align: center;
+        }
+
+
+        .table tbody td {
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid var(--medium-gray);
+        }
+
+
+        @media (max-width: 768px) {
+            .logo-circle {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-circle img {
+                width: 80%;
+                height: 80%;
+            }
+
+            .nav-icons .btn {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                margin-left: 5px;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -174,6 +200,7 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
+
 </html>

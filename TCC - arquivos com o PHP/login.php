@@ -46,11 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
     <title>CEC - Login</title>
 
@@ -62,8 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 0px;
         }
 
-        html, body {
-            height: 100%; /*deixa o conteúdo no centro vertical e horizontal*/
+        html,
+        body {
+            height: 100%;
+            /*deixa o conteúdo no centro vertical e horizontal*/
         }
 
 
@@ -76,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         main {
             background-color: #e5e5e5;
             border-radius: 20px;
-            padding: 10px; 
+            padding: 10px;
         }
 
 
@@ -84,8 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
         }
 
-        
-        .form-control { /*Inputs de login e senha*/
+
+        .form-control {
+            /*Inputs de login e senha*/
             border-radius: 6px;
             margin-bottom: 20px;
             width: 300px;
@@ -96,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
-        #login-acessar { /*Botão de avançar*/
+        #login-acessar {
+            /*Botão de avançar*/
             color: black;
         }
 
@@ -126,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!--Esqueci a senha-->
-            <a href="" class="mb-3 d-flex justify-content-end small" id="esqueci-senha">Esqueci a senha</a>             
+            <a href="" class="mb-3 d-flex justify-content-end small" id="esqueci-senha">Esqueci a senha</a>
 
             <div class="div col-12 d-flex justify-content-end">
                 <!--Botão de voltar-->
@@ -138,4 +143,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </main>
 </body>
+
 </html>

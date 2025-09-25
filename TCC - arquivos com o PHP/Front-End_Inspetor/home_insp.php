@@ -85,7 +85,8 @@
             overflow: hidden;
         }
 
-        td, th {
+        td,
+        th {
             text-align: center;
             padding: .6rem;
             border: 1px solid #e5e7eb;

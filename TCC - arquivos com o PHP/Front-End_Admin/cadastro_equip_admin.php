@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -57,10 +58,10 @@
     }
 
     .page-title {
-      text-align: center; 
-      font-size: 1.8rem; 
-      font-weight: bold; 
-      margin-bottom: 2rem; 
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
       background-color: #d0d0d0;
     }
 
@@ -84,7 +85,7 @@
 
     .btn-primary {
       background-color: #1e3a8a;
-      box-shadow: 1px 1px  5px rgba(0, 0, 0, 0.51);
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.51);
       border: none;
       width: 200px;
     }
@@ -92,7 +93,6 @@
     .btn-primary:hover {
       background-color: #0e78a9;
     }
-
   </style>
 </head>
 
@@ -102,19 +102,19 @@
       <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid" />
     </div>
     <div class="nav-icons">
-        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
 
-        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
 
-        <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
+      <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
 
-        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
 
-        <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
 
-        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
 
-        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+      <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
     </div>
   </header>
 
@@ -162,9 +162,10 @@
         <div class="d-grid justify-content-center">
           <button type="submit" name="action" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
         </div>
-        
+
       </form>
     </div>
   </div>
 </body>
+
 </html>
