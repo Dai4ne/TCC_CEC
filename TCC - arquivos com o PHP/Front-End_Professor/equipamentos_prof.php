@@ -14,7 +14,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
             padding: 15px 0;
             display: flex;
             align-items: center;
@@ -107,21 +107,45 @@
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
+
                 <div class="col-6 col-md-3">
                     <div class="logo-container">
                         <img src="../Imagens/logo_100.png" alt="logo">
                     </div>
                 </div>
+
+                <!--Navbar-->
                 <div class="col-6 col-md-9">
                     <div class="nav-icons justify-content-end">
-                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-                        <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
-                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+
+                        <div class="nav-icon"> <!-- Home-->
+                            <a href="home_prof.php">
+                                <i class="bi bi-house-door-fill"></i>
+                            </a>
+                        </div>
+
+                        <div class="nav-icon"> <!-- Equipamentos  -->
+                            <a href="equipamentos_prof.php">
+                                <i class="bi bi-tv-fill"></i>    
+                            </a>
+                        </div>
+
+                        <div class="nav-icon"> <!-- Histórico -->
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <div class="nav-icon">
+                            <a href="perfil_prof.php">
+                                <i class="bi bi-person-fill"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
+
 
     <main class="container py-4">
 

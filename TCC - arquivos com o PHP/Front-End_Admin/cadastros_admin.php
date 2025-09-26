@@ -10,9 +10,20 @@
     <title>CEC</title>
 
     <style>
+        /* Adicione estas regras para garantir que o corpo ocupe toda a altura da tela */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* Para que header, h1 e main se organizem verticalmente */
+        }
+
         header {
             background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
-            height: 120px;
+            height: 110px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -20,8 +31,8 @@
         }
 
         .logo-circle {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -54,72 +65,70 @@
             text-align: center;
             font-size: 1.8rem;
             font-weight: bold;
-            margin-bottom: 2rem;
             background-color: #d0d0d0;
+            padding: 20px 0;
+            margin-bottom: 0;
         }
 
-        .main-content {
-            padding: 40px 0;
+        main {
+            flex-grow: 1; /* Faz com que o main ocupe todo o espaço vertical restante */
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center;     /* Centraliza verticalmente */
+            padding: 20px; 
+            width: 100%;
+            box-sizing: border-box; /* padding e borda no width/height total */
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Duas colunas de igual largura por padrão */
+            gap: 20px;
+            max-width: 700px; 
+            width: 100%; /* caixa ocupa a largura total disponível até max-width */
         }
 
         .dashboard-card {
-            width: 350px;
             background: #e5e7eb;
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
+            padding: 20px 15px; 
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: 0.3s;
+            text-align: center; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            line-height: 1.3; /* Espaçamento entre as linhas */
+            color: #000000ff;
         }
 
         .dashboard-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.24);
         }
 
-        @media (max-width:768px) {
-            .header {
-                padding: 10px 0;
-            }
+        @media (max-width:992px) {
+             .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr); /* duas colunas */
+                gap: 30px;
+             }
 
-            .logo-container {
-                width: 50px;
-                height: 50px;
-            }
-
-            .nav-icons {
-                gap: 15px;
-            }
-
-            .nav-icon {
-                width: 30px;
-                height: 30px;
-            }
-
-            .welcome-title {
-                font-size: 1.8rem;
-                margin-bottom: 30px;
-            }
-
-            .dashboard-card {
-                padding: 20px;
-                margin-bottom: 15px;
-            }
+             .dashboard-card {
+                font-size: 1.3rem;
+                padding: 15px 10px;
+                min-height: 100px;
+             }
         }
 
-        @media (max-width:576px) {
-            .welcome-title {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-
-            .dashboard-card {
-                padding: 15px;
-            }
-        }
-
-
-        @media (max-width:768px) {
+        @media (max-width:768px) { /* Para tablets e telas menores */
             header {
                 padding: 0 1rem;
                 height: 100px;
@@ -136,15 +145,36 @@
             }
 
             h1 {
-                font-size: 1.6rem;
-                margin-bottom: 1.5rem;
+                font-size: 1.7rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr; /* Uma coluna em telas menores */
+                max-width: 400px; /* Largura máxima para os cards em uma coluna */
+                gap: 15px;
+            }
+
+            .dashboard-card {
+                font-size: 1.2rem;
+                padding: 20px 15px;
+                min-height: 100px;
             }
         }
 
-        @media (max-width:576px) {
+        @media (max-width:576px) { /* Para celulares */
             .nav-icon {
                 width: 30px;
                 height: 30px;
+            }
+
+            .dashboard-card {
+                padding: 15px 10px;
+                font-size: 1rem;
+                min-height: 90px;
+            }
+
+             .dashboard-grid {
+                gap: 25px;
             }
         }
     </style>
@@ -156,59 +186,70 @@
             <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
         </div>
         <div class="nav-icons">
-            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- Home -->
 
-            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- Configurações -->
+            <div class="nav-icon"> <!-- Home -->
+                <a href="home_admin.php"> 
+                    <i class="bi bi-house-door-fill"></i> 
+                </a>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Configurações -->
+                <i class="bi bi-gear-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Cadastro -->
+                <a href="cadastros_admin.php">
+                    <i class="bi bi-plus-square-fill"></i>
+                </a>
+            </div>
+            
+            <div class="nav-icon"> <!-- Notificações --> 
+                <i class="bi bi-bell-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Perfil -->
+                <i class="bi bi-person-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!--  -->
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Equipamentos  -->
+                <i class="bi bi-tv-fill"></i>
+            </div>
 
-            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
-
-            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- Notificações -->
-
-            <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- Perfil -->
-
-            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!--  -->
-
-            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- Equipamentos  -->
         </div>
     </header>
 
     <h1 class="page-title p-4">CADASTROS</h1>
 
-    <main class="main-content">
-        <div class="container-fluid">
-          
-            <div class="row">
+    <main>
+        <div class="dashboard-grid">
 
-                <div class="col-12 col-lg-4">
-                    <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-person-plus-fill me-2"></i>USUÁRIO</h2>
-                    </div>
-                </div
-
-                <div class="col-12 col-lg-4">
-                    <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-tv-fill me-2"></i>EQUIPAMENTO</h2>
-                     </div>
+            <a href="cadastro_usuario_admin.php">
+                <div class="dashboard-card">
+                    USUÁRIO
                 </div>
-                
-            </div>
+            </a>
 
-            
-            <div class="row justify-content-center">
-
-                <div class="col-12 col-lg-4">
-                    <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-tv-fill me-2"></i>USUÁRIOS REGISTRADOS</h2>
-                    </div>
+            <a href="">
+                <div class="dashboard-card">
+                    USUÁRIOS REGISTRADOS NO SISTEMA
                 </div>
+            </a>        
 
-                <div class="col-12 col-lg-4 ">
-                    <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-tv-fill me-2"></i>EQUIPAMENTOS REGISTRADOS</h2>
-                    </div>
+            <a href="cadastro_equip_admin.php">
+                <div class="dashboard-card">
+                    EQUIPAMENTO
                 </div>
-
-            </div>
+            </a>       
+    
+            <a href="">
+                <div class="dashboard-card">
+                    EQUIPAMENTOS REGISTRADOS NO SISTEMA
+                </div>
+            </a>
         </div>
     </main>
 

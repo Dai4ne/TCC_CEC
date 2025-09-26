@@ -11,6 +11,8 @@
     <title>CEC</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Federo&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
         body {
             margin: 0;
             background: #f8f9fa;
@@ -23,6 +25,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
+            font-family: Poppins, Arial;
         }
 
         .logo-circle {
@@ -79,7 +82,7 @@
 
         .dashboard-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.24);
         }
 
         .card-title {
@@ -187,19 +190,38 @@
             <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
         </div>
         <div class="nav-icons">
-            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- Home -->
-
-            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- Configurações -->
-
-            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
-
-            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- Notificações -->
-
-            <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- Perfil -->
-
-            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!--  -->
-
-            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- Equipamentos  -->
+            <div class="nav-icon"> <!-- Home -->
+                <a href="home_admin.php"> 
+                    <i class="bi bi-house-door-fill"></i> 
+                </a>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Configurações -->
+                <i class="bi bi-gear-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Cadastro -->
+                <a href="cadastros_admin.php">
+                    <i class="bi bi-plus-square-fill"></i>
+                </a>
+            </div>
+            
+            <div class="nav-icon"> <!-- Notificações --> 
+                <i class="bi bi-bell-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Perfil -->
+                <i class="bi bi-person-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!--  -->
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div> 
+            
+            <div class="nav-icon"> <!-- Equipamentos  -->
+                <i class="bi bi-tv-fill"></i>
+            </div>
+            
         </div>
     </header>
 

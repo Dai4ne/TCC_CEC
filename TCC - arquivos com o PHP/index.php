@@ -14,7 +14,6 @@
         }
 
         main {
-            /*PERGUNTAR PARA O PROFESSOR COMO DEIXAR A CAIXA EXATAMENTE NO CENTRO DA TELA*/
             width: 360px;
             height: 420px;
             background-color: #e5e5e5;
