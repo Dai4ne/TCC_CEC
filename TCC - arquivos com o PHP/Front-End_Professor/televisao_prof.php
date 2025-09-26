@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+        .equipment-icon i {
+            font-size: 2rem;
+            color: #1e3a8a;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container {
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-icon i {
+            font-size: 1.3rem;
+            color: #1e3a8a;
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        /* css da parte das TVs e equipamentos*/
+        .equipment-item {
+            padding: 10px 15px;
+            transition: background-color 0.2s ;
+            font-weight: bold;
+        }
+
+        .equipment-item:hover {
+            background-color: #e5e7eb;
+        }
+
+        .equipment-item.active {
+            background-color: #e5e7eb; /* Cor de fundo para o item selecionado */
+            font-weight: bold;
+        }
+        
+        .equipment-item .equipment-icon i {
+            color: #000000ff;
+        }
+
+
+
+        .product-card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            transition: box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0px 0px 15px  #0000007f;
+        }
+        
+        .product-card-img {
+            max-width: 100%;
+            height: auto;
+            background-color: #ffffffff;
+            height: 150px; 
+            margin-bottom: 10px;
+            border-radius: 0.25rem;
+        }
+        
+        img {
+            width: 200px;
+        }
+
+        .btn-lend { /*Botão EMPRESTAR*/
+            background-color: #0e78a9;
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .btn-lend:hover {
+            background-color: #fd4463;
+            color: white;
+        }
+
+
+        @media (max-width: 768px) {
+            .logo-container {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-container img {
+                width: 80%;
+                height: 80%;
+            }
+
+            .nav-icons .nav-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+                margin-left: 5px;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            /* o menu e a listagem das TVs ficam em colunas de 12 */
+            .col-lg-3, .col-lg-9 {
+                width: 100%;
+            }
+            
+            /* Adiciona margem entre as colunas "equipamentos" e as TVs */
+            .row.g-4 > .col-12:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo_100.png" alt="logo">
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+
+                        <div class="nav-icon"> <a href="home_prof.php">
+                                <i class="bi bi-house-door-fill"></i>
+                            </a>
+                        </div>
+
+                        <div class="nav-icon"> <a href="equipamentos_prof.php">
+                                <i class="bi bi-tv-fill"></i>
+                            </a>
+                        </div>
+
+                        <div class="nav-icon"> <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <div class="nav-icon">
+                            <a href="perfil_prof.php">
+                                <i class="bi bi-person-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="container py-4">
+
+        <div class="input-group mb-4">
+            <span class="input-group-text bg-secondary-subtle"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" placeholder="Pesquisar equipamentos">
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-12 col-lg-3">
+                <div class="bg-white rounded shadow-sm">
+                    
+                    <h5 class="text-center fw-bold pt-3 pb-2 mb-0 border-bottom">EQUIPAMENTOS</h5>
+
+                    <a href="televisao_prof.php">
+                        <div class="equipment-item active d-flex justify-content-between align-items-center border-bottom">
+                        <span>TELEVISÃO</span>
+                        <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>
+                    </div>
+                    </a>
+
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
+                            <span>NOTEBOOK</span>
+                            <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
+                        </div>
+                    </a>
+
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
+                            <span>CHROMEBOOK</span>
+                            <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
+                        </div>
+                    </a>
+
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
+                            <span>TABLET</span>
+                            <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
+                        </div>                  
+                    </a>
+
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
+                            <span>PROJETOR</span>
+                            <div class="equipment-icon"><i class="bi bi-projector"></i></div>
+                        </div>
+                    </a>
+
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center">
+                            <span>FONES</span>
+                            <div class="equipment-icon"><i class="bi bi-headphones"></i></div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Parte das TVs-->
+            <div class="col-12 col-lg-9">
+                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-3">
+                    
+                    <div class="col">
+                        <div class="product-card shadow-sm">
+                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""></div>
+                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
+                            <p class="card-text text-uppercase small mb-3">NÚMERO 1</p>
+                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="product-card shadow-sm">
+                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""> </div>
+                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
+                            <p class="card-text text-uppercase small mb-3">NÚMERO 2</p>
+                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="product-card shadow-sm">
+                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""> </div>
+                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
+                            <p class="card-text text-uppercase small mb-3">NÚMERO 3</p>
+                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
+                        </div>
+                    </div>
+                          
+
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

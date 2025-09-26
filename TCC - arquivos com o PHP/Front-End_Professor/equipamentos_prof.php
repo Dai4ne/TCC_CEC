@@ -10,7 +10,7 @@
     <style>
         .equipment-icon i {
             font-size: 2rem;
-            color: #1e3a8a;
+            color: #000000ff;
         }
 
         .header {
@@ -62,6 +62,11 @@
         .nav-icon:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
         }
 
         .equipment-item:hover {
@@ -158,37 +163,51 @@
 
             <div class="col-lg-6 col-md-12">
                 <div class="bg-body rounded shadow-sm p-3">
+                    
                     <h5 class="text-center fw-bold mb-3">EQUIPAMENTOS</h5>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
+                    <a href="televisao_prof.php">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>TELEVISÃO</span>
                         <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>
                     </div>
+                    </a>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>NOTEBOOK</span>
-                        <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
-                    </div>
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>NOTEBOOK</span>
+                            <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
+                        </div>
+                    </a>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>CHROMEBOOK</span>
-                        <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
-                    </div>
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>CHROMEBOOK</span>
+                            <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
+                        </div>
+                    </a>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>TABLET</span>
-                        <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
-                    </div>
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>TABLET</span>
+                            <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
+                        </div>                        
+                    </a>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
-                        <span>PROJETOR</span>
-                        <div class="equipment-icon"><i class="bi bi-projector"></i></div>
-                    </div>
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>PROJETOR</span>
+                            <div class="equipment-icon"><i class="bi bi-projector"></i></div>
+                        </div>
+                    </a>
 
-                    <div class="equipment-item d-flex justify-content-between align-items-center py-2">
-                        <span>FONES</span>
-                        <div class="equipment-icon"><i class="bi bi-headphones"></i></div>
-                    </div>
+                    <a href="">
+                        <div class="equipment-item d-flex justify-content-between align-items-center py-2">
+                            <span>FONES</span>
+                            <div class="equipment-icon"><i class="bi bi-headphones"></i></div>
+                        </div>
+                    </a>
+
 
                 </div>
             </div>
