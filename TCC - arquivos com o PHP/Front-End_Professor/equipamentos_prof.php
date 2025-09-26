@@ -164,26 +164,32 @@
                         <span>TELEVISÃO</span>
                         <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>
                     </div>
+
                     <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>NOTEBOOK</span>
                         <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                     </div>
+
                     <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>CHROMEBOOK</span>
                         <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                     </div>
+
                     <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>TABLET</span>
                         <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
                     </div>
+
                     <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>PROJETOR</span>
                         <div class="equipment-icon"><i class="bi bi-projector"></i></div>
                     </div>
+
                     <div class="equipment-item d-flex justify-content-between align-items-center py-2">
                         <span>FONES</span>
                         <div class="equipment-icon"><i class="bi bi-headphones"></i></div>
                     </div>
+
                 </div>
             </div>
 
@@ -202,24 +208,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <tr>
+                                    <td>Tablet</td>
+                                    <td><span class="badge bg-warning text-dark">Em uso</span></td>
+                                    <td>26/09/2025</td>
+                                    <td>14:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Notebooks</td>
+                                    <td><span class="badge bg-warning text-dark">Em uso</span></td>
+                                    <td>26/09/2025</td>
+                                    <td>13:30</td>
+                                </tr> 
+
                                 <tr>
                                     <td>Chromebook</td>
                                     <td><span class="badge bg-success">Devolvido</span></td>
                                     <td>17/07/2025</td>
                                     <td>13:20</td>
                                 </tr>
-                                <tr>
-                                    <td>Tablet</td>
-                                    <td><span class="badge bg-warning text-dark">Em uso</span></td>
-                                    <td>19/07/2025</td>
-                                    <td>14:00</td>
-                                </tr>
-                                <tr>
-                                    <td>Notebooks</td>
-                                    <td><span class="badge bg-warning text-dark">Em uso</span></td>
-                                    <td>25/07/2025</td>
-                                    <td>08:30</td>
-                                </tr>
+
                                 <tr>
                                     <td>Televisão</td>
                                     <td><span class="badge bg-success">Devolvido</span></td>
@@ -228,7 +237,7 @@
                                 </tr>
                                 <tr>
                                     <td>Projetor</td>
-                                    <td><span class="badge bg-warning text-dark">Em uso</span></td>
+                                    <td><span class="badge bg-success">Devolvido</span></td>
                                     <td>05/08/2025</td>
                                     <td>15:00</td>
                                 </tr>
