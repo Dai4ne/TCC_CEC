@@ -1,3 +1,10 @@
+<?php
+include 'verifica_login.php';
+verificaTipo('1'); // Verifica se é admin
+
+$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome pra exibir
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -11,11 +18,12 @@
     <title>CEC</title>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Federo&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Federo&family=Poppins&display=swap');
 
         body {
             margin: 0;
             background: #f8f9fa;
+            font-family: Poppins, Arial;
         }
 
         header {
@@ -25,7 +33,6 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
-            font-family: Poppins, Arial;
         }
 
         .logo-circle {
@@ -59,16 +66,14 @@
             color: #1e3a8a;
         }
 
-
-
         h1 {
             font-size: 2rem;
             font-weight: bold;
             margin-top: 2rem;
             margin-bottom: 2rem;
             color: #1f2937;
+            text-align: center;
         }
-
 
         .dashboard-card {
             height: 400px;
@@ -94,55 +99,6 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        .card-content {
-            padding-left: 20px;
-            color: #374151;
-            font-style: normal;
-            list-style-type: disc;
-        }
-
-        @media (max-width:768px) {
-            .header {
-                padding: 10px 0;
-            }
-
-            .logo-container {
-                width: 50px;
-                height: 50px;
-            }
-
-            .nav-icons {
-                gap: 15px;
-            }
-
-            .nav-icon {
-                width: 30px;
-                height: 30px;
-            }
-
-            .welcome-title {
-                font-size: 1.8rem;
-                margin-bottom: 30px;
-            }
-
-            .dashboard-card {
-                padding: 20px;
-                margin-bottom: 15px;
-            }
-        }
-
-        @media (max-width:576px) {
-            .welcome-title {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-
-            .dashboard-card {
-                padding: 15px;
-            }
-        }
-
 
         @media (max-width:768px) {
             header {
@@ -176,7 +132,8 @@
                 font-size: 1.4rem;
             }
 
-            th, td {
+            th,
+            td {
                 padding: .4rem;
                 font-size: .8rem;
             }
@@ -190,71 +147,37 @@
             <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
         </div>
         <div class="nav-icons">
-            <div class="nav-icon"> <!-- Home -->
-                <a href="home_admin.php"> 
-                    <i class="bi bi-house-door-fill"></i> 
-                </a>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Configurações -->
-                <i class="bi bi-gear-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Cadastro -->
-                <a href="cadastros_admin.php">
-                    <i class="bi bi-plus-square-fill"></i>
-                </a>
-            </div>
-            
-            <div class="nav-icon"> <!-- Notificações --> 
-                <i class="bi bi-bell-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Perfil -->
-                <i class="bi bi-person-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!--  -->
-                <i class="bi bi-exclamation-triangle-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Equipamentos  -->
-                <i class="bi bi-tv-fill"></i>
-            </div>
-            
+            <div class="nav-icon"><a href="home_admin.php"><i class="bi bi-house-door-fill"></i></a></div>
+            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+            <div class="nav-icon"><a href="cadastros_admin.php"><i class="bi bi-plus-square-fill"></i></a></div>
+            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
         </div>
     </header>
 
-
     <main class="main-content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <h1 class="welcome-title">BEM-VINDO, ADMINISTRADOR!</h1>
+                    <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
                 </div>
             </div>
 
-            <div class="row justify-content-center"> <!-- Centralização horizontal dos dashboard-card -->
-
+            <div class="row justify-content-center">
                 <div class="col-12 col-lg-4">
-
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
                     </div>
-
                 </div>
 
                 <div class="col-12 col-lg-4">
-
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>PENDÊNCIAS</h2>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </main>
 

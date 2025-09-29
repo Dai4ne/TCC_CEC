@@ -307,9 +307,8 @@
             <button class="btn">
               <i class="bi bi-gear-fill"></i> Configurações
             </button>
-            <button class="btn">
-              <i class="bi bi-box-arrow-right"></i> Sair
-            </button>
+            <a href="logout.php" class="btn btn">
+              <i class="bi bi-box-arrow-right"> </i> Sair</a>
           </div>
         </div>
       </aside>

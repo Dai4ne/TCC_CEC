@@ -12,17 +12,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
   }
 
-  $sql = "INSERT INTO usuarios (nome, email, senha, tipo_usuario)
+  // Mantendo SHA1 conforme você pediu
+  $sql = "INSERT INTO usuario (nome, email, senha, tipo)
             VALUES ('$nome', '$email', SHA1('$senha'), '$tipo')";
 
   if ($con->query($sql)) {
-    echo "<script>alert('Cadastrado com sucesso!'); window.location.href='login.php';</script>";
+    // Redireciona direto para a home do admin (mantive o caminho que você usou antes)
+    echo "<script>alert('Cadastrado com sucesso!'); window.location.href='home_admin.php';</script>";
+    exit;
   } else {
     echo "<script>alert('Erro ao cadastrar: " . $con->error . "');</script>";
   }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -99,19 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     .form-card {
       padding: 2rem;
       border-radius: 12px;
-      background-color: #ffffff;
+      background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-card h3 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #1e3a8a;
     }
 
     .btn-primary {
       background-color: #1e3a8a;
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.51);
       border: none;
       width: 200px;
     }
@@ -124,31 +119,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 <body>
   <header>
-    <div class="logo-circle">
-      <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid" />
-    </div>
-    <div class="nav-icons">
-      <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-
-      <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-
-      <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- Cadastro -->
-
-      <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-
-      <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-
-      <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-
-      <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-    </div>
+    <div class="logo-circle"><img src="../Imagens/logo_100.png" alt="logo" class="img-fluid" /></div>
   </header>
 
   <h1 class="page-title p-4">CADASTRO DE USUÁRIO</h1>
 
   <div class="form-container">
     <div class="form-card">
-
       <form action="cadastro_usuario_admin.php" method="post">
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
@@ -178,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         <div class="d-grid justify-content-center">
           <button type="submit" name="action" value="Cadastrar" class="btn btn-primary">Cadastrar</button>
         </div>
-
       </form>
     </div>
   </div>

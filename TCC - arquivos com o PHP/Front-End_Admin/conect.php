@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "cec";
+$db   = "bd_cec";
 
 $con = new mysqli($host, $user, $pass, $db);
 

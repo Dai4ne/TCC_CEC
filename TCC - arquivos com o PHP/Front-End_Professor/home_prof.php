@@ -1,3 +1,10 @@
+<?php
+include '../Front-End_Admin/verifica_login.php';
+verificaTipo('2'); // Verifica se é professor
+
+$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome para exibir
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,7 +22,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);            
+            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
             padding: 15px 0;
             display: flex;
             align-items: center;
@@ -76,6 +83,7 @@
             margin-bottom: 40px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-align: center;
         }
 
         .dashboard-card {
@@ -101,13 +109,6 @@
             margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        .card-content {
-            padding-left: 20px;
-            color: #374151;
-            font-style: normal;
-            list-style-type: disc;
         }
 
         @media (max-width:768px) {
@@ -154,45 +155,22 @@
 </head>
 
 <body>
-
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
-
                 <div class="col-6 col-md-3">
                     <div class="logo-container">
                         <img src="../Imagens/logo_100.png" alt="logo">
                     </div>
                 </div>
-
-                <!--Navbar-->
                 <div class="col-6 col-md-9">
                     <div class="nav-icons justify-content-end">
-
-                        <div class="nav-icon"> <!-- Home-->
-                            <a href="home_prof.php">
-                                <i class="bi bi-house-door-fill"></i>
-                            </a>
-                        </div>
-
-                        <div class="nav-icon"> <!-- Equipamentos  -->
-                            <a href="equipamentos_prof.php">
-                                <i class="bi bi-tv-fill"></i>    
-                            </a>
-                        </div>
-
-                        <div class="nav-icon"> <!-- Histórico -->
-                            <i class="bi bi-clock-history"></i>
-                        </div>
-
-                        <div class="nav-icon">
-                            <a href="perfil_prof.php">
-                                <i class="bi bi-person-fill"></i>
-                            </a>
-                        </div>
+                        <div class="nav-icon"><a href="home_prof.php"><i class="bi bi-house-door-fill"></i></a></div>
+                        <div class="nav-icon"><a href="equipamentos_prof.php"><i class="bi bi-tv-fill"></i></a></div>
+                        <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        <div class="nav-icon"><a href="perfil_prof.php"><i class="bi bi-person-fill"></i></a></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>
@@ -201,7 +179,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="welcome-title">BEM-VINDO, PROFESSOR!</h1>
+                    <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
                 </div>
             </div>
             <div class="row">
@@ -218,7 +196,6 @@
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>RECADOS</h2>
-
                     </div>
                 </div>
             </div>
