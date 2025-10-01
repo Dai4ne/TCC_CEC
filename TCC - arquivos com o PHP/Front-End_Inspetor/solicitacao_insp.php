@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEC</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="header_insp.css">
+    <title>CEC</title>
+    
 
     <style>
         :root {
@@ -15,53 +18,6 @@
             --light-gray: #f8f9fa;
             --medium-gray: #e9ecef;
         }
-
-
-        .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
-            padding: 15px 0;
-            display: flex;
-            align-items: center;
-        }
-
-
-        .logo-circle {
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-
-        .logo-circle img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
-
-
-        .nav-icons .btn {
-            background: white;
-            border-radius: 8px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
-            font-size: 18px;
-            color: var(--primary-blue);
-        }
-
-
-        .nav-icons .btn:hover {
-            background: var(--medium-gray);
-        }
-
 
         .main-content {
             padding: 2rem 0;
@@ -120,23 +76,6 @@
         }
 
         @media (max-width: 768px) {
-            .logo-circle {
-                width: 50px;
-                height: 50px;
-            }
-
-            .logo-circle img {
-                width: 80%;
-                height: 80%;
-            }
-
-            .nav-icons .btn {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
-                margin-left: 5px;
-            }
-
             .page-title {
                 font-size: 1.5rem;
             }
@@ -152,17 +91,23 @@
 <body>
 
     <header class="header">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            <div class="logo-circle">
-                <img src="../Imagens/logo_100.png" alt="Logo">
-            </div>
-
-            <div class="nav-icons d-flex">
-                <button class="btn"><i class="bi bi-house-door-fill"></i></button>
-                <button class="btn"><i class="bi bi-bell-fill"></i></button>
-                <button class="btn"><i class="bi bi-tv-fill"></i></button>
-                <button class="btn"><i class="bi bi-person-fill"></i></button>
-                <button class="btn"><i class="bi bi-exclamation-triangle-fill"></i></button>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- HOMEPAGE-->
+                        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
+                        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
+                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
+                        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
+                        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
+                    </div>
+                </div>
             </div>
         </div>
     </header>

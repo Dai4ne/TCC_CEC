@@ -69,12 +69,12 @@
     }
 
     .nav-icon {
-        width: 45px; 
-        height: 45px;
+        width: 40px; 
+        height: 40px;
     }
     
     .nav-icon i {
-        font-size: 1.9rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -96,11 +96,11 @@
     }
 
     .nav-icon {
-        width: 40px; 
-        height: 40px;
+        width: 35px; 
+        height: 35px;
     }
     
     .nav-icon i{
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 }

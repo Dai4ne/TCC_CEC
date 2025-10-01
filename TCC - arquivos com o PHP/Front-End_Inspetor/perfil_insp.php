@@ -4,55 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CEC</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="header_insp.css">
+  <title>CEC</title>
+  
 
   <style>
     body {
       margin: 0;
       padding: 0;
       background: #f8f9fa;
-    }
-
-    header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-    }
-
-    .logo-circle {
-      width: 60px;
-      height: 60px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-icons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .nav-icon {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .nav-icon i {
-      font-size: 1.4rem;
-      color: #1e3a8a;
     }
 
     .topo-cinza {
@@ -162,40 +125,32 @@
       color: #000;
     }
 
-    @media (max-width: 768px) {
-      .nav-icons {
-        justify-content: center;
-        margin-top: 10px;
-      }
-
-      .logo-container {
-        width: 50px;
-        height: 50px;
-      }
-
-      .nav-icon {
-        width: 30px;
-        height: 30px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo-circle">
-      <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
-    </div>
-    <div class="nav-icons">
-      <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-    </div>
-  </header>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- HOMEPAGE-->
+                        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
+                        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
+                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
+                        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
+                        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
   <div class="container my-4">
     <div class="row g-4">
