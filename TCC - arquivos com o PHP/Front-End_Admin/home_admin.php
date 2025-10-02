@@ -1,3 +1,9 @@
+<?php
+include 'verifica_login.php';
+verificaTipo('1'); // Verifica se é admin
+
+$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome pra exibir
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -103,7 +109,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="welcome-title">BEM-VINDO!</h1>
+                    <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
                 </div>
             </div>
 
