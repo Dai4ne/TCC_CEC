@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$perfil_verifica = '1';
+include('../verifica.php');
+
+
+
+// Para exibir o nome
+$nomeUsuario = $_SESSION['nome_usuario'];
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
