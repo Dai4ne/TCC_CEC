@@ -151,41 +151,32 @@ include('../verifica.php');
      <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
-
                 <div class="col-6 col-md-3">
                     <div class="logo-container">
                         <img src="../Imagens/logo-png.png" alt="logo">
                     </div>
                 </div>
-
-                <!--Navbar-->
                 <div class="col-6 col-md-9">
                     <div class="nav-icons justify-content-end">
 
-                        <div class="nav-icon"> <!-- Home-->
-                            <a href="home_prof.php">
-                                <i class="bi bi-house-door-fill"></i>
-                            </a>
-                        </div>
+                        <a href="home_prof.php">
+                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div> 
+                        </a> <!--HOMEPAGE-->
 
-                        <div class="nav-icon"> <!-- Equipamentos  -->
-                            <a href="equipamentos_prof.php">
-                                <i class="bi bi-tv-fill"></i>    
-                            </a>
-                        </div>
-
-                        <div class="nav-icon"> <!-- Histórico -->
-                            <i class="bi bi-clock-history"></i>
-                        </div>
-
-                        <div class="nav-icon">
-                            <a href="perfil_prof.php">
-                                <i class="bi bi-person-fill"></i>
-                            </a>
-                        </div>
+                        <a href="equipamentos_prof.php"> 
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+                        </a><!--EQUIPAMENTOS-->
+                        
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        </a> <!--HISTÓRICO-->
+                        
+                        <a href="perfil_prof.php">
+                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+                        </a> <!--PERFIL-->
+                        
                     </div>
                 </div>
-
             </div>
         </div>
     </header>

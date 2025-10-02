@@ -1,21 +1,3 @@
-<?php
-session_start();
-
-// Verifica se o usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-    exit;
-}
-
-$perfil_verifica = '1';
-include('../verifica.php');
-
-
-
-// Para exibir o nome
-$nomeUsuario = $_SESSION['nome_usuario'];
-?>
-    
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -104,18 +86,36 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                 </div>
                 <div class="col-6 col-md-9">
                     <div class="nav-icons justify-content-end">
-                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- HOMEPAGE-->
-                        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
-                        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
-                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
+
+
+                        <a href="home_admin.php">
+                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+                        </a> <!-- HOMEPAGE-->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> 
+                        </a> <!-- EQUIPAMENTOS -->
 
                         <a href="cadastros_admin.php">
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> 
-                        </a><!-- CADASTRAR -->
+                        </a> <!-- CADASTRAR -->
 
-                        
-                        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
-                        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                        </a> <!-- ATRASOS -->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+                        </a> <!-- PERFIL-->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+                        </a> <!-- CONFIGURAÇÕES-->
+
                     </div>
                 </div>
             </div>

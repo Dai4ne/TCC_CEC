@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $perfil_verifica = '2';
 include('../verifica.php');
-    
+   
 
 // Para exibir o nome
 $nomeUsuario = $_SESSION['nome_usuario'];
@@ -104,10 +104,23 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                 </div>
                 <div class="col-6 col-md-9">
                     <div class="nav-icons justify-content-end">
-                        <div class="nav-icon"><a href="home_prof.php"><i class="bi bi-house-door-fill"></i></a></div>
-                        <div class="nav-icon"><a href="equipamentos_prof.php"><i class="bi bi-tv-fill"></i></a></div>
-                        <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
-                        <div class="nav-icon"><a href="perfil_prof.php"><i class="bi bi-person-fill"></i></a></div>
+
+                        <a href="home_prof.php">
+                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div> 
+                        </a> <!--HOMEPAGE-->
+
+                        <a href="equipamentos_prof.php"> 
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+                        </a><!--EQUIPAMENTOS-->
+                        
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        </a> <!--HISTÓRICO-->
+                        
+                        <a href="perfil_prof.php">
+                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+                        </a> <!--PERFIL-->
+                        
                     </div>
                 </div>
             </div>
