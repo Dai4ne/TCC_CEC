@@ -1,3 +1,10 @@
+<?php
+include '../Front-End_Admin/verifica_login.php';
+verificaTipo('3'); // Verifica se é inspetor
+
+$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome para exibir
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -108,7 +115,7 @@
     </header>
 
     <main>
-        <h1>BEM-VINDO!</h1>
+        <h1>BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="table-section">

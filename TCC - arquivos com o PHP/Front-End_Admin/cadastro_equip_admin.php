@@ -59,50 +59,19 @@ $result = $con->query("SELECT * FROM equipamento");
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CEC - Cadastro Equipamento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+
+  <link rel="stylesheet" href="header_admin.css">
+  <title>CEC - Cadastro Equipamento</title>
+  
   <style>
     body {
       margin: 0;
       background: #f8f9fa;
       font-family: 'Poppins', sans-serif;
     }
-    header {
-      background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-    }
-    .logo-circle {
-      width: 80px;
-      height: 80px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .nav-icons {
-      display: flex;
-      gap: 1rem;
-    }
-    .nav-icon {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    .nav-icon i {
-      font-size: 1.4rem;
-      color: #1e3a8a;
-    }
+
     .page-title {
       text-align: center;
       font-size: 1.8rem;
@@ -110,22 +79,26 @@ $result = $con->query("SELECT * FROM equipamento");
       margin-bottom: 2rem;
       background-color: #d0d0d0;
     }
+
     .form-container {
       max-width: 600px;
       margin: auto;
     }
+
     .form-card {
       padding: 2rem;
       border-radius: 12px;
       background-color: #ffffff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
     .btn-primary {
       background-color: #1e3a8a;
       box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.51);
       border: none;
       width: 200px;
     }
+    
     .btn-primary:hover {
       background-color: #0e78a9;
     }
@@ -133,20 +106,28 @@ $result = $con->query("SELECT * FROM equipamento");
 </head>
 
 <body>
-  <header>
-    <div class="logo-circle">
-      <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid" />
-    </div>
-    <div class="nav-icons">
-      <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-      <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-    </div>
-  </header>
+  <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- HOMEPAGE-->
+                        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
+                        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
+                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
+                        <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- CADASTRAR -->
+                        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
+                        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
   <h1 class="page-title p-4">CADASTRO DE EQUIPAMENTO</h1>
 

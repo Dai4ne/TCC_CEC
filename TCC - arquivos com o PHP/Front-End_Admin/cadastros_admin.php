@@ -7,10 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet" href="header_admin.css">
     <title>CEC</title>
 
     <style>
-        /* Adicione estas regras para garantir que o corpo ocupe toda a altura da tela */
+        /* Garente que o corpo ocupe toda a altura da tela */
         html, body {
             height: 100%;
             margin: 0;
@@ -19,46 +20,6 @@
         body {
             display: flex;
             flex-direction: column; /* Para que header, h1 e main se organizem verticalmente */
-        }
-
-        header {
-            background: linear-gradient(135deg, #072855 0%, #0e78a9 50%, #12bdeb 100%);
-            height: 110px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-        }
-
-        .logo-circle {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-icon {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .nav-icon i {
-            font-size: 1.4rem;
-            color: #1e3a8a;
         }
 
         .page-title {
@@ -129,21 +90,6 @@
         }
 
         @media (max-width:768px) { /* Para tablets e telas menores */
-            header {
-                padding: 0 1rem;
-                height: 100px;
-            }
-
-            .logo-circle {
-                width: 60px;
-                height: 60px;
-            }
-
-            .nav-icon {
-                width: 35px;
-                height: 35px;
-            }
-
             h1 {
                 font-size: 1.7rem;
             }
@@ -162,11 +108,6 @@
         }
 
         @media (max-width:576px) { /* Para celulares */
-            .nav-icon {
-                width: 30px;
-                height: 30px;
-            }
-
             .dashboard-card {
                 padding: 15px 10px;
                 font-size: 1rem;
@@ -181,44 +122,26 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo-circle">
-            <img src="../Imagens/logo_100.png" alt="logo" class="img-fluid">
-        </div>
-        <div class="nav-icons">
-
-            <div class="nav-icon"> <!-- Home -->
-                <a href="home_admin.php"> 
-                    <i class="bi bi-house-door-fill"></i> 
-                </a>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Configurações -->
-                <i class="bi bi-gear-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Cadastro -->
-                <a href="cadastros_admin.php">
-                    <i class="bi bi-plus-square-fill"></i>
-                </a>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+                        <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> <!-- HOMEPAGE-->
+                        <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
+                        <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
+                        <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
+                        <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- CADASTRAR -->
+                        <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
+                        <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
+                    </div>
+                </div>
             </div>
-            
-            <div class="nav-icon"> <!-- Notificações --> 
-                <i class="bi bi-bell-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Perfil -->
-                <i class="bi bi-person-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!--  -->
-                <i class="bi bi-exclamation-triangle-fill"></i>
-            </div> 
-            
-            <div class="nav-icon"> <!-- Equipamentos  -->
-                <i class="bi bi-tv-fill"></i>
-            </div>
-
         </div>
     </header>
 
