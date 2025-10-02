@@ -47,12 +47,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
 }
-
-
-// ===== LISTAGEM =====
-$result = $con->query("SELECT * FROM equipamento");
 ?>
 
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica se é admin
+if ($_SESSION['perfil'] !== '1') {
+    echo "Acesso negado!";
+    exit;
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 

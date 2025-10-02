@@ -12,18 +12,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
   }
 
-  // Mantendo SHA1 conforme você pediu
   $sql = "INSERT INTO usuario (nome, email, senha, tipo)
             VALUES ('$nome', '$email', SHA1('$senha'), '$tipo')";
 
   if ($con->query($sql)) {
-    // Redireciona direto para a home do admin (mantive o caminho que você usou antes)
+
     echo "<script>alert('Cadastrado com sucesso!'); window.location.href='home_admin.php';</script>";
     exit;
   } else {
     echo "<script>alert('Erro ao cadastrar: " . $con->error . "');</script>";
   }
 }
+?>
+
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica se é admin
+if ($_SESSION['perfil'] !== '1') {
+    echo "Acesso negado!";
+    exit;
+}
+
+
 ?>
 
 <!DOCTYPE html>

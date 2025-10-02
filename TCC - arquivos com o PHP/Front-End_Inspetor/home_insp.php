@@ -1,9 +1,22 @@
 <?php
-include '../Front-End_Admin/verifica_login.php';
-verificaTipo('3'); // Verifica se é inspetor
+session_start();
 
-$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome para exibir
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica se é inspetor
+if ($_SESSION['perfil'] !== '3') {
+    echo "Acesso negado!";
+    exit;
+}
+
+// Para exibir o nome
+$nomeUsuario = $_SESSION['nome_usuario'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">

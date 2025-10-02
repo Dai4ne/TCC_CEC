@@ -1,9 +1,22 @@
 <?php
-include 'verifica_login.php';
-verificaTipo('1'); // Verifica se é admin
+session_start();
 
-$nomeUsuario = $_SESSION['nome_usuario']; // pega o nome pra exibir
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica se é admin
+if ($_SESSION['perfil'] !== '1') { // aqui usamos 'perfil' que é o que você definiu na sessão
+    echo "Acesso negado!";
+    exit;
+}
+
+// Para exibir o nome
+$nomeUsuario = $_SESSION['nome_usuario'];
 ?>
+    
 
 <!DOCTYPE html>
 <html lang="pt-BR">

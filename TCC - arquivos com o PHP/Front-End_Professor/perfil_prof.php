@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Verifica se é professor
+if ($_SESSION['perfil'] !== '2') {
+    echo "Acesso negado!";
+    exit;
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
