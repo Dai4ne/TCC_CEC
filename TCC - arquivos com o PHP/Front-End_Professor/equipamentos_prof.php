@@ -7,12 +7,8 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é professor
-if ($_SESSION['perfil'] !== '2') {
-    echo "Acesso negado!";
-    exit;
-}
-
+$perfil_verifica = '2';
+include('../verifica.php');
 
 ?>
 

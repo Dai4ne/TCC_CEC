@@ -7,14 +7,22 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é professor
-if ($_SESSION['perfil'] !== '2') {
-    echo "Acesso negado!";
-    exit;
+$perfil_verifica = '2';
+include('../verifica.php');
+
+include "../Front-End_Admin/conect.php";
+$sql = "SELECT * FROM equipamento";
+$resultado = mysqli_query($con, $sql);
+
+$equipamento = [];
+
+while ($linha = mysqli_fetch_array($resultado)) {
+    $equipamento[] = $linha;
 }
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -221,33 +229,16 @@ if ($_SESSION['perfil'] !== '2') {
             <!-- Parte das TVs-->
             <div class="col-12 col-lg-9">
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-3">
-                    
+                    <?php foreach ($equipamento as $equipamentos): ?>
                     <div class="col">
-                        <div class="product-card shadow-sm">
-                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""></div>
-                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
-                            <p class="card-text text-uppercase small mb-3">NÚMERO 1</p>
-                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
-                        </div>
+                       <?php 
+                       $img = "../Imagens/tv_lg.png";
+                       $marca = $equipamentos['marca'];
+                       $num = $equipamentos['numeracao'];
+                       include "../card-equipamento.php"
+                       ?>
                     </div>
-
-                    <div class="col">
-                        <div class="product-card shadow-sm">
-                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""> </div>
-                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
-                            <p class="card-text text-uppercase small mb-3">NÚMERO 2</p>
-                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="product-card shadow-sm">
-                            <div class="product-card-img"> <img src="../Imagens/tv_lg.png" alt=""> </div>
-                            <p class="card-text text-uppercase fw-bold mb-1">TELEVISÃO</p>
-                            <p class="card-text text-uppercase small mb-3">NÚMERO 3</p>
-                            <button type="button" class="btn btn-lend w-100">EMPRESTAR</button>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                           
 
                     

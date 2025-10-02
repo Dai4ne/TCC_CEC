@@ -7,14 +7,13 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é inspetor
-if ($_SESSION['perfil'] !== '3') {
-    echo "Acesso negado!";
-    exit;
-}
+
+$perfil_verifica = '3';
+include('../verifica.php');
+
 
 // Para exibir o nome
-$nomeUsuario = $_SESSION['nome_usuario'];
+$nomeusuario = $_SESSION['nome_usuario'];
 ?>
 
 

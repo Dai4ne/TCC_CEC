@@ -7,11 +7,10 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é admin
-if ($_SESSION['perfil'] !== '1') { // aqui usamos 'perfil' que é o que você definiu na sessão
-    echo "Acesso negado!";
-    exit;
-}
+$perfil_verifica = '1';
+include('../verifica.php');
+
+
 
 // Para exibir o nome
 $nomeUsuario = $_SESSION['nome_usuario'];
@@ -109,7 +108,12 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                         <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> <!-- CONFIGURAÇÕES-->
                         <div class="nav-icon"><i class="bi bi-bell-fill"></i></div> <!-- NOTIFICAÇÕES -->
                         <div class="nav-icon"><i class="bi bi-person-fill"></i></div> <!-- PERFIL-->
-                        <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> <!-- CADASTRAR -->
+
+                        <a href="cadastros_admin.php">
+                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> 
+                        </a><!-- CADASTRAR -->
+
+                        
                         <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div> <!-- ATRASOS -->
                         <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> <!-- EQUIPAMENTOS -->
                     </div>

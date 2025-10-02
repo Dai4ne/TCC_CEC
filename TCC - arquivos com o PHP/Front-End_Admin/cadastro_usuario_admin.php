@@ -34,11 +34,8 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é admin
-if ($_SESSION['perfil'] !== '1') {
-    echo "Acesso negado!";
-    exit;
-}
+$perfil_verifica = '1';
+include('../verifica.php');
 
 
 ?>

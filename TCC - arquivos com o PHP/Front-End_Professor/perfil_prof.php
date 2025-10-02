@@ -7,14 +7,11 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-// Verifica se é professor
-if ($_SESSION['perfil'] !== '2') {
-    echo "Acesso negado!";
-    exit;
-}
+$perfil_verifica = '2';
+include('../verifica.php');
 
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -260,8 +257,30 @@ if ($_SESSION['perfil'] !== '2') {
             <button class="btn">
               <i class="bi bi-gear-fill"></i> Configurações
             </button>
-            <a href="logout.php" class="btn btn">
-              <i class="bi bi-box-arrow-right"> </i> Sair</a>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Desconectar
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+       <h4>Confirmar Saída</h4>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="../logout.php" class="btn btn-primary">Sair</a>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </aside>
