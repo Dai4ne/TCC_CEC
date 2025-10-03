@@ -39,7 +39,6 @@ include('../verifica.php');
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -92,7 +91,7 @@ include('../verifica.php');
 </head>
 
 <body>
-  <<header class="header">
+  <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-6 col-md-3">

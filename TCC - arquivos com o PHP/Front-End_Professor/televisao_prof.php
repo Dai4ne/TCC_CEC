@@ -11,7 +11,13 @@ $perfil_verifica = '2';
 include('../verifica.php');
 
 include "../Front-End_Admin/conect.php";
-$sql = "SELECT * FROM equipamento";
+
+// Consulta com JOIN para obter o nome da marca
+$sql = "
+    SELECT e.*, m.nome AS marca_nome
+    FROM equipamento e
+    JOIN marca m ON e.id_marca = m.id_marca
+";
 $resultado = mysqli_query($con, $sql);
 
 $equipamento = [];
@@ -19,9 +25,8 @@ $equipamento = [];
 while ($linha = mysqli_fetch_array($resultado)) {
     $equipamento[] = $linha;
 }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -224,16 +229,17 @@ while ($linha = mysqli_fetch_array($resultado)) {
             <!-- Parte das TVs-->
             <div class="col-12 col-lg-9">
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-3">
-                    <?php foreach ($equipamento as $equipamentos): ?>
-                    <div class="col">
-                       <?php 
-                       $img = "../Imagens/tv_lg.png";
-                       $marca = $equipamentos['marca'];
-                       $num = $equipamentos['numeracao'];
-                       include "../card-equipamento.php"
-                       ?>
-                    </div>
-                    <?php endforeach; ?>
+<?php foreach ($equipamento as $equipamentos): ?>
+    <div class="col">
+        <?php 
+        $img = "../Imagens/tv_lg.png";
+        $marca = $equipamentos['marca_nome']; // ✅ Corrigido
+        $num = $equipamentos['numeracao'];
+        include "../card-equipamento.php";
+        ?>
+    </div>
+<?php endforeach; ?>
+
                           
 
                     
