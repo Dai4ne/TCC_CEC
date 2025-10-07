@@ -30,7 +30,8 @@ $nomeusuario = $_SESSION['nome_usuario'];
     <title>CEC</title>
     
     <style>
-        body {
+        body::-webkit-scrollbar {
+            display: none;
             margin: 0;
             background: #f8f9fa;
         }

@@ -59,6 +59,7 @@ include('../verifica.php');
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,10 +69,12 @@ include('../verifica.php');
   <title>CEC - Cadastro Equipamento</title>
 
   <style>
-    body {
+    body::-webkit-scrollbar {
+      display: none;
       margin: 0;
       background: #f8f9fa;
       font-family: 'Poppins', sans-serif;
+
     }
 
     .page-title {
@@ -118,13 +121,27 @@ include('../verifica.php');
         </div>
         <div class="col-6 col-md-9">
           <div class="nav-icons justify-content-end">
-            <a href="home_admin.php"><div class="nav-icon"><i class="bi bi-house-door-fill"></i></div></a>
-            <a href=""><div class="nav-icon"><i class="bi bi-tv-fill"></i></div></a>
-            <a href="cadastros_admin.php"><div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div></a>
-            <a href=""><div class="nav-icon"><i class="bi bi-bell-fill"></i></div></a>
-            <a href=""><div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div></a>
-            <a href=""><div class="nav-icon"><i class="bi bi-person-fill"></i></div></a>
-            <a href=""><div class="nav-icon"><i class="bi bi-gear-fill"></i></div></a>
+            <a href="home_admin.php">
+              <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+            </a>
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+            </a>
+            <a href="cadastros_admin.php">
+              <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
+            </a>
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+            </a>
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            </a>
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+            </a>
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+            </a>
           </div>
         </div>
       </div>
@@ -176,4 +193,5 @@ include('../verifica.php');
   </div>
 
 </body>
+
 </html>

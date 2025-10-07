@@ -11,7 +11,7 @@ $perfil_verifica = '2';
 include('../verifica.php');
 
 
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -27,7 +27,8 @@ include('../verifica.php');
 
 
   <style>
-    body {
+    body::-webkit-scrollbar {
+      display: none;
       margin: 0;
       padding: 0;
       background: #f8f9fa;
@@ -141,45 +142,43 @@ include('../verifica.php');
       border-radius: 6px;
       color: white;
     }
-
-
   </style>
 </head>
 
 <body>
 
-     <header class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-6 col-md-3">
-                    <div class="logo-container">
-                        <img src="../Imagens/logo-png.png" alt="logo">
-                    </div>
-                </div>
-                <div class="col-6 col-md-9">
-                    <div class="nav-icons justify-content-end">
-
-                        <a href="home_prof.php">
-                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div> 
-                        </a> <!--HOMEPAGE-->
-
-                        <a href="equipamentos_prof.php"> 
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-                        </a><!--EQUIPAMENTOS-->
-                        
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
-                        </a> <!--HISTÓRICO-->
-                        
-                        <a href="perfil_prof.php">
-                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-                        </a> <!--PERFIL-->
-                        
-                    </div>
-                </div>
-            </div>
+  <header class="header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-6 col-md-3">
+          <div class="logo-container">
+            <img src="../Imagens/logo-png.png" alt="logo">
+          </div>
         </div>
-    </header>
+        <div class="col-6 col-md-9">
+          <div class="nav-icons justify-content-end">
+
+            <a href="home_prof.php">
+              <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div>
+            </a> <!--HOMEPAGE-->
+
+            <a href="equipamentos_prof.php">
+              <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+            </a><!--EQUIPAMENTOS-->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+            </a> <!--HISTÓRICO-->
+
+            <a href="perfil_prof.php">
+              <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+            </a> <!--PERFIL-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
 
   <div class="container my-4">
@@ -248,30 +247,30 @@ include('../verifica.php');
             <button class="btn">
               <i class="bi bi-gear-fill"></i> Configurações
             </button>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Desconectar
-</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Desconectar
+            </button>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-       <h4>Confirmar Saída</h4>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a href="../logout.php" class="btn btn-primary">Sair</a>
-      </div>
-    </div>
-  </div>
-</div>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-center">
+                      <h4>Confirmar Saída</h4>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="../logout.php" class="btn btn-primary">Sair</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </aside>

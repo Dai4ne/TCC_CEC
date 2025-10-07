@@ -31,7 +31,8 @@ $nomeUsuario = $_SESSION['nome_usuario'];
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Federo&family=Poppins&display=swap');
 
-        body {
+        body::-webkit-scrollbar {
+            display: none;
             margin: 0;
             background: #f8f9fa;
             font-family: Poppins, Arial;
@@ -110,11 +111,11 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                         </a> <!-- HOMEPAGE-->
 
                         <a href="">
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> 
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
 
                         <a href="cadastros_admin.php">
-                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> 
+                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
                         <a href="">

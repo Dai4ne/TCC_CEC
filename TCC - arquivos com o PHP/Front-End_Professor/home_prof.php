@@ -27,7 +27,8 @@ $nomeUsuario = $_SESSION['nome_usuario'];
     <title>CEC</title>
 
     <style>
-        body {
+        body::-webkit-scrollbar {
+            display: none;
             margin: 0;
             padding: 0;
             background: #f8f9fa;
@@ -106,21 +107,21 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                     <div class="nav-icons justify-content-end">
 
                         <a href="home_prof.php">
-                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div> 
+                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div>
                         </a> <!--HOMEPAGE-->
 
-                        <a href="equipamentos_prof.php"> 
+                        <a href="equipamentos_prof.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
-                        
+
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
                         </a> <!--HISTÓRICO-->
-                        
+
                         <a href="perfil_prof.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!--PERFIL-->
-                        
+
                     </div>
                 </div>
             </div>

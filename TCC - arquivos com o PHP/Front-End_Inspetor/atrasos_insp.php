@@ -37,6 +37,10 @@ include('../verifica.php');
             padding: 2rem 0;
         }
 
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         .page-title {
             text-align: center;
             font-size: 2rem;

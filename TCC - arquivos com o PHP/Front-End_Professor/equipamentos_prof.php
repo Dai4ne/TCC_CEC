@@ -12,9 +12,6 @@ include('../verifica.php');
 
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -36,6 +33,10 @@ include('../verifica.php');
         a {
             text-decoration: none;
             color: black;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
         }
 
         .equipment-item {

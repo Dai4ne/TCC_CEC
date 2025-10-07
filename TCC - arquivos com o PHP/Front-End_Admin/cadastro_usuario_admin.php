@@ -39,6 +39,7 @@ include('../verifica.php');
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -52,7 +53,8 @@ include('../verifica.php');
   <title>CEC - Cadastro Usuário</title>
 
   <style>
-    body {
+    body::-webkit-scrollbar {
+      display: none;
       margin: 0;
       background: #f8f9fa;
       font-family: 'Poppins', sans-serif;
@@ -92,50 +94,50 @@ include('../verifica.php');
 
 <body>
   <header class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-6 col-md-3">
-                    <div class="logo-container">
-                        <img src="../Imagens/logo-png.png" alt="logo">
-                    </div>
-                </div>
-                <div class="col-6 col-md-9">
-                    <div class="nav-icons justify-content-end">
-
-
-                        <a href="home_admin.php">
-                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-                        </a> <!-- HOMEPAGE-->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div> 
-                        </a> <!-- EQUIPAMENTOS -->
-
-                        <a href="cadastros_admin.php">
-                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div> 
-                        </a> <!-- CADASTRAR -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-                        </a> <!-- PERFIL-->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-                        </a> <!-- CONFIGURAÇÕES-->
-
-                    </div>
-                </div>
-            </div>
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-6 col-md-3">
+          <div class="logo-container">
+            <img src="../Imagens/logo-png.png" alt="logo">
+          </div>
         </div>
-    </header>
+        <div class="col-6 col-md-9">
+          <div class="nav-icons justify-content-end">
+
+
+            <a href="home_admin.php">
+              <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+            </a> <!-- HOMEPAGE-->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+            </a> <!-- EQUIPAMENTOS -->
+
+            <a href="cadastros_admin.php">
+              <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
+            </a> <!-- CADASTRAR -->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+            </a> <!-- NOTIFICAÇÕES -->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            </a> <!-- ATRASOS -->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+            </a> <!-- PERFIL-->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+            </a> <!-- CONFIGURAÇÕES-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <h1 class="page-title p-4">CADASTRO DE USUÁRIO</h1>
 

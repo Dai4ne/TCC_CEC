@@ -27,7 +27,6 @@ while ($linha = mysqli_fetch_array($resultado)) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -45,6 +44,10 @@ while ($linha = mysqli_fetch_array($resultado)) {
         .equipment-icon i {
             font-size: 2rem;
             color: #1e3a8a;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
         }
 
         a {

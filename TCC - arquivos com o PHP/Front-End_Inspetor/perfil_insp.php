@@ -14,6 +14,7 @@ include('../verifica.php');
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -25,10 +26,11 @@ include('../verifica.php');
 
   <link rel="stylesheet" href="header_insp.css">
   <title>CEC</title>
-  
+
 
   <style>
-    body {
+    body::-webkit-scrollbar {
+      display: none;
       margin: 0;
       padding: 0;
       background: #f8f9fa;
@@ -140,51 +142,50 @@ include('../verifica.php');
       border-radius: 6px;
       color: #000;
     }
-
   </style>
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-6 col-md-3">
-                    <div class="logo-container">
-                        <img src="../Imagens/logo-png.png" alt="logo">
-                    </div>
-                </div>
-                <div class="col-6 col-md-9">
-                    <div class="nav-icons justify-content-end">
-                        <a href="home_insp.php">
-                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> 
-                        </a> <!-- HOMEPAGE-->
-
-                        <a href="solicitacao_insp.php">
-                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-                        </a> <!-- EQUIPAMENTOS -->
-
-                        <a href="atrasos_insp.php">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
-
-                        <a href="perfil_insp.php">
-                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-                        </a> <!-- PERFIL-->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
-                        </a> <!-- CONFIGURAÇÕES-->
-
-                    </div>
-                </div>
-            </div>
+  <header class="header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-6 col-md-3">
+          <div class="logo-container">
+            <img src="../Imagens/logo-png.png" alt="logo">
+          </div>
         </div>
-    </header>
+        <div class="col-6 col-md-9">
+          <div class="nav-icons justify-content-end">
+            <a href="home_insp.php">
+              <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+            </a> <!-- HOMEPAGE-->
+
+            <a href="solicitacao_insp.php">
+              <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+            </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+            </a> <!-- EQUIPAMENTOS -->
+
+            <a href="atrasos_insp.php">
+              <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            </a> <!-- ATRASOS -->
+
+            <a href="perfil_insp.php">
+              <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+            </a> <!-- PERFIL-->
+
+            <a href="">
+              <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+            </a> <!-- CONFIGURAÇÕES-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <div class="container my-4">
     <div class="row g-4">

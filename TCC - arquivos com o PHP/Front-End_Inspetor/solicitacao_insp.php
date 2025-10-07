@@ -13,6 +13,7 @@ include('../verifica.php');
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -36,6 +37,10 @@ include('../verifica.php');
 
         .main-content {
             padding: 2rem 0;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
         }
 
         .page-title {
