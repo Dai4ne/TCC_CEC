@@ -1,7 +1,12 @@
 <?php
 session_start();
 
-// Verifica se o usuário está logado
+// Impede cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+// Bloqueia acesso se não estiver logado
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: login.php");
     exit;
@@ -15,6 +20,20 @@ include('../verifica.php');
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+   <script>
+        // Se o usuário usar "voltar" e a sessão não existir, redireciona
+        window.onload = function() {
+            if (!<?php echo isset($_SESSION['id_usuario']) ? 'true' : 'false'; ?>) {
+                window.location.href = 'login.php';
+            }
+        }
+        // Evita cache via back button
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        }
+    </script>
 
 <head>
   <meta charset="UTF-8" />

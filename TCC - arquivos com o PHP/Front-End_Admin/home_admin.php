@@ -94,6 +94,9 @@ $nomeUsuario = $_SESSION['nome_usuario'];
 </head>
 
 <body>
+    <?php 
+    include '../alert/alert.php'
+    ?>
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -166,5 +169,6 @@ $nomeUsuario = $_SESSION['nome_usuario'];
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
 </html>

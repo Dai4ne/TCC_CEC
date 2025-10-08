@@ -13,7 +13,7 @@ include('../verifica.php');
 
 
 // Para exibir o nome
-$nomeusuario = $_SESSION['nome_usuario'];
+$nomeUsuario = $_SESSION['nome_usuario'];
 ?>
 
 
@@ -105,6 +105,9 @@ $nomeusuario = $_SESSION['nome_usuario'];
 </head>
 
 <body>
+    <?php 
+    include '../alert/alert.php'
+    ?>
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -146,7 +149,7 @@ $nomeusuario = $_SESSION['nome_usuario'];
     </header>
 
     <main>
-        <h1>BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
+        <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?></h1>
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="table-section">
@@ -193,5 +196,6 @@ $nomeusuario = $_SESSION['nome_usuario'];
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
 </html>

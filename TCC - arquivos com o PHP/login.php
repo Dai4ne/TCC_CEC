@@ -32,12 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Redireciona baseado no tipo
         switch ($usuario['tipo']) {
             case '1':
+                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
                 header("Location: Front-End_Admin/home_admin.php");
                 break;
             case '2':
+                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
                 header("Location: Front-End_Professor/home_prof.php");
                 break;
             case '3':
+                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
                 header("Location: Front-End_Inspetor/home_insp.php");
                 break;
             default:
@@ -45,10 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         exit;
     } else {
-        echo "<script>
-                alert('E-mail ou senha inválidos!');
-                window.location.href='login.php?tipo=" . urlencode($tipoUsuario) . "';
-              </script>";
+        $_SESSION['msg_alert'] = ['danger', 'Email ou Senha Incorreto!'];
+        header("Location: login.php?tipo=" . urlencode($tipoUsuario));
         exit;
     }
 }
@@ -113,6 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="d-flex py-4 bg-body-tertiary justify-content-center align-items-center">
+    <?php
+    include 'alert/alert.php'
+    ?>
     <main class="h-auto">
         <!-- Formulário -->
         <form action="login.php?tipo=<?= htmlspecialchars($tipoUsuario); ?>" method="post" class="py-4 px-3">
@@ -144,6 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="script.js"></script>
 
 </html>

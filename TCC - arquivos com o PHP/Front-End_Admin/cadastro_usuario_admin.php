@@ -15,13 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   $sql = "INSERT INTO usuario (nome, email, senha, tipo)
             VALUES ('$nome', '$email', SHA1('$senha'), '$tipo')";
 
-  if ($con->query($sql)) {
-
-    echo "<script>alert('Cadastrado com sucesso!'); window.location.href='home_admin.php';</script>";
+  if ($con->query($sql)){
+    session_start();
+    $_SESSION['msg_alert'] = ['success', 'Cadastrado com sucesso!'];
+    header("Location: cadastro_usuario_admin.php"); // ou home_admin.php, se quiser
     exit;
-  } else {
-    echo "<script>alert('Erro ao cadastrar: " . $con->error . "');</script>";
-  }
+}
+
 }
 ?>
 
@@ -93,6 +93,9 @@ include('../verifica.php');
 </head>
 
 <body>
+    <?php 
+    include '../alert/alert.php'
+    ?>
   <header class="header">
     <div class="container-fluid">
       <div class="row align-items-center">
@@ -176,5 +179,6 @@ include('../verifica.php');
     </div>
   </div>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
 </html>

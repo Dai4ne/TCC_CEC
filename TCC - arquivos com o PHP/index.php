@@ -87,6 +87,7 @@
 </head>
 
 <body>
+
     <div id="circulo">
         <img src="Imagens/logo_210.png" alt="">
     </div>
@@ -106,5 +107,4 @@
     </main>
 
 </body>
-
 </html>

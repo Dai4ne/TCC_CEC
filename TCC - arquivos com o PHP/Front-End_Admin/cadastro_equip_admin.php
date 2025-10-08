@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-include "conect.php"; // caminho deve estar certo
+include "conect.php";
 
 // Arrays para seleção no formulário
 $tipos = [
@@ -24,27 +23,56 @@ $marcas = [
 
 // ===== CADASTRO =====
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'Cadastrar') {
-    $tipo        = trim($_POST['tipo'] ?? '');
-    $numeracao   = trim($_POST['numeracao'] ?? '');
-    $marca       = trim($_POST['marca'] ?? '');
-    $descricao   = trim($_POST['descricao'] ?? '');
+    $tipo          = trim($_POST['tipo'] ?? '');
+    $numeracao     = trim($_POST['numeracao'] ?? '');
+    $marca         = intval($_POST['marca'] ?? 0);
+    $descricao     = trim($_POST['descricao'] ?? '');
+    $numero_serie  = trim($_POST['numero_serie'] ?? '');
 
-    if (empty($tipo) || empty($numeracao) || empty($marca) || empty($descricao)) {
+    // Validação de campos
+    if (empty($tipo) || empty($numeracao) || empty($marca) || empty($descricao) || empty($numero_serie)) {
         echo "<script>alert('Preencha todos os campos!'); window.history.back();</script>";
         exit;
     }
 
-    // Inserção no banco
-    $sql = "INSERT INTO equipamento (tipo, numeracao, id_marca, descricao)
-            VALUES ('$tipo', '$numeracao', '$marca', '$descricao')";
+    // Verifica se a marca existe
+if (!array_key_exists($marca, $marcas)) {
+    session_start();
+    $_SESSION['msg_alert'] = ['error', 'Marca inválida!'];
+    header("Location: cadastro_equip_admin.php");
+    exit;
+}
 
-    if ($con->query($sql) === TRUE) {
-        echo "<script>alert('Equipamento cadastrado com sucesso!'); window.location.href='cadastro_equip_admin.php';</script>";
-        exit;
+// Prepared statement para inserir equipamento
+$stmt = $con->prepare("INSERT INTO equipamento (tipo, numeracao, id_marca, descricao, numero_serie) VALUES (?, ?, ?, ?, ?)");
+if (!$stmt) {
+    session_start();
+    $_SESSION['msg_alert'] = ['error', 'Erro ao preparar a query: ' . $con->error];
+    header("Location: cadastro_equip_admin.php");
+    exit;
+}
+
+$stmt->bind_param("ssiss", $tipo, $numeracao, $marca, $descricao, $numero_serie);
+
+if ($stmt->execute()) {
+    session_start();
+    $_SESSION['msg_alert'] = ['success', 'Equipamento cadastrado com sucesso!'];
+    header("Location: cadastro_equip_admin.php");
+    exit;
+} else {
+    session_start();
+    if ($stmt->errno === 1062) { // duplicidade
+        $_SESSION['msg_alert'] = ['error', 'Número de série já cadastrado!'];
     } else {
-        echo "<script>alert('Erro ao cadastrar equipamento: " . $con->error . "'); window.history.back();</script>";
-        exit;
+        $_SESSION['msg_alert'] = ['error', 'Erro ao cadastrar equipamento: ' . $stmt->error];
     }
+    header("Location: cadastro_equip_admin.php");
+    exit;
+}
+
+
+    $stmt->close();
+    exit;
 }
 
 // Verifica se o usuário está logado
@@ -111,6 +139,9 @@ include('../verifica.php');
 </head>
 
 <body>
+    <?php 
+    include '../alert/alert.php'
+    ?>
   <header class="header">
     <div class="container-fluid">
       <div class="row align-items-center">
@@ -183,7 +214,11 @@ include('../verifica.php');
         <div class="mb-4">
           <label for="descricao" class="form-label">Descrição</label>
           <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" required />
-        </div>
+        </div> 
+        <div class="mb-3">
+  <label for="numero_serie" class="form-label">Número de Série</label>
+  <input type="text" class="form-control" id="numero_serie" name="numero_serie" placeholder="Número de série do equipamento" required />
+</div>
 
         <div class="d-grid justify-content-center">
           <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -193,5 +228,6 @@ include('../verifica.php');
   </div>
 
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
 </html>
