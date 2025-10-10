@@ -53,6 +53,13 @@ include('../verifica.php');
   <title>CEC - Cadastro Usuário</title>
 
   <style>
+    html, body{
+            height: 100%;
+            margin: 0px;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
     body::-webkit-scrollbar {
       display: none;
       margin: 0;

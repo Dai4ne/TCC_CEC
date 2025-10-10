@@ -11,7 +11,6 @@ $perfil_verifica = '1';
 include('../verifica.php');
 
 
-
 // Para exibir o nome
 $nomeUsuario = $_SESSION['nome_usuario'];
 ?>
@@ -30,6 +29,13 @@ $nomeUsuario = $_SESSION['nome_usuario'];
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Federo&family=Poppins&display=swap');
+
+        html, body{
+            height: 100%;
+            margin: 0px;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
         body::-webkit-scrollbar {
             display: none;

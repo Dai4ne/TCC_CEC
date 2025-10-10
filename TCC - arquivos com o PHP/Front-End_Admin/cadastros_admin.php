@@ -28,19 +28,25 @@ include('../verifica.php');
 
     <style>
         /* Garente que o corpo ocupe toda a altura da tela */
-        html,
-        body {
-            height: 100%;
-            margin: 0;
+        html, body {
+            height: 100%; 
+            margin: 0px;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        body::-webkit-scrollbar {
-            display: none;
-            display: flex;
+        body { 
+            display: flex; 
             flex-direction: column;
-            /* Para que header, h1 e main se organizem verticalmente */
         }
 
+        /* SOLUÇÃO PARA OCULTAR A BARRA DE ROLAGEM E REMOVER O ESPAÇO RESERVADO */
+        body::-webkit-scrollbar {
+            width: 0px; 
+            background: transparent;
+        }
+
+        
         .page-title {
             text-align: center;
             font-size: 1.8rem;
@@ -48,6 +54,7 @@ include('../verifica.php');
             background-color: #d0d0d0;
             padding: 20px 0;
             margin-bottom: 0;
+            flex-shrink: 0; 
         }
 
         main {
@@ -59,11 +66,11 @@ include('../verifica.php');
             align-items: center;
             /* Centraliza verticalmente */
             padding: 20px;
-            width: 100%;
+            width: 100%; 
             box-sizing: border-box;
-            /* padding e borda no width/height total */
+            /* Permite que o body role, não o main */
+            overflow: visible; 
         }
-
 
         a {
             text-decoration: none;
@@ -102,6 +109,7 @@ include('../verifica.php');
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.24);
         }
 
+
         @media (max-width:992px) {
             .dashboard-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -116,9 +124,8 @@ include('../verifica.php');
             }
         }
 
-        @media (max-width:768px) {
 
-            /* Para tablets e telas menores */
+        @media (max-width:768px) { /* Para tablets e telas menores */
             h1 {
                 font-size: 1.7rem;
             }

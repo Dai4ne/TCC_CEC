@@ -93,10 +93,18 @@ include('../verifica.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  
   <link rel="stylesheet" href="header_admin.css">
   <title>CEC - Cadastro Equipamento</title>
 
   <style>
+    html, body{
+            height: 100%;
+            margin: 0px;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
     body::-webkit-scrollbar {
       display: none;
       margin: 0;
