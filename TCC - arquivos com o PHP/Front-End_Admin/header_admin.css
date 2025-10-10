@@ -103,3 +103,16 @@
         font-size: 1.4rem;
     }
 }
+
+@media (max-width: 400px){ /*Celulares*/
+    .logo-container {
+        width: 60px;
+        height: 50px; 
+    }
+
+    .logo-container img{
+        width: 50px;
+        height: auto;
+    }
+            
+        }

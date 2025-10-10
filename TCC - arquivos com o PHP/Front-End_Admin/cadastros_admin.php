@@ -158,6 +158,30 @@ include('../verifica.php');
                 gap: 25px;
             }
         }
+
+        @media (max-width: 400px){ /*Celulares*/
+
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                /* Duas colunas de igual largura por padrão */
+                gap: 10px;
+                max-width: 300px;
+                width: 100%;
+                /* caixa ocupa a largura total disponível até max-width */
+            }
+
+            .dashboard-card {
+                font-size: 1.2rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        
     </style>
 </head>
 

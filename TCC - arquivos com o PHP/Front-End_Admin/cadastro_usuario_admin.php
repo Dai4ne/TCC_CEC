@@ -54,11 +54,11 @@ include('../verifica.php');
 
   <style>
     html, body{
-            height: 100%;
-            margin: 0px;
-            padding: 0;
-            overflow-x: hidden;
-        }
+      height: 100%;
+      margin: 0px;
+      padding: 0;
+      overflow-x: hidden;
+    }
 
     body::-webkit-scrollbar {
       display: none;
@@ -95,6 +95,16 @@ include('../verifica.php');
 
     .btn-primary:hover {
       background-color: #0e78a9;
+    }
+
+    @media (max-width: 400px) { /*Celulares*/
+      .page-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        background-color: #d0d0d0;
+      }
     }
   </style>
 </head>
