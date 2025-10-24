@@ -244,7 +244,7 @@ include('../verifica.php');
                 </div>
             </a>
 
-            <a href="">
+            <a href="user_professores_admin.php">
                 <div class="dashboard-card">
                     USUÁRIOS REGISTRADOS NO SISTEMA
                 </div>
