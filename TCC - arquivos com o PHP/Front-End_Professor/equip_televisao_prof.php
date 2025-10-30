@@ -27,6 +27,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -184,42 +185,42 @@ while ($linha = mysqli_fetch_array($resultado)) {
                     
                     <h5 class="text-center fw-bold pt-3 pb-2 mb-0 border-bottom">EQUIPAMENTOS</h5>
 
-                    <a href="televisao_prof.php">
+                    <a href="equip_televisao_prof.php">
                         <div class="equipment-item active d-flex justify-content-between align-items-center border-bottom">
                         <span>TELEVISÃO</span>
                         <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>
                     </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_notebook_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
                             <span>NOTEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_chromebook_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
                             <span>CHROMEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_tablet_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
                             <span>TABLET</span>
                             <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
                         </div>                  
                     </a>
 
-                    <a href="">
+                    <a href="equip_projetor_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom">
                             <span>PROJETOR</span>
                             <div class="equipment-icon"><i class="bi bi-projector"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_fone_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center">
                             <span>FONES</span>
                             <div class="equipment-icon"><i class="bi bi-headphones"></i></div>
