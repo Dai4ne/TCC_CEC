@@ -235,7 +235,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
 <?php foreach ($equipamento as $equipamentos): ?>
     <div class="col">
         <?php 
-        $img = "../Imagens/tv_lg.png";
+        $img = "../Imagens/tablet_positivo400.png";
         $marca = $equipamentos['marca_nome']; // ✅ Corrigido
         $num = $equipamentos['numeracao'];
         include "../card-equipamento.php";
