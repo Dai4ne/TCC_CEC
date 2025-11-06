@@ -1,5 +1,6 @@
 <?php
 include "conect.php";
+include "../functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == "Cadastrar") {
   $nome  = trim($_POST['nome']);
@@ -12,15 +13,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
   }
 
-  $sql = "INSERT INTO usuario (nome, email, senha, tipo)
-            VALUES ('$nome', '$email', SHA1('$senha'), '$tipo')";
+  // Validação de força da senha
+  if (!isPasswordStrong($senha)) {
+    echo "<script>alert('A senha deve ter pelo menos 8 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais!');</script>";
+    exit;
+  }
 
-  if ($con->query($sql)){
+  // Validação de e-mail
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo "<script>alert('E-mail inválido!');</script>";
+    exit;
+  }
+
+  // Verifica se o e-mail já está cadastrado
+  $stmt = $con->prepare("SELECT id_usuario FROM usuario WHERE email = ?");
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  
+  if ($result->num_rows > 0) {
+    echo "<script>alert('Este e-mail já está cadastrado!');</script>";
+    exit;
+  }
+
+  // Gera o hash da senha
+  $senhaHash = createPasswordHash($senha);
+
+  // Prepara a query com prepared statement
+  $stmt = $con->prepare("INSERT INTO usuario (nome, email, senha, tipo) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("ssss", $nome, $email, $senhaHash, $tipo);
+
+  if ($stmt->execute()) {
     session_start();
     $_SESSION['msg_alert'] = ['success', 'Cadastrado com sucesso!'];
-    header("Location: cadastro_usuario_admin.php"); // ou home_admin.php, se quiser
+    header("Location: cadastro_usuario_admin.php");
     exit;
-}
+  } else {
+    echo "<script>alert('Erro ao cadastrar usuário!');</script>";
+  }
 
 }
 ?>
@@ -30,13 +60,12 @@ session_start();
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-    exit;
+  header("Location: login.php");
+  exit;
 }
 
 $perfil_verifica = '1';
 include('../verifica.php');
-
 
 ?>
 
@@ -170,13 +199,35 @@ include('../verifica.php');
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="email@exemplo.com" required />
         </div>
 
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required />
+          <div class="input-group">
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required oninput="validatePassword(this.value)" />
+            <button class="btn btn-outline-secondary" type="button" id="togglePassword" onclick="togglePasswordVisibility('senha','toggleIcon')">
+              <i class="bi bi-eye-fill" id="toggleIcon"></i>
+            </button>
+          </div>
+
+          <!-- Indicadores de força da senha -->
+          <div class="mt-2">
+            <div class="progress" style="height: 5px;">
+              <div id="password-strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <small id="password-strength-text" class="form-text"></small>
+          </div>
+
+          <!-- Requisitos da senha -->
+          <div class="mt-2 small">
+            <div id="password-length" class="text-danger"><i class="bi bi-x-circle-fill"></i> Mínimo de 8 caracteres</div>
+            <div id="password-uppercase" class="text-danger"><i class="bi bi-x-circle-fill"></i> Pelo menos uma letra maiúscula</div>
+            <div id="password-lowercase" class="text-danger"><i class="bi bi-x-circle-fill"></i> Pelo menos uma letra minúscula</div>
+            <div id="password-number" class="text-danger"><i class="bi bi-x-circle-fill"></i> Pelo menos um número</div>
+            <div id="password-special" class="text-danger"><i class="bi bi-x-circle-fill"></i> Pelo menos um caractere especial</div>
+          </div>
         </div>
 
         <div class="mb-4">
@@ -196,6 +247,23 @@ include('../verifica.php');
     </div>
   </div>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../js/password-validation.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action="cadastro_usuario_admin.php"]');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      const senha = document.getElementById('senha').value;
+      if (!validatePassword(senha)) {
+        e.preventDefault();
+        alert('A senha não atende a todos os requisitos de segurança!');
+      }
+    });
+  });
+</script>
+
 <script src="../script.js"></script>
+
 </html>

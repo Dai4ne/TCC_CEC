@@ -65,22 +65,7 @@
         }
 
 
-        /*Barra de pesquisa */
-        .search-box {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 350px;
-            height: 40px;
-            background-color: #e9ecef;
-            border-radius: 5px;
-            padding: 0 10px;
-        }
-
-        .search-icon {
-            font-size: 1.2rem;
-            color: #505356ff;
-        }
+        /* A barra de pesquisa usa estilos centralizados em header_admin.css */
 
         /* Lista de usuários */
         .user-list {
@@ -213,9 +198,10 @@
             }
          }
     </style>
+
 </head>
 
-<body>
+<body data-user-type="3">
     <?php 
     include '../alert/alert.php'
     ?>
@@ -290,26 +276,26 @@
             <div class="col-12 col-lg-4 d-flex justify-content-end align-items-center">
                 <div class="search-box">
                     <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Pesquisar por nome ou e-mail..." />
+                    <button class="search-clear" type="button" aria-label="Limpar busca"><i class="bi bi-x-lg"></i></button>
                 </div>
             </div>
 
         </div>
 
         <div class="user-list">
-            <div class="user-row">
-                <div class="user-info">
-                    <span class="user-name">Fabricia Lopes</span>
-                    <span class="user-email">fabricia23_lops@gmail.com</span>
-                </div>
-                <span class="user-status active-status">ATIVO</span>
-
-                <button class="btn options-btn">
-                    <i class="bi bi-three-dots"></i>
-                </button>
-            </div>
-
-
+            <!-- Lista preenchida via AJAX -->
         </div>
+
+        <!-- Paginação (preenchida por JS) -->
+        <nav aria-label="Paginação de usuários" class="mt-3">
+            <ul class="pagination"></ul>
+        </nav>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/user-search.js"></script>
+    <script src="../script.js"></script>
+</body>
 </html>

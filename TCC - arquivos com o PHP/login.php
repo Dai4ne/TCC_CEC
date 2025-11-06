@@ -1,9 +1,16 @@
 <?php
 session_start();
 include "Front-End_Admin/conect.php";
+include "functions.php";
 
-// Pega o tipo passado na URL
+// Pega o tipo passado na URL e valida
 $tipoUsuario = $_GET['tipo'] ?? '';
+$tiposValidos = ['administrador', 'professor', 'inspetor'];
+
+if (!in_array(strtolower($tipoUsuario), $tiposValidos)) {
+    header("Location: index.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -17,41 +24,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Consulta no banco (usando SHA1 como no seu cadastro)
-    $sql = "SELECT * FROM usuario WHERE email='$email' AND senha=SHA1('$senha')";
-    $result = $con->query($sql);
+    // Proteção contra SQL Injection usando prepared statements
+    $stmt = $con->prepare("SELECT * FROM usuario WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result && $result->num_rows === 1) {
         $usuario = $result->fetch_assoc();
+        
+        // Verifica se a senha está correta usando a função de verificação
+        if (verifyPassword($senha, $usuario['senha'])) {
+            // Cria as sessões corretas
+            $_SESSION['id_usuario']   = $usuario['id_usuario'];
+            $_SESSION['nome_usuario'] = $usuario['nome'];
+            $_SESSION['perfil']       = $usuario['tipo'];
 
-        // Cria as sessões corretas
-        $_SESSION['id_usuario']   = $usuario['id_usuario'];
-        $_SESSION['nome_usuario'] = $usuario['nome'];
-        $_SESSION['perfil']       = $usuario['tipo'];
-
-        // Redireciona baseado no tipo
-        switch ($usuario['tipo']) {
-            case '1':
-                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
-                header("Location: Front-End_Admin/home_admin.php");
-                break;
-            case '2':
-                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
-                header("Location: Front-End_Professor/home_prof.php");
-                break;
-            case '3':
-                $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
-                header("Location: Front-End_Inspetor/home_insp.php");
-                break;
-            default:
-                header("Location: index.php");
+            // Redireciona baseado no tipo
+            switch ($usuario['tipo']) {
+                case '1':
+                    $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
+                    header("Location: Front-End_Admin/home_admin.php");
+                    break;
+                case '2':
+                    $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
+                    header("Location: Front-End_Professor/home_prof.php");
+                    break;
+                case '3':
+                    $_SESSION['msg_alert'] = ['success', 'Login realizado com sucesso!'];
+                    header("Location: Front-End_Inspetor/home_insp.php");
+                    break;
+                default:
+                    header("Location: index.php");
+            }
+            exit;
         }
-        exit;
-    } else {
-        $_SESSION['msg_alert'] = ['danger', 'Email ou Senha Incorreto!'];
-        header("Location: login.php?tipo=" . urlencode($tipoUsuario));
-        exit;
     }
+    
+    // Se chegou aqui, é porque o login falhou
+    $_SESSION['msg_alert'] = ['danger', 'Email ou Senha Incorreto!'];
+    header("Location: login.php?tipo=" . urlencode($tipoUsuario));
+    exit;
 }
 ?>
 
