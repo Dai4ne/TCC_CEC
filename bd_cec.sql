@@ -23,6 +23,14 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bd_cec`
 --
+-- NOTAS DE ALTERAÇÕES (solicitadas pelo time):
+-- 07-11-2025: Inserimos registros iniciais na tabela `marca` para evitar
+--            erro de chave estrangeira ao cadastrar equipamentos.
+--            Observação: testes de alteração de esquema (colunas
+--            `data_aprovacao`, `id_inspetor`, `disponivel`) foram realizados
+--            e posteriormente revertidos para manter compatibilidade.
+--            O dump abaixo reflete o estado final usado pela aplicação.
+
 
 -- --------------------------------------------------------
 
@@ -72,7 +80,8 @@ CREATE TABLE `marca` (
 
 -- Inserindo dados na tabela `marca`
 
-
+-- ALTERAÇÃO (07-11-2025): inseridas marcas iniciais para evitar erro de FK
+-- ao cadastrar equipamentos (valores usados pela aplicação)
 INSERT INTO `marca` (`nome`) VALUES 
 ('Samsung'),
 ('Google'),
