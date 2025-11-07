@@ -9,7 +9,80 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $perfil_verifica = '3';
 include('../verifica.php');
+include "../Front-End_Admin/conect.php";
 
+// Processar ações de notificação / devolução
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['action'], $_POST['id_emprestimo'])) {
+        $id_emprestimo = intval($_POST['id_emprestimo']);
+        $action = $_POST['action'];
+        
+        if ($action === 'notificar') {
+            // Buscar informações do empréstimo
+            $stmt = $con->prepare("
+                SELECT e.id_usuario, u.nome 
+                FROM emprestimo e 
+                JOIN usuario u ON e.id_usuario = u.id_usuario 
+                WHERE e.id_emprestimo = ?
+            ");
+            $stmt->bind_param("i", $id_emprestimo);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $emprestimo = $result->fetch_assoc();
+            
+            if ($emprestimo) {
+                // Inserir notificação
+                $mensagem = "Prezado professor, seu empréstimo está atrasado. Por favor, devolva o equipamento o mais breve possível.";
+                $stmt = $con->prepare("
+                    INSERT INTO notificacao (id_remetente, id_destinatario, mensagem, status_notificacao) 
+                    VALUES (?, ?, ?, 'P')
+                ");
+                $stmt->bind_param("iis", $_SESSION['id_usuario'], $emprestimo['id_usuario'], $mensagem);
+                
+                if ($stmt->execute()) {
+                    $_SESSION['msg_alert'] = ['success', 'Notificação enviada com sucesso!'];
+                } else {
+                    $_SESSION['msg_alert'] = ['error', 'Erro ao enviar notificação!'];
+                }
+            }
+            
+            header("Location: atrasos_insp.php");
+            exit;
+        }
+
+        
+    }
+}
+
+// Buscar empréstimos atrasados
+$sql = "SELECT e.*, u.nome as nome_professor, eq.tipo, eq.numeracao, m.nome as marca,
+        TIMESTAMPDIFF(HOUR, e.data_devolucao, CURRENT_TIMESTAMP) as horas_atraso
+        FROM emprestimo e
+        JOIN usuario u ON e.id_usuario = u.id_usuario
+        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+        JOIN marca m ON eq.id_marca = m.id_marca
+        WHERE e.status_emprestimo = 'A' 
+        AND e.data_devolucao < CURRENT_TIMESTAMP
+        ORDER BY e.data_devolucao ASC";
+
+$resultado = $con->query($sql);
+$atrasos = [];
+
+if ($resultado) {
+    while ($row = $resultado->fetch_assoc()) {
+        // Formatar tipo de equipamento
+        $tipos = [
+            '1' => 'Televisão',
+            '2' => 'Notebook',
+            '3' => 'Chromebook',
+            '4' => 'Tablet',
+            '5' => 'Projetor',
+            '6' => 'Fone'
+        ];
+        $row['tipo_nome'] = $tipos[$row['tipo']] ?? 'Desconhecido';
+        $atrasos[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +152,8 @@ include('../verifica.php');
 
 <body>
 
+    <?php include '../alert/alert.php' ?>
+    
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -95,7 +170,7 @@ include('../verifica.php');
 
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
+                        </a> <!-- SOLICITAÇÕES -->
 
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
@@ -134,47 +209,38 @@ include('../verifica.php');
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Ferrini</td>
-                        <td>DataShow</td>
-                        <td>15/08/2025 - 13:00</td>
-                        <td>Devolvido</td>
-                    </tr>
-
-                    <tr>
-                        <td>Enso</td>
-                        <td>Notebook 24</td>
-                        <td>15/08/2025 - 09:00</td>
-                        <td>Não devolvido</td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
+                    <?php if (empty($atrasos)): ?>
+                        <tr>
+                            <td colspan="4" class="text-center py-4">Nenhum atraso registrado</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($atrasos as $a): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($a['nome_professor']) ?></td>
+                                <td><?= htmlspecialchars($a['tipo_nome']) ?> <?= htmlspecialchars($a['marca']) ?> #<?= htmlspecialchars($a['numeracao']) ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($a['data_devolucao'])) ?></td>
+                                <td>
+                                    <?php
+                                    $horas = (int)$a['horas_atraso'];
+                                    if ($horas < 24) {
+                                        echo $horas . ' hora(s)';
+                                    } else {
+                                        $dias = floor($horas / 24);
+                                        $horas_restantes = $horas % 24;
+                                        echo $dias . ' dia(s) e ' . $horas_restantes . ' hora(s)';
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="id_emprestimo" value="<?= $a['id_emprestimo'] ?>">
+                                        <input type="hidden" name="action" value="notificar">
+                                        <button type="submit" class="btn btn-warning"><i class="bi bi-bell"></i> Notificar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

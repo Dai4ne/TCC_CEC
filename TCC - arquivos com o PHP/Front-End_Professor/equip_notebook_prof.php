@@ -9,19 +9,18 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $perfil_verifica = '2';
 include('../verifica.php');
-
 include "../Front-End_Admin/conect.php";
 
-// Consulta com JOIN para obter o nome da marca
+// Listar apenas notebooks (tipo = 2)
 $sql = "
     SELECT e.*, m.nome AS marca_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    WHERE e.tipo = '2'
 ";
 $resultado = mysqli_query($con, $sql);
 
 $equipamento = [];
-
 while ($linha = mysqli_fetch_array($resultado)) {
     $equipamento[] = $linha;
 }

@@ -7,11 +7,61 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
-
 $perfil_verifica = '3';
 include('../verifica.php');
+include "../Front-End_Admin/conect.php";
 
+// Processar ações de aprovar/rejeitar
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['action'], $_POST['id_emprestimo'])) {
+        $id_emprestimo = intval($_POST['id_emprestimo']);
+        $action = $_POST['action'];
+        
+        if ($action === 'aprovar' || $action === 'rejeitar') {
+            $status = ($action === 'aprovar') ? 'A' : 'R'; // A = Aprovado, R = Rejeitado
+            
+            $stmt = $con->prepare("UPDATE emprestimo SET status_emprestimo = ? WHERE id_emprestimo = ?");
+            $stmt->bind_param("si", $status, $id_emprestimo);
+            
+            if ($stmt->execute()) {
+                $_SESSION['msg_alert'] = ['success', 'Solicitação ' . ($status === 'A' ? 'aprovada' : 'rejeitada') . ' com sucesso!'];
+            } else {
+                $_SESSION['msg_alert'] = ['error', 'Erro ao processar solicitação!'];
+            }
+            
+            header("Location: solicitacao_insp.php");
+            exit;
+        }
+    }
+}
 
+// Buscar solicitações pendentes
+$sql = "SELECT e.*, u.nome as nome_professor, eq.tipo, eq.numeracao, m.nome as marca
+        FROM emprestimo e
+        JOIN usuario u ON e.id_usuario = u.id_usuario
+        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+        JOIN marca m ON eq.id_marca = m.id_marca
+        WHERE e.status_emprestimo = 'P'
+        ORDER BY e.data_hora ASC";
+
+$resultado = $con->query($sql);
+$solicitacoes = [];
+
+if ($resultado) {
+    while ($row = $resultado->fetch_assoc()) {
+        // Formatar tipo de equipamento
+        $tipos = [
+            '1' => 'Televisão',
+            '2' => 'Notebook',
+            '3' => 'Chromebook',
+            '4' => 'Tablet',
+            '5' => 'Projetor',
+            '6' => 'Fone'
+        ];
+        $row['tipo_nome'] = $tipos[$row['tipo']] ?? 'Desconhecido';
+        $solicitacoes[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,6 +160,8 @@ include('../verifica.php');
 
 <body>
 
+    <?php include '../alert/alert.php' ?>
+    
     <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -126,7 +178,7 @@ include('../verifica.php');
 
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
+                        </a> <!-- SOLICITAÇÕES -->
 
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
@@ -164,55 +216,31 @@ include('../verifica.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Ferrini</td>
-                        <td>DataShow</td>
-                        <td>15/08/2025 - 13:00</td>
-                        <td class="action-buttons">
-                            <button class="btn-reject">Negar</button>
-                            <button class="btn-approve">Aceitar</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td class="action-buttons">
-                            <button class="btn-reject">Negar</button>
-                            <button class="btn-approve">Aceitar</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td class="action-buttons">
-                            <button class="btn-reject">Negar</button>
-                            <button class="btn-approve">Aceitar</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td class="action-buttons">
-                            <button class="btn-reject">Negar</button>
-                            <button class="btn-approve">Aceitar</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>....</td>
-                        <td class="action-buttons">
-                            <button class="btn-reject">Negar</button>
-                            <button class="btn-approve">Aceitar</button>
-                        </td>
-                    </tr>
+                    <?php if (empty($solicitacoes)): ?>
+                        <tr>
+                            <td colspan="4" class="text-center py-4">Nenhuma solicitação pendente</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($solicitacoes as $s): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($s['nome_professor']) ?></td>
+                                <td><?= htmlspecialchars($s['tipo_nome']) ?> <?= htmlspecialchars($s['marca']) ?> #<?= htmlspecialchars($s['numeracao']) ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($s['data_hora'])) ?></td>
+                                <td class="action-buttons">
+                                    <form method="post" style="display:inline-block;">
+                                        <input type="hidden" name="id_emprestimo" value="<?= $s['id_emprestimo'] ?>">
+                                        <input type="hidden" name="action" value="aprovar">
+                                        <button type="submit" class="btn btn-approve"><i class="bi bi-check-lg"></i> Aceitar</button>
+                                    </form>
+                                    <form method="post" style="display:inline-block; margin-left:8px;">
+                                        <input type="hidden" name="id_emprestimo" value="<?= $s['id_emprestimo'] ?>">
+                                        <input type="hidden" name="action" value="rejeitar">
+                                        <button type="submit" class="btn btn-reject"><i class="bi bi-x-lg"></i> Negar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

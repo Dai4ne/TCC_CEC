@@ -12,17 +12,64 @@ include('../verifica.php');
 
 include "../Front-End_Admin/conect.php";
 
-// Consulta com JOIN para obter o nome da marca
+// Processar solicitação de empréstimo (apenas TVs)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['emprestar'], $_POST['id_equipamento'])) {
+    $id_equipamento = intval($_POST['id_equipamento']);
+    $id_usuario = $_SESSION['id_usuario'];
+
+    // Verificar se o equipamento é realmente uma TV e se está disponível
+    $stmt = $con->prepare("SELECT tipo FROM equipamento WHERE id_equipamento = ? LIMIT 1");
+    $stmt->bind_param("i", $id_equipamento);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+
+    if (!$row || $row['tipo'] !== '1') {
+        $_SESSION['msg_alert'] = ['error', 'Equipamento inválido.'];
+    } else {
+        // Verificar empréstimo/pedido existente
+        $stmt = $con->prepare("SELECT id_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A')");
+        $stmt->bind_param("i", $id_equipamento);
+        $stmt->execute();
+        $res2 = $stmt->get_result();
+
+        if ($res2->num_rows > 0) {
+            $_SESSION['msg_alert'] = ['error', 'Este equipamento já está emprestado ou com solicitação pendente.'];
+        } else {
+            $stmt = $con->prepare("INSERT INTO emprestimo (id_usuario, id_equipamento, status_emprestimo, data_hora, data_devolucao) VALUES (?, ?, 'P', NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY))");
+            $stmt->bind_param("ii", $id_usuario, $id_equipamento);
+            if ($stmt->execute()) {
+                $_SESSION['msg_alert'] = ['success', 'Solicitação de empréstimo enviada com sucesso!'];
+            } else {
+                $_SESSION['msg_alert'] = ['error', 'Erro ao registrar solicitação.'];
+            }
+        }
+    }
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Consulta com JOIN para obter o nome da marca e somente TVs (tipo = 1)
 $sql = "
     SELECT e.*, m.nome AS marca_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    WHERE e.tipo = '1'
 ";
 $resultado = mysqli_query($con, $sql);
 
 $equipamento = [];
 
 while ($linha = mysqli_fetch_array($resultado)) {
+    // Verificar se o equipamento está disponível (não há empréstimo pendente/ativo)
+    $stmt = $con->prepare("SELECT status_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A') ORDER BY id_emprestimo DESC LIMIT 1");
+    $stmt->bind_param("i", $linha['id_equipamento']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $status = $result->fetch_assoc();
+    $linha['disponivel'] = empty($status);
+
     $equipamento[] = $linha;
 }
 ?>

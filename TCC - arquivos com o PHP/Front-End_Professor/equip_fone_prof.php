@@ -12,11 +12,12 @@ include('../verifica.php');
 
 include "../Front-End_Admin/conect.php";
 
-// Consulta com JOIN para obter o nome da marca
+// Consulta com JOIN para obter o nome da marca e filtrar fones (tipo = 6)
 $sql = "
     SELECT e.*, m.nome AS marca_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    WHERE e.tipo = '6'
 ";
 $resultado = mysqli_query($con, $sql);
 

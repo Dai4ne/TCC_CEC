@@ -114,7 +114,7 @@ include('../verifica.php');
                     
                     <h5 class="text-center fw-bold mb-3">EQUIPAMENTOS</h5>
 
-                    <a href="televisao_prof.php">
+                    <a href="equip_televisao_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2">
                         <span>TELEVISÃO</span>
                         <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>

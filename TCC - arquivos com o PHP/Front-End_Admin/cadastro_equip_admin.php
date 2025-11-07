@@ -12,14 +12,18 @@ $tipos = [
     '6' => 'Fone'
 ];
 
-$marcas = [
-    '1' => 'Samsung',
-    '2' => 'Google',
-    '3' => 'Positivo',
-    '4' => 'Lenovo',
-    '5' => 'Lg',
-    '6' => 'Outro'
-];
+// Buscar marcas do banco de dados
+$sql = "SELECT id_marca, nome FROM marca ORDER BY id_marca";
+$result = $con->query($sql);
+$marcas = [];
+
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $marcas[$row['id_marca']] = $row['nome'];
+    }
+} else {
+    $_SESSION['msg_alert'] = ['error', 'Erro ao carregar marcas. Por favor, verifique se as marcas foram cadastradas.'];
+}
 
 // ===== CADASTRO =====
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'Cadastrar') {
