@@ -284,7 +284,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
     <div class="col">
         <?php 
         $img = "../Imagens/tv_lg.png";
-        $marca = $equipamentos['marca_nome']; // ✅ Corrigido
+        $marca = $equipamentos['marca_nome'];
         $num = $equipamentos['numeracao'];
         include "../card-equipamento.php";
         ?>
