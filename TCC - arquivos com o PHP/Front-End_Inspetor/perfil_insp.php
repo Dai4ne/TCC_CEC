@@ -11,7 +11,24 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '3';
 include('../verifica.php');
 
+// Conexão com o banco de dados
+include("../Front-End_Admin/conect.php");
 
+// Variáveis para armazenar os dados do usuário
+$usuarioDados = null;
+
+if (isset($_SESSION['id_usuario'])) {
+    $idU = intval($_SESSION['id_usuario']);
+    
+    // Buscar dados do usuário (nome e email)
+    if ($stmt = $con->prepare("SELECT nome, email FROM usuario WHERE id_usuario = ?")) {
+        $stmt->bind_param('i', $idU);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $usuarioDados = $res->fetch_assoc();
+        $stmt->close();
+    }
+}
 
 ?>
 
@@ -194,19 +211,19 @@ include('../verifica.php');
 
         <section class="conteudo text-center">
           <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
-          <p class="nome">Nome</p>
+          <p class="nome"><?php echo htmlspecialchars($usuarioDados['nome'] ?? 'Nome'); ?></p>
 
           <div class="dados">
             <h2>DADOS PESSOAIS</h2>
 
             <div class="campo">
               <label>NOME:</label>
-              <p class="valor">Nome completo</p>
+              <p class="valor"><?php echo htmlspecialchars($usuarioDados['nome'] ?? 'Nome completo'); ?></p>
             </div>
 
             <div class="campo">
               <label>EMAIL:</label>
-              <p class="valor">email@exemplo.com</p>
+              <p class="valor"><?php echo htmlspecialchars($usuarioDados['email'] ?? 'email@exemplo.com'); ?></p>
             </div>
           </div>
         </section>
@@ -231,7 +248,7 @@ include('../verifica.php');
           </button>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              Desconectar
+              <i class="bi bi-box-arrow-right"></i> Desconectar
             </button>
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
@@ -246,7 +263,7 @@ include('../verifica.php');
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../logout.php" class="btn btn-primary">Sair</a>
+                    <a href="../logout.php" class="btn btn-primary"><i class="bi bi-box-arrow-right"></i> Sair</a>
                   </div>
 
     </div>

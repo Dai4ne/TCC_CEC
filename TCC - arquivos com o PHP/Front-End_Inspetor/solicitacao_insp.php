@@ -16,19 +16,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'], $_POST['id_emprestimo'])) {
         $id_emprestimo = intval($_POST['id_emprestimo']);
         $action = $_POST['action'];
-        
+
         if ($action === 'aprovar' || $action === 'rejeitar') {
             $status = ($action === 'aprovar') ? 'A' : 'R'; // A = Aprovado, R = Rejeitado
-            
+
+            // Obter id_equipamento ligado a essa solicitação
+            $stmtSel = $con->prepare("SELECT id_equipamento FROM emprestimo WHERE id_emprestimo = ? LIMIT 1");
+            $stmtSel->bind_param("i", $id_emprestimo);
+            $id_equipamento = null;
+            if ($stmtSel->execute()) {
+                $resSel = $stmtSel->get_result();
+                if ($resSel && $row = $resSel->fetch_assoc()) {
+                    $id_equipamento = intval($row['id_equipamento']);
+                }
+            }
+            $stmtSel->close();
+
+            // Iniciar transação para atualizar empréstimo e disponibilidade do equipamento
+            $con->begin_transaction();
+            $ok = true;
+
             $stmt = $con->prepare("UPDATE emprestimo SET status_emprestimo = ? WHERE id_emprestimo = ?");
             $stmt->bind_param("si", $status, $id_emprestimo);
-            
-            if ($stmt->execute()) {
+            if (!$stmt->execute()) {
+                $ok = false;
+            }
+            $stmt->close();
+
+            if ($ok && $id_equipamento !== null) {
+                if ($status === 'A') {
+                    // marcar equipamento como indisponível
+                    $stmtEq = $con->prepare("UPDATE equipamento SET disponivel = 0 WHERE id_equipamento = ?");
+                } else {
+                    // rejeitado -> garantir que equipamento fique disponível
+                    $stmtEq = $con->prepare("UPDATE equipamento SET disponivel = 1 WHERE id_equipamento = ?");
+                }
+                $stmtEq->bind_param("i", $id_equipamento);
+                if (!$stmtEq->execute()) {
+                    $ok = false;
+                }
+                $stmtEq->close();
+            }
+
+            if ($ok) {
+                $con->commit();
                 $_SESSION['msg_alert'] = ['success', 'Solicitação ' . ($status === 'A' ? 'aprovada' : 'rejeitada') . ' com sucesso!'];
             } else {
+                $con->rollback();
                 $_SESSION['msg_alert'] = ['error', 'Erro ao processar solicitação!'];
             }
-            
+
             header("Location: solicitacao_insp.php");
             exit;
         }
@@ -211,20 +248,24 @@ if ($resultado) {
                     <tr>
                         <th>Professor</th>
                         <th>Aparelho</th>
-                        <th>Data e Hora</th>
+                        <th>Aulas</th>
+                        <th>Data de Devol. Prevista</th>
+                        <th>Solicitado em</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($solicitacoes)): ?>
                         <tr>
-                            <td colspan="4" class="text-center py-4">Nenhuma solicitação pendente</td>
+                            <td colspan="6" class="text-center py-4">Nenhuma solicitação pendente</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($solicitacoes as $s): ?>
                             <tr>
                                 <td><?= htmlspecialchars($s['nome_professor']) ?></td>
                                 <td><?= htmlspecialchars($s['tipo_nome']) ?> <?= htmlspecialchars($s['marca']) ?> #<?= htmlspecialchars($s['numeracao']) ?></td>
+                                <td><?= htmlspecialchars($s['qtd_aulas'] ?? '—') ?></td>
+                                <td><?= date('d/m/Y H:i', strtotime($s['data_devolucao'])) ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($s['data_hora'])) ?></td>
                                 <td class="action-buttons">
                                     <form method="post" style="display:inline-block;">

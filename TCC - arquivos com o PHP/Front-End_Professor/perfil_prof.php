@@ -15,6 +15,50 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '2';
 include('../verifica.php');
 
+// Conexão com o banco e carregamento dos dados do usuário
+include "../Front-End_Admin/conect.php";
+
+$usuarioDados = null;
+$historico = [];
+if (isset($_SESSION['id_usuario'])) {
+  $idU = intval($_SESSION['id_usuario']);
+  // Dados do usuário
+  if ($stmt = $con->prepare("SELECT nome, email, tipo, data_registro FROM usuario WHERE id_usuario = ?")) {
+    $stmt->bind_param('i', $idU);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $usuarioDados = $res->fetch_assoc();
+    $stmt->close();
+  }
+
+  // Histórico de empréstimos do usuário (últimos 10)
+  $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca
+        FROM emprestimo e
+        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+        LEFT JOIN marca m ON eq.id_marca = m.id_marca
+        WHERE e.id_usuario = ?
+        ORDER BY e.data_hora DESC
+        LIMIT 4";
+  if ($stmt2 = $con->prepare($sqlHist)) {
+    $stmt2->bind_param('i', $idU);
+    $stmt2->execute();
+    $res2 = $stmt2->get_result();
+    $tipos = [
+      '1' => 'Televisão',
+      '2' => 'Notebook',
+      '3' => 'Chromebook',
+      '4' => 'Tablet',
+      '5' => 'Projetor',
+      '6' => 'Fone'
+    ];
+    while ($row = $res2->fetch_assoc()) {
+      $row['tipo_nome'] = $tipos[$row['tipo']] ?? ($row['tipo'] ?: 'Desconhecido');
+      $historico[] = $row;
+    }
+    $stmt2->close();
+  }
+}
+
 
 ?>
 
@@ -207,19 +251,19 @@ include('../verifica.php');
 
         <section class="conteudo text-center">
           <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
-          <p class="nome">Nome</p>
+          <p class="nome"><?= htmlspecialchars($usuarioDados['nome'] ?? $_SESSION['nome_usuario']) ?></p>
 
           <div class="dados">
             <h2>DADOS PESSOAIS</h2>
 
             <div class="campo">
               <label>NOME:</label>
-              <p class="valor">Nome completo</p>
+              <p class="valor"><?= htmlspecialchars($usuarioDados['nome'] ?? '') ?></p>
             </div>
 
             <div class="campo">
               <label>EMAIL:</label>
-              <p class="valor">email@exemplo.com</p>
+              <p class="valor"><?= htmlspecialchars($usuarioDados['email'] ?? '') ?></p>
             </div>
           </div>
         </section>
@@ -238,28 +282,25 @@ include('../verifica.php');
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Notebook</td>
-                  <td>01/08</td>
-                  <td>10:00</td>
-                </tr>
-                <tr>
-                  <td>Tablet</td>
-                  <td>03/08</td>
-                  <td>14:15</td>
-                </tr>
-                <tr>
-                  <td>PC</td>
-                  <td>04/08</td>
-                  <td>09:00</td>
-                </tr>
-                <tr>
-                  <td>Notebook</td>
-                  <td>05/08</td>
-                  <td>16:45</td>
-                </tr>
+                <?php if (empty($historico)): ?>
+                  <tr>
+                    <td colspan="3" class="text-center">Nenhum histórico de empréstimos</td>
+                  </tr>
+                <?php else: ?>
+                  <?php foreach ($historico as $h): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($h['tipo_nome']) ?> <?= htmlspecialchars($h['marca'] ?? '') ?> #<?= htmlspecialchars($h['numeracao'] ?? '') ?></td>
+                      <td><?= date('d/m/Y', strtotime($h['data_hora'])) ?></td>
+                      <td><?= date('H:i', strtotime($h['data_hora'])) ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </tbody>
             </table>
+          </div>
+
+          <div style="margin-top:12px;">
+            <a href="historicos.php" class="btn btn-outline-primary w-100">Ver todos</a>
           </div>
 
           <div class="botoes">
@@ -268,7 +309,7 @@ include('../verifica.php');
             </button>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              Desconectar
+              <i class="bi bi-box-arrow-right"></i> Desconectar
             </button>
 
             <!-- Modal -->
@@ -285,7 +326,7 @@ include('../verifica.php');
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../logout.php" class="btn btn-primary">Sair</a>
+                    <a href="../logout.php" class="btn btn-primary"><i class="bi bi-box-arrow-right"></i> Sair</a>
                   </div>
                 </div>
               </div>

@@ -12,44 +12,6 @@ include('../verifica.php');
 
 include "../Front-End_Admin/conect.php";
 
-// Processar solicitação de empréstimo (apenas TVs)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['emprestar'], $_POST['id_equipamento'])) {
-    $id_equipamento = intval($_POST['id_equipamento']);
-    $id_usuario = $_SESSION['id_usuario'];
-
-    // Verificar se o equipamento é realmente uma TV e se está disponível
-    $stmt = $con->prepare("SELECT tipo FROM equipamento WHERE id_equipamento = ? LIMIT 1");
-    $stmt->bind_param("i", $id_equipamento);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-
-    if (!$row || $row['tipo'] !== '1') {
-        $_SESSION['msg_alert'] = ['error', 'Equipamento inválido.'];
-    } else {
-        // Verificar empréstimo/pedido existente
-        $stmt = $con->prepare("SELECT id_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A')");
-        $stmt->bind_param("i", $id_equipamento);
-        $stmt->execute();
-        $res2 = $stmt->get_result();
-
-        if ($res2->num_rows > 0) {
-            $_SESSION['msg_alert'] = ['error', 'Este equipamento já está emprestado ou com solicitação pendente.'];
-        } else {
-            $stmt = $con->prepare("INSERT INTO emprestimo (id_usuario, id_equipamento, status_emprestimo, data_hora, data_devolucao) VALUES (?, ?, 'P', NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY))");
-            $stmt->bind_param("ii", $id_usuario, $id_equipamento);
-            if ($stmt->execute()) {
-                $_SESSION['msg_alert'] = ['success', 'Solicitação de empréstimo enviada com sucesso!'];
-            } else {
-                $_SESSION['msg_alert'] = ['error', 'Erro ao registrar solicitação.'];
-            }
-        }
-    }
-
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
-
 // Consulta com JOIN para obter o nome da marca e somente TVs (tipo = 1)
 $sql = "
     SELECT e.*, m.nome AS marca_nome
@@ -62,14 +24,6 @@ $resultado = mysqli_query($con, $sql);
 $equipamento = [];
 
 while ($linha = mysqli_fetch_array($resultado)) {
-    // Verificar se o equipamento está disponível (não há empréstimo pendente/ativo)
-    $stmt = $con->prepare("SELECT status_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A') ORDER BY id_emprestimo DESC LIMIT 1");
-    $stmt->bind_param("i", $linha['id_equipamento']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $status = $result->fetch_assoc();
-    $linha['disponivel'] = empty($status);
-
     $equipamento[] = $linha;
 }
 ?>
@@ -282,12 +236,55 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-3">
 <?php foreach ($equipamento as $equipamentos): ?>
     <div class="col">
-        <?php 
+        <?php
+        // Dados do equipamento
+        $idEquip = intval($equipamentos['id_equipamento']);
         $img = "../Imagens/tv_lg.png";
         $marca = $equipamentos['marca_nome'];
         $num = $equipamentos['numeracao'];
-        include "../card-equipamento.php";
+
+        // Verificar se existe empréstimo pendente ou em uso para este equipamento
+        $estado = 'emp'; // emp = disponível, solicitado, indisponivel
+        if ($stmtChk = $con->prepare("SELECT id_emprestimo, id_usuario, status_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A') LIMIT 1")) {
+            $stmtChk->bind_param('i', $idEquip);
+            if ($stmtChk->execute()) {
+                $resChk = $stmtChk->get_result();
+                if ($resChk && $rowChk = $resChk->fetch_assoc()) {
+                    if ($rowChk['status_emprestimo'] === 'A') {
+                        $estado = 'indisponivel';
+                    } elseif ($rowChk['status_emprestimo'] === 'P') {
+                        if (intval($rowChk['id_usuario']) === intval($_SESSION['id_usuario'])) {
+                            $estado = 'solicitado';
+                        } else {
+                            $estado = 'indisponivel';
+                        }
+                    }
+                }
+            }
+            $stmtChk->close();
+        }
         ?>
+
+        <div class="product-card shadow-sm">
+            <div class="product-card-img">
+                <img src="<?= htmlspecialchars($img) ?>" alt="Imagem do equipamento">
+            </div>
+            <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
+            <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+
+            <?php if ($estado === 'emp'): ?>
+                <form method="POST" action="../process_emprestimo.php">
+                    <input type="hidden" name="id_equipamento" value="<?= $idEquip ?>">
+                    <input type="hidden" name="qtd_aulas" value="1">
+                    <input type="hidden" name="data_devolucao" value="">
+                    <button type="submit" class="btn btn-primary w-100">EMPRESTAR</button>
+                </form>
+            <?php elseif ($estado === 'solicitado'): ?>
+                <button class="btn btn-warning w-100" disabled>SOLICITADO</button>
+            <?php else: ?>
+                <button class="btn btn-secondary w-100" disabled>INDISPONÍVEL</button>
+            <?php endif; ?>
+        </div>
     </div>
 <?php endforeach; ?>
 

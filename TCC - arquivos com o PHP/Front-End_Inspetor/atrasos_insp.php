@@ -203,39 +203,44 @@ if ($resultado) {
                     <tr>
                         <th>Professor</th>
                         <th>Aparelho</th>
-                        <th>Data e Hora</th>
-                        <th>Status</th>
+                        <th>Aulas</th>
+                        <th>Data/Hora Prevista</th>
+                        <th>Atraso</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <?php if (empty($atrasos)): ?>
                         <tr>
-                            <td colspan="4" class="text-center py-4">Nenhum atraso registrado</td>
+                            <td colspan="6" class="text-center py-4">Nenhum atraso registrado</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($atrasos as $a): ?>
                             <tr>
                                 <td><?= htmlspecialchars($a['nome_professor']) ?></td>
                                 <td><?= htmlspecialchars($a['tipo_nome']) ?> <?= htmlspecialchars($a['marca']) ?> #<?= htmlspecialchars($a['numeracao']) ?></td>
+                                <td><?= htmlspecialchars($a['qtd_aulas'] ?? '—') ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($a['data_devolucao'])) ?></td>
                                 <td>
-                                    <?php
-                                    $horas = (int)$a['horas_atraso'];
-                                    if ($horas < 24) {
-                                        echo $horas . ' hora(s)';
-                                    } else {
-                                        $dias = floor($horas / 24);
-                                        $horas_restantes = $horas % 24;
-                                        echo $dias . ' dia(s) e ' . $horas_restantes . ' hora(s)';
-                                    }
-                                    ?>
+                                    <span class="badge bg-danger">
+                                        <?php
+                                        $horas = (int)$a['horas_atraso'];
+                                        if ($horas < 24) {
+                                            echo $horas . 'h';
+                                        } else {
+                                            $dias = floor($horas / 24);
+                                            $horas_restantes = $horas % 24;
+                                            echo $dias . 'd ' . $horas_restantes . 'h';
+                                        }
+                                        ?>
+                                    </span>
                                 </td>
                                 <td>
-                                    <form method="post">
+                                    <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="id_emprestimo" value="<?= $a['id_emprestimo'] ?>">
                                         <input type="hidden" name="action" value="notificar">
-                                        <button type="submit" class="btn btn-warning"><i class="bi bi-bell"></i> Notificar</button>
+                                        <button type="submit" class="btn btn-sm btn-warning"><i class="bi bi-bell"></i> Notificar</button>
                                     </form>
                                 </td>
                             </tr>

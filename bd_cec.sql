@@ -34,6 +34,7 @@ CREATE TABLE `emprestimo` (
   `id_emprestimo` int(11) NOT NULL,
   `data_hora` datetime NOT NULL DEFAULT current_timestamp(),
   `data_devolucao` datetime NOT NULL DEFAULT current_timestamp(),
+  `qtd_aulas` int(11) DEFAULT NULL COMMENT 'Número de aulas informado pelo professor ao solicitar emprestimo; usado para controle de duração e cálculo de prazo',
   `status_emprestimo` char(1) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_equipamento` int(11) NOT NULL
