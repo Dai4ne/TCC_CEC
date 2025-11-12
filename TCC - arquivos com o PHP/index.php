@@ -38,11 +38,11 @@
         }
 
         img {
-            width: 180px;
+            width: 182px;
             height: auto;
             /* Altura se ajusta automaticamente para manter a proporção */
-            margin-top: -4px;
-            margin-left: -48px;
+            margin-top: -5px;
+            margin-left: -49px;
 
         }
 
