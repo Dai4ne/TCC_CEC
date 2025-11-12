@@ -192,7 +192,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
             <div class="col-12 col-lg-3">
                 <div class="bg-white rounded shadow-sm">
                     
-                    <h5 class="text-center fw-bold pt-3 pb-2 mb-0 border-bottom">EQUIPAMENTOS</h5>
+                    <h5 class="text-center fw-bold pt-3 pb-3 mb-0 border-bottom">EQUIPAMENTOS</h5>
 
                     <a href="equip_televisao_prof.php">
                         <div class="equipment-item active d-flex justify-content-between align-items-center border-bottom">
