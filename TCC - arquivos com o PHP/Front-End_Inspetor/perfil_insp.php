@@ -151,13 +151,18 @@ if (isset($_SESSION['id_usuario'])) {
       display: flex;
       align-items: center;
       gap: 10px;
-      background-color: #eceae0;
+      background-color: #e4e4e4;
       border: none;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
       border-radius: 6px;
       color: #000;
+    }
+
+    .btn:hover{
+      background-color: #053968;
+      color: white;
     }
   </style>
 </head>
@@ -246,8 +251,9 @@ if (isset($_SESSION['id_usuario'])) {
           <button class="btn">
             <i class="bi bi-gear-fill"></i> Configurações
           </button>
+
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="bi bi-box-arrow-right"></i> Desconectar
             </button>
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
