@@ -217,7 +217,7 @@ if ($resultado) {
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- SOLICITAÇÕES -->
 
-                        <a href="">
+                        <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
 

@@ -16,15 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Receber dados
 $id_equip = isset($_POST['id_equipamento']) ? intval($_POST['id_equipamento']) : 0;
 $id_user = intval($_SESSION['id_usuario']);
-$qtd_aulas = isset($_POST['qtd_aulas']) ? intval($_POST['qtd_aulas']) : 1;
 $data_dev = isset($_POST['data_devolucao']) ? trim($_POST['data_devolucao']) : '';
 
-// Se data_devolucao está vazia, calcular baseado em aulas (1 aula = 50 minutos)
+// Se data_devolucao está vazia, não há obrigatoriedade
 if (empty($data_dev)) {
-    $agora = time();
-    $minutos = $qtd_aulas * 50;
-    $timestamp = $agora + ($minutos * 60);
-    $data_dev = date('Y-m-d H:i:s', $timestamp);
+    $data_dev = null;
+} else {
+    // Converter datetime-local para formato MySQL (datetime-local vem no formato: YYYY-MM-DDTHH:mm)
+    $data_dev = str_replace('T', ' ', $data_dev) . ':00';
 }
 
 // Verificar se equipamento existe
@@ -52,15 +51,9 @@ if ($res->num_rows > 0) {
 $stmt->close();
 
 // Inserir empréstimo
-if ($qtd_aulas !== null && $qtd_aulas > 0) {
-    $sql = "INSERT INTO emprestimo (id_usuario, id_equipamento, status_emprestimo, data_hora, data_devolucao, qtd_aulas) VALUES (?, ?, 'P', NOW(), ?, ?)";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param('iisi', $id_user, $id_equip, $data_dev, $qtd_aulas);
-} else {
-    $sql = "INSERT INTO emprestimo (id_usuario, id_equipamento, status_emprestimo, data_hora, data_devolucao) VALUES (?, ?, 'P', NOW(), ?)";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param('iis', $id_user, $id_equip, $data_dev);
-}
+$sql = "INSERT INTO emprestimo (id_usuario, id_equipamento, status_emprestimo, data_hora, data_devolucao) VALUES (?, ?, 'P', NOW(), ?)";
+$stmt = $con->prepare($sql);
+$stmt->bind_param('iis', $id_user, $id_equip, $data_dev);
 
 if ($stmt->execute()) {
     $_SESSION['msg_alert'] = ['success', 'Solicitação de empréstimo enviada com sucesso!'];

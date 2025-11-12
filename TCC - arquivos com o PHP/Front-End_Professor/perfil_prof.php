@@ -308,7 +308,7 @@ if (isset($_SESSION['id_usuario'])) {
           </div>
 
           <div style="margin-top:12px;">
-            <a href="historicos.php" class="btn btn-outline-primary w-100">Ver todos</a>
+            <a href="historico_prof.php" class="btn btn-outline-primary w-100">Ver todos</a>
           </div>
 
           <div class="botoes">

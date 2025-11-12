@@ -1,3 +1,55 @@
+<?php
+session_start();
+
+// Impede cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+// Bloqueia acesso se não estiver logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$perfil_verifica = '2';
+include('../verifica.php');
+
+// Conexão com o banco e carregamento dos dados do usuário
+include "../Front-End_Admin/conect.php";
+
+$historico = [];
+if (isset($_SESSION['id_usuario'])) {
+  $idU = intval($_SESSION['id_usuario']);
+
+  // Histórico de empréstimos do usuário (todos)
+  $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca
+        FROM emprestimo e
+        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+        LEFT JOIN marca m ON eq.id_marca = m.id_marca
+        WHERE e.id_usuario = ?
+        ORDER BY e.data_hora DESC";
+  if ($stmt2 = $con->prepare($sqlHist)) {
+    $stmt2->bind_param('i', $idU);
+    $stmt2->execute();
+    $res2 = $stmt2->get_result();
+    $tipos = [
+      '1' => 'Televisão',
+      '2' => 'Notebook',
+      '3' => 'Chromebook',
+      '4' => 'Tablet',
+      '5' => 'Projetor',
+      '6' => 'Fone'
+    ];
+    while ($row = $res2->fetch_assoc()) {
+      $row['tipo_nome'] = $tipos[$row['tipo']] ?? ($row['tipo'] ?: 'Desconhecido');
+      $historico[] = $row;
+    }
+    $stmt2->close();
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -128,22 +180,35 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Televisão 3</td>
-                        <td>LG</td>
-                        <td>00/00/0000</td>
-                        <td>11:05</td>
-                        <td>11:42</td>
-                    </tr>
-
-                    <tr>
-                        <td>Notebook 13</td>
-                        <td>Multilaser</td>
-                        <td>00/00/0000</td>
-                        <td>08:17</td>
-                        <td>10:02</td>
-                    </tr>
-                    
+                    <?php if (empty($historico)): ?>
+                        <tr>
+                            <td colspan="5" class="text-center py-4">Nenhum histórico de empréstimos</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($historico as $item): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($item['tipo_nome']) ?> #<?= htmlspecialchars($item['numeracao']) ?></td>
+                                <td><?= htmlspecialchars($item['marca'] ?? 'N/A') ?></td>
+                                <td><?= date('d/m/Y', strtotime($item['data_hora'])) ?></td>
+                                <td><?= date('H:i', strtotime($item['data_hora'])) ?></td>
+                                <td>
+                                    <?php 
+                                    if ($item['status_emprestimo'] === 'D' && !empty($item['data_devolucao'])) {
+                                        echo date('H:i', strtotime($item['data_devolucao']));
+                                    } elseif ($item['status_emprestimo'] === 'P') {
+                                        echo '<span class="badge bg-warning">Pendente</span>';
+                                    } elseif ($item['status_emprestimo'] === 'A') {
+                                        echo '<span class="badge bg-success">Em uso</span>';
+                                    } elseif ($item['status_emprestimo'] === 'R') {
+                                        echo '<span class="badge bg-danger">Rejeitado</span>';
+                                    } else {
+                                        echo '—';
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
 
             </table>

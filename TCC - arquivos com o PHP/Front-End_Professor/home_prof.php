@@ -82,11 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 $emprestados = [];
 if (isset($_SESSION['id_usuario'])) {
     $idUsuario = intval($_SESSION['id_usuario']);
+    // Atualizar empréstimos que estão em uso ('A') e já passaram do horário de devolução para 'T' (atrasado)
+    if ($stmtUpd = $con->prepare("UPDATE emprestimo SET status_emprestimo = 'T' WHERE id_usuario = ? AND status_emprestimo = 'A' AND data_devolucao < CURRENT_TIMESTAMP")) {
+        $stmtUpd->bind_param('i', $idUsuario);
+        $stmtUpd->execute();
+        $stmtUpd->close();
+    }
     $sql = "SELECT e.*, eq.tipo, eq.numeracao, m.nome as marca
             FROM emprestimo e
             JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
             JOIN marca m ON eq.id_marca = m.id_marca
-            WHERE e.id_usuario = ? AND e.status_emprestimo IN ('P','A')
+            WHERE e.id_usuario = ? AND e.status_emprestimo IN ('P','A','T')
             ORDER BY e.data_hora DESC";
     if ($stmt = $con->prepare($sql)) {
         $stmt->bind_param('i', $idUsuario);
@@ -300,20 +306,24 @@ if (isset($_SESSION['id_usuario'])) {
                         <?php else: ?>
                             <div class="list-group" style="margin-top:10px;">
                                 <?php foreach ($emprestados as $item): ?>
-                                        <?php
-                                        // Mapear status para rótulos exibidos
-                                        if ($item['status_emprestimo'] === 'P') {
-                                            $statusLabel = 'Solicitado';
-                                            $badgeClass = 'bg-warning text-dark';
-                                        } elseif ($item['status_emprestimo'] === 'A') {
-                                            // 'A' representará 'Em uso' para o professor
-                                            $statusLabel = 'Em uso';
-                                            $badgeClass = 'bg-success';
-                                        } else {
-                                            $statusLabel = $item['status_emprestimo'];
-                                            $badgeClass = 'bg-secondary';
-                                        }
-                                        ?>
+                                                                <?php
+                                                                // Mapear status para rótulos exibidos
+                                                                if ($item['status_emprestimo'] === 'P') {
+                                                                    $statusLabel = 'Solicitado';
+                                                                    $badgeClass = 'bg-warning text-dark';
+                                                                } elseif ($item['status_emprestimo'] === 'A') {
+                                                                    // 'A' representará 'Em uso' para o professor
+                                                                    $statusLabel = 'Em uso';
+                                                                    $badgeClass = 'bg-success';
+                                                                } elseif ($item['status_emprestimo'] === 'T') {
+                                                                    // 'T' = Atrasado
+                                                                    $statusLabel = 'Em atraso';
+                                                                    $badgeClass = 'bg-danger';
+                                                                } else {
+                                                                    $statusLabel = $item['status_emprestimo'];
+                                                                    $badgeClass = 'bg-secondary';
+                                                                }
+                                                                ?>
                                     <div class="list-group-item d-flex justify-content-between align-items-start mb-2" style="background:#fff;border-radius:8px;">
                                         <div>
                                             <div class="fw-bold"><?= htmlspecialchars($item['tipo_nome']) ?> <?= htmlspecialchars($item['marca']) ?> #<?= htmlspecialchars($item['numeracao']) ?></div>
@@ -321,7 +331,7 @@ if (isset($_SESSION['id_usuario'])) {
                                         </div>
                                         <div class="d-flex flex-column align-items-end">
                                             <span class="badge <?= $badgeClass ?> rounded-pill" style="height:28px;padding:6px 10px;align-self:center;"><?= $statusLabel ?></span>
-                                            <?php if ($item['status_emprestimo'] === 'A'): // mostrar botão devolver apenas quando estiver em uso ?>
+                                            <?php if ($item['status_emprestimo'] === 'A' || $item['status_emprestimo'] === 'T'): // mostrar botão devolver quando estiver em uso ou em atraso ?>
                                                 <form method="post" style="margin-top:6px;">
                                                     <input type="hidden" name="id_emprestimo" value="<?= intval($item['id_emprestimo']) ?>">
                                                     <input type="hidden" name="action" value="devolver">

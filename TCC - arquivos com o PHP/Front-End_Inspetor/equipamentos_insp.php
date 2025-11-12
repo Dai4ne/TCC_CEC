@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$perfil_verifica = '3';
+include('../verifica.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -108,42 +122,42 @@
                     
                     <h5 class="text-center fw-bold pt-3 pb-3 mb-0 border-bottom">EQUIPAMENTOS</h5>
 
-                    <a href="">
+                    <a href="equip_televisao_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                         <span>TELEVISÃO</span>
                         <div class="equipment-icon"><i class="bi bi-tv-fill"></i></div>
                     </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_notebook_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>NOTEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_chromebook_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>CHROMEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_tablet_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>TABLET</span>
                             <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
                         </div>                        
                     </a>
 
-                    <a href="">
+                    <a href="equip_projetor_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>PROJETOR</span>
                             <div class="equipment-icon"><i class="bi bi-projector"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_fone_insp.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center py-2 px-3">
                             <span>FONES</span>
                             <div class="equipment-icon"><i class="bi bi-headphones"></i></div>

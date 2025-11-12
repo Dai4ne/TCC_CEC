@@ -10,6 +10,7 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '3';
 include('../verifica.php');
 include "../Front-End_Admin/conect.php";
+include "../equip_config.php";
 
 // Processar ações de notificação / devolução
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,8 +62,8 @@ $sql = "SELECT e.*, u.nome as nome_professor, eq.tipo, eq.numeracao, m.nome as m
         JOIN usuario u ON e.id_usuario = u.id_usuario
         JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
         JOIN marca m ON eq.id_marca = m.id_marca
-        WHERE e.status_emprestimo = 'A' 
-        AND e.data_devolucao < CURRENT_TIMESTAMP
+        WHERE e.status_emprestimo IN ('A','T') 
+            AND e.data_devolucao < CURRENT_TIMESTAMP
         ORDER BY e.data_devolucao ASC";
 
 $resultado = $con->query($sql);
@@ -70,16 +71,7 @@ $atrasos = [];
 
 if ($resultado) {
     while ($row = $resultado->fetch_assoc()) {
-        // Formatar tipo de equipamento
-        $tipos = [
-            '1' => 'Televisão',
-            '2' => 'Notebook',
-            '3' => 'Chromebook',
-            '4' => 'Tablet',
-            '5' => 'Projetor',
-            '6' => 'Fone'
-        ];
-        $row['tipo_nome'] = $tipos[$row['tipo']] ?? 'Desconhecido';
+        $row['tipo_nome'] = getTipoEquipamento($row['tipo']);
         $atrasos[] = $row;
     }
 }
@@ -172,7 +164,7 @@ if ($resultado) {
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- SOLICITAÇÕES -->
 
-                        <a href="">
+                        <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
 
@@ -203,7 +195,6 @@ if ($resultado) {
                     <tr>
                         <th>Professor</th>
                         <th>Aparelho</th>
-                        <th>Aulas</th>
                         <th>Data/Hora Prevista</th>
                         <th>Atraso</th>
                         <th>Ação</th>
@@ -213,14 +204,13 @@ if ($resultado) {
                 <tbody>
                     <?php if (empty($atrasos)): ?>
                         <tr>
-                            <td colspan="6" class="text-center py-4">Nenhum atraso registrado</td>
+                            <td colspan="5" class="text-center py-4">Nenhum atraso registrado</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($atrasos as $a): ?>
                             <tr>
                                 <td><?= htmlspecialchars($a['nome_professor']) ?></td>
                                 <td><?= htmlspecialchars($a['tipo_nome']) ?> <?= htmlspecialchars($a['marca']) ?> #<?= htmlspecialchars($a['numeracao']) ?></td>
-                                <td><?= htmlspecialchars($a['qtd_aulas'] ?? '—') ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($a['data_devolucao'])) ?></td>
                                 <td>
                                     <span class="badge bg-danger">

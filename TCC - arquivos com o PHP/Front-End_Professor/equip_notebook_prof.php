@@ -10,6 +10,7 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '2';
 include('../verifica.php');
 include "../Front-End_Admin/conect.php";
+include "../equip_config.php";
 
 // Listar apenas notebooks (tipo = 2)
 $sql = "
@@ -241,12 +242,51 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-3">
 <?php foreach ($equipamento as $equipamentos): ?>
     <div class="col">
-        <?php 
-        $img = "../Imagens/tv_lg.png";
-        $marca = $equipamentos['marca_nome']; // ✅ Corrigido
+        <?php
+        // Dados do equipamento
+        $idEquip = intval($equipamentos['id_equipamento']);
+        $tipo = $equipamentos['tipo'];
+        $img = getImagemEquipamento($tipo);
+        $marca = $equipamentos['marca_nome'];
         $num = $equipamentos['numeracao'];
-        include "../card-equipamento.php";
+
+        // Verificar se existe empréstimo pendente ou em uso para este equipamento
+        $estado = 'emp'; // emp = disponível, solicitado, indisponivel
+        if ($stmtChk = $con->prepare("SELECT id_emprestimo, id_usuario, status_emprestimo FROM emprestimo WHERE id_equipamento = ? AND status_emprestimo IN ('P','A') LIMIT 1")) {
+            $stmtChk->bind_param('i', $idEquip);
+            if ($stmtChk->execute()) {
+                $resChk = $stmtChk->get_result();
+                if ($resChk && $rowChk = $resChk->fetch_assoc()) {
+                    if ($rowChk['status_emprestimo'] === 'A') {
+                        $estado = 'indisponivel';
+                    } elseif ($rowChk['status_emprestimo'] === 'P') {
+                        if (intval($rowChk['id_usuario']) === intval($_SESSION['id_usuario'])) {
+                            $estado = 'solicitado';
+                        } else {
+                            $estado = 'indisponivel';
+                        }
+                    }
+                }
+            }
+            $stmtChk->close();
+        }
         ?>
+
+        <div class="product-card shadow-sm">
+            <div class="product-card-img">
+                <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>">
+            </div>
+            <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
+            <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+
+            <?php if ($estado === 'emp'): ?>
+                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modalEmprestimo" onclick="setEquipamentoModal(<?= $idEquip ?>, '<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>')">EMPRESTAR</button>
+            <?php elseif ($estado === 'solicitado'): ?>
+                <button class="btn btn-warning w-100" disabled>SOLICITADO</button>
+            <?php else: ?>
+                <button class="btn btn-secondary w-100" disabled>INDISPONÍVEL</button>
+            <?php endif; ?>
+        </div>
     </div>
 <?php endforeach; ?>
 
@@ -260,7 +300,64 @@ while ($linha = mysqli_fetch_array($resultado)) {
 
     </main>
 
+    <!-- Modal de Empréstimo -->
+    <div class="modal fade" id="modalEmprestimo" tabindex="-1" aria-labelledby="modalEmprestimoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEmprestimoLabel">Emprestar Equipamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="../process_emprestimo.php" onsubmit="return validarEmprestimo()">
+                    <div class="modal-body">
+                        <div id="modalAlert"></div>
+                        <p><strong>Equipamento:</strong> <span id="equipamentoNome"></span></p>
+                        
+                        <div class="mb-3">
+                            <label for="horaDevolvida" class="form-label">Hora de Devolução <span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control" id="horaDevolvida" name="data_devolucao">
+                            <small class="text-muted">Defina quando o equipamento deverá ser devolvido</small>
+                        </div>
+
+                        <input type="hidden" name="id_equipamento" id="idEquipamento" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar Empréstimo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function setEquipamentoModal(idEquip, nomeEquip) {
+            document.getElementById('idEquipamento').value = idEquip;
+            document.getElementById('equipamentoNome').textContent = nomeEquip;
+            document.getElementById('horaDevolvida').value = '';
+            // Limpa possíveis alertas antigos ao abrir o modal
+            const modalAlert = document.getElementById('modalAlert');
+            if (modalAlert) modalAlert.innerHTML = '';
+        }
+
+        function validarEmprestimo() {
+            const horaDevolvida = document.getElementById('horaDevolvida').value;
+            const modalAlert = document.getElementById('modalAlert');
+
+            if (!horaDevolvida || horaDevolvida.trim() === '') {
+                if (modalAlert) {
+                    modalAlert.innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n                                <strong>Erro:</strong> Por favor, defina a hora de devolução do equipamento!\n                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>\n                            </div>';
+                    document.getElementById('horaDevolvida').focus();
+                } else {
+                    alert('⚠️ Por favor, defina a hora de devolução do equipamento!');
+                }
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 
 </html>

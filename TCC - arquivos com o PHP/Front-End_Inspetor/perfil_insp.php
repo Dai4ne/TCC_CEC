@@ -187,7 +187,7 @@ if (isset($_SESSION['id_usuario'])) {
               <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
             </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
 
-            <a href="">
+            <a href="equipamentos_insp.php">
               <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
             </a> <!-- EQUIPAMENTOS -->
 
