@@ -66,14 +66,14 @@ include('../verifica.php');
             align-items: center;
             /* Centraliza verticalmente */
             padding: 20px;
-            width: 100%; 
+            width: 100%;
             box-sizing: border-box;
-            /* Permite que o body role, não o main */
-            overflow: visible; 
+            overflow: visible;
         }
 
         a {
             text-decoration: none;
+            height: 100%;
         }
 
         .dashboard-grid {
@@ -83,7 +83,7 @@ include('../verifica.php');
             gap: 20px;
             max-width: 700px;
             width: 100%;
-            /* caixa ocupa a largura total disponível até max-width */
+            grid-auto-rows: 1fr;
         }
 
         .dashboard-card {
@@ -93,14 +93,16 @@ include('../verifica.php');
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: 0.3s;
             text-align: center;
+            
+            height: 100%; 
+            min-height: auto; 
+
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 80px;
             font-weight: bold;
             font-size: 1.5rem;
             line-height: 1.3;
-            /* Espaçamento entre as linhas */
             color: #000000ff;
         }
 
@@ -115,12 +117,13 @@ include('../verifica.php');
                 grid-template-columns: repeat(2, 1fr);
                 /* duas colunas */
                 gap: 30px;
+                grid-auto-rows: 1fr; /* Manter a altura igual */
             }
 
             .dashboard-card {
                 font-size: 1.3rem;
                 padding: 15px 10px;
-                min-height: 100px;
+                min-height: auto;
             }
         }
 
@@ -132,16 +135,16 @@ include('../verifica.php');
 
             .dashboard-grid {
                 grid-template-columns: 1fr;
-                /* Uma coluna em telas menores */
                 max-width: 400px;
-                /* Largura máxima para os cards em uma coluna */
                 gap: 15px;
+                grid-auto-rows: minmax(100px, auto); /* Altura mínima/adaptativa */
             }
 
             .dashboard-card {
                 font-size: 1.2rem;
                 padding: 20px 15px;
-                min-height: 100px;
+                /* Removido: min-height: 100px; */
+                min-height: auto;
             }
         }
 
@@ -179,8 +182,6 @@ include('../verifica.php');
                 font-size: 1.5rem;
             }
         }
-
-
         
     </style>
 </head>
@@ -240,7 +241,7 @@ include('../verifica.php');
 
             <a href="cadastro_usuario_admin.php">
                 <div class="dashboard-card">
-                    USUÁRIO
+                    CADASTRAR USUÁRIO
                 </div>
             </a>
 
@@ -252,7 +253,7 @@ include('../verifica.php');
 
             <a href="cadastro_equip_admin.php">
                 <div class="dashboard-card">
-                    EQUIPAMENTO
+                    CADASTRAR EQUIPAMENTO
                 </div>
             </a>
 
