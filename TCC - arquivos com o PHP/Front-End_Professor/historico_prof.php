@@ -61,32 +61,9 @@
             justify-content: center;
         }
 
-
-        .btn-reject {
-            background: #e74c3c;
-            color: white;
-            border-radius: 6px;
-            padding: 6px 15px;
-            border: none;
-        }
-
-
-        .btn-approve {
-            background: #27ae60;
-            color: white;
-            border-radius: 6px;
-            padding: 6px 15px;
-            border: none;
-        }
-
         @media (max-width: 768px) {
             .page-title {
                 font-size: 1.5rem;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 5px;
             }
         }
     </style>
@@ -114,6 +91,10 @@
                         </a><!--EQUIPAMENTOS-->
 
                         <a href="">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="historico_prof.php">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
                         </a> <!--HISTÓRICO-->
 
@@ -135,20 +116,36 @@
         <h1 class="page-title">HISTÓRICO</h1>
 
         <div class="requests-table table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table mb-0">
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Numeração</th>
+                        <th>Aparelho</th>
+                        <th>Marca</th>
+                        <th>Data</th>
                         <th>Emprestado em</th>
                         <th>Devolvido em</th>
                     </tr>
                 </thead>
-                <tbody>
-        
-                        
 
+                <tbody>
+                    <tr>
+                        <td>Televisão 3</td>
+                        <td>LG</td>
+                        <td>00/00/0000</td>
+                        <td>11:05</td>
+                        <td>11:42</td>
+                    </tr>
+
+                    <tr>
+                        <td>Notebook 13</td>
+                        <td>Multilaser</td>
+                        <td>00/00/0000</td>
+                        <td>08:17</td>
+                        <td>10:02</td>
+                    </tr>
+                    
                 </tbody>
+
             </table>
         </div>
     </main>

@@ -263,10 +263,15 @@ if ($resultado) {
                         <?php foreach ($solicitacoes as $s): ?>
                             <tr>
                                 <td><?= htmlspecialchars($s['nome_professor']) ?></td>
+
                                 <td><?= htmlspecialchars($s['tipo_nome']) ?> <?= htmlspecialchars($s['marca']) ?> #<?= htmlspecialchars($s['numeracao']) ?></td>
+
                                 <td><?= htmlspecialchars($s['qtd_aulas'] ?? '—') ?></td>
+
                                 <td><?= date('d/m/Y H:i', strtotime($s['data_devolucao'])) ?></td>
+
                                 <td><?= date('d/m/Y H:i', strtotime($s['data_hora'])) ?></td>
+                                
                                 <td class="action-buttons">
                                     <form method="post" style="display:inline-block;">
                                         <input type="hidden" name="id_emprestimo" value="<?= $s['id_emprestimo'] ?>">

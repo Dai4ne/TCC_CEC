@@ -258,12 +258,20 @@ if (isset($_SESSION['id_usuario'])) {
                         </a><!--EQUIPAMENTOS-->
 
                         <a href="">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="historico_prof.php">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
                         </a> <!--HISTÓRICO-->
 
                         <a href="perfil_prof.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!--PERFIL-->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
+                        </a> <!-- CONFIGURAÇÕES-->
 
                     </div>
                 </div>

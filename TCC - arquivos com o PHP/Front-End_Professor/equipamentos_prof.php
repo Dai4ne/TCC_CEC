@@ -78,21 +78,29 @@ include('../verifica.php');
                     <div class="nav-icons justify-content-end">
 
                         <a href="home_prof.php">
-                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div> 
+                            <div class="nav-icon"> <i class="bi bi-house-door-fill"></i></div>
                         </a> <!--HOMEPAGE-->
 
-                        <a href="equipamentos_prof.php"> 
+                        <a href="equipamentos_prof.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
-                        
+
                         <a href="">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="historico_prof.php">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
                         </a> <!--HISTÓRICO-->
-                        
+
                         <a href="perfil_prof.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!--PERFIL-->
-                        
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
+                        </a> <!-- CONFIGURAÇÕES-->
+
                     </div>
                 </div>
             </div>
