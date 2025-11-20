@@ -1,0 +1,11 @@
+PROFESSOR
+email: dai@gmail.com
+senha: Dai0708!
+
+INSPETOR
+email: let@gmail.com 
+senha: Let0708!
+
+ADMINISTRADOR
+email: thur@gmail.com
+senha: Thur0708!
