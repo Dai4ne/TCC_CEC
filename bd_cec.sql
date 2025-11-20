@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/11/2025 às 00:08
+-- Tempo de geração: 20/11/2025 às 03:58
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,9 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bd_cec`
 --
-
-CREATE DATABASE IF NOT EXISTS bd_cec;
-USE bd_cec;
 
 -- --------------------------------------------------------
 
@@ -228,7 +225,8 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `nome`, `email`, `senha`, `tipo`, `data_registro`) VALUES
 (8, 'arthur', 'admin@gmail.com', '$2y$12$QTF4HAlY9TeHhXiZmjbow.MS35.6Ty2zal9JOiUpeY88WnZXq2NPq', '1', '2025-11-07 11:01:22'),
 (9, 'dai', 'dai@gmail.com', '$2y$12$nmkK5Ha6WEpMFjs12D9M2Oji/qBTM2m4Q.XlQAfwtsgQl5bLVW3Va', '2', '2025-11-07 11:01:39'),
-(10, 'let', 'let@gmail.com', '$2y$12$Vxi.VelyamKJ8ZGpCdwcfu77PxYERlekPaUGYJVoXHiVf0iZwOzEG', '3', '2025-11-07 11:01:48');
+(10, 'let', 'let@gmail.com', '$2y$12$Vxi.VelyamKJ8ZGpCdwcfu77PxYERlekPaUGYJVoXHiVf0iZwOzEG', '3', '2025-11-07 11:01:48'),
+(11, 'arthurR', 'thur@gmail.com', '$2y$12$kic9hdLggrtwxqCjdvIFz.mrldhyt2sSB.hXib.rk/Ti0f7o.RzEy', '1', '2025-11-19 23:56:33');
 
 --
 -- Índices para tabelas despejadas
@@ -325,7 +323,7 @@ ALTER TABLE `ocorrencias`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restrições para tabelas despejadas
