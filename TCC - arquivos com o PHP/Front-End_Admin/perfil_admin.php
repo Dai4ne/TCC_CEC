@@ -90,7 +90,6 @@
             display: flex;
             align-items: center;
             height: 60px;
-            width: 400px;
             gap: 10px;
             background-color: #e5e7eb;
             border: none;
@@ -105,6 +104,7 @@
             background-color: #053968;
             color: white;
         }
+
     </style>
 </head>
 
@@ -134,7 +134,7 @@
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="notificacao_admin.php">
+                        <a href="nova_notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 
