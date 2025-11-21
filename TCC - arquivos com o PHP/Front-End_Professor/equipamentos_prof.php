@@ -130,35 +130,35 @@ include('../verifica.php');
                     </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_notebook_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>NOTEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_chromebook_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>CHROMEBOOK</span>
                             <div class="equipment-icon"><i class="bi bi-laptop"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_tablet_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>TABLET</span>
                             <div class="equipment-icon"><i class="bi bi-tablet"></i></div>
                         </div>                        
                     </a>
 
-                    <a href="">
+                    <a href="equip_projetor_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center border-bottom py-2 px-3">
                             <span>PROJETOR</span>
                             <div class="equipment-icon"><i class="bi bi-projector"></i></div>
                         </div>
                     </a>
 
-                    <a href="">
+                    <a href="equip_fone_prof.php">
                         <div class="equipment-item d-flex justify-content-between align-items-center py-2 px-3">
                             <span>FONES</span>
                             <div class="equipment-icon"><i class="bi bi-headphones"></i></div>

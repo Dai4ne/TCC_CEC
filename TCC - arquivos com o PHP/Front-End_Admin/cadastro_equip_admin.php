@@ -93,162 +93,168 @@ include('../verifica.php');
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-  
-  <link rel="stylesheet" href="header_admin.css">
-  <title>CEC - Cadastro Equipamento</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    
+    <link rel="stylesheet" href="header_admin.css">
+    <title>CEC - Cadastro Equipamento</title>
 
-  <style>
-    html, body{
-      height: 100%;
-      margin: 0px;
-      padding: 0;
-      overflow-x: hidden;
-    }
+    <style>
+        html, body{
+            height: 100%;
+            margin: 0px;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-    body::-webkit-scrollbar {
-      display: none;
-      margin: 0;
-      background: #f8f9fa;
-      font-family: 'Poppins', sans-serif;
+        body::-webkit-scrollbar {
+            display: none;
+            margin: 0;
+            background: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    }
+        .page-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            background-color: #d0d0d0;
+        }
 
-    .page-title {
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      background-color: #d0d0d0;
-    }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
 
-    .form-container {
-      max-width: 600px;
-      margin: auto;
-    }
+        .form-card {
+            padding: 2rem;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .form-card {
-      padding: 2rem;
-      border-radius: 12px;
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        .btn-primary {
+            background-color: #1e3a8a;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.51);
+            border: none;
+            width: 200px;
+        }
 
-    .btn-primary {
-      background-color: #1e3a8a;
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.51);
-      border: none;
-      width: 200px;
-    }
-
-    .btn-primary:hover {
-      background-color: #0e78a9;
-    }
+        .btn-primary:hover {
+            background-color: #0e78a9;
+        }
 
 
-    @media (max-width: 400px) { /*Celulares*/
-      .page-title {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      background-color: #d0d0d0;
-      }
-    }
+        @media (max-width: 400px) { /*Celulares*/
+            .page-title {
+                text-align: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                background-color: #d0d0d0;
+            }
+        }
 
-  </style>
+    </style>
 </head>
 
 <body>
     <?php 
     include '../alert/alert.php'
     ?>
-  <header class="header">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-6 col-md-3">
-          <div class="logo-container">
-            <img src="../Imagens/logo-png.png" alt="logo">
-          </div>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+
+
+                        <a href="home_admin.php">
+                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+                        </a> <!-- HOMEPAGE-->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+                        </a> <!-- EQUIPAMENTOS -->
+
+                        <a href="cadastros_admin.php">
+                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
+                        </a> <!-- CADASTRAR -->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+                        </a> <!-- PERFIL-->
+
+                        <a href="">
+                            <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
+                        </a> <!-- CONFIGURAÇÕES-->
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-6 col-md-9">
-          <div class="nav-icons justify-content-end">
-            <a href="home_admin.php">
-              <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-            </a>
-            <a href="">
-              <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-            </a>
-            <a href="cadastros_admin.php">
-              <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
-            </a>
-            <a href="">
-              <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-            </a>
-            <a href="">
-              <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-            </a>
-            <a href="">
-              <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-            </a>
-            <a href="">
-              <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+    </header>
 
   <h1 class="page-title p-4">CADASTRO DE EQUIPAMENTO</h1>
 
-  <div class="form-container">
-    <div class="form-card">
-      <form action="cadastro_equip_admin.php" method="post">
-        <input type="hidden" name="action" value="Cadastrar">
+    <div class="form-container">
+        <div class="form-card">
+            <form action="cadastro_equip_admin.php" method="post">
+                    <input type="hidden" name="action" value="Cadastrar">
 
-        <div class="mb-3">
-          <label for="tipo" class="form-label">Tipo de aparelho</label>
-          <select class="form-select" id="tipo" name="tipo" required>
-            <option disabled selected value="">Selecione uma opção</option>
-            <?php foreach ($tipos as $codigo => $nome): ?>
-              <option value="<?= $codigo ?>"><?= $nome ?></option>
-            <?php endforeach; ?>
-          </select>
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo de aparelho</label>
+                        <select class="form-select" id="tipo" name="tipo" required>
+                            <option disabled selected value="">Selecione uma opção</option>
+                            <?php foreach ($tipos as $codigo => $nome): ?>
+                            <option value="<?= $codigo ?>"><?= $nome ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="numeracao" class="form-label">Numeração</label>
+                        <input type="text" class="form-control" id="numeracao" name="numeracao" placeholder="Número do aparelho" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="marca" class="form-label">Marca</label>
+                        <select class="form-select" id="marca" name="marca" required>
+                            <option disabled selected value="">Selecione uma opção</option>
+                            <?php foreach ($marcas as $codigo => $nome): ?>
+                            <option value="<?= $codigo ?>"><?= $nome ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" required />
+                    </div> 
+
+                    <div class="mb-3">
+                        <label for="numero_serie" class="form-label">Número de Série</label>
+                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" placeholder="Número de série do equipamento" required />
+                    </div>
+
+                    <div class="d-grid justify-content-center">
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+            </form>
+
         </div>
-
-        <div class="mb-3">
-          <label for="numeracao" class="form-label">Numeração</label>
-          <input type="text" class="form-control" id="numeracao" name="numeracao" placeholder="Número do aparelho" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="marca" class="form-label">Marca</label>
-          <select class="form-select" id="marca" name="marca" required>
-            <option disabled selected value="">Selecione uma opção</option>
-            <?php foreach ($marcas as $codigo => $nome): ?>
-              <option value="<?= $codigo ?>"><?= $nome ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="mb-4">
-          <label for="descricao" class="form-label">Descrição</label>
-          <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" required />
-        </div> 
-        <div class="mb-3">
-  <label for="numero_serie" class="form-label">Número de Série</label>
-  <input type="text" class="form-control" id="numero_serie" name="numero_serie" placeholder="Número de série do equipamento" required />
-</div>
-
-        <div class="d-grid justify-content-center">
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
-        </div>
-      </form>
     </div>
-  </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

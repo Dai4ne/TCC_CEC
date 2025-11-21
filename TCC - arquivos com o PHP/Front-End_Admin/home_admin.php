@@ -1,19 +1,19 @@
 <?php
-session_start();
+    session_start();
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-    exit;
-}
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['id_usuario'])) {
+        header("Location: login.php");
+        exit;
+    }
 
-$perfil_verifica = '1';
-include('../verifica.php');
+    $perfil_verifica = '1';
+    include('../verifica.php');
 
 
-// Para exibir o nome
-$nomeUsuario = $_SESSION['nome_usuario'];
-?>
+    // Para exibir o nome
+    $nomeUsuario = $_SESSION['nome_usuario'];
+    ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -130,10 +130,6 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
 
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>

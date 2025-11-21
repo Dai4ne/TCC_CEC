@@ -269,10 +269,6 @@ $userData = searchUsers($searchTerm, $tipo, $page);
                         </a> <!-- NOTIFICAÇÕES -->
 
                         <a href="">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
-
-                        <a href="">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 

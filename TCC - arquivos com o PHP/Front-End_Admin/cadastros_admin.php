@@ -1,16 +1,14 @@
 <?php
-session_start();
+    session_start();
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-    exit;
-}
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['id_usuario'])) {
+        header("Location: login.php");
+        exit;
+    }
 
-$perfil_verifica = '1';
-include('../verifica.php');
-
-
+    $perfil_verifica = '1';
+    include('../verifica.php');
 ?>
 
 <!DOCTYPE html>
@@ -215,10 +213,6 @@ include('../verifica.php');
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
 
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>

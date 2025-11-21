@@ -67,6 +67,29 @@
 
         /* A barra de pesquisa usa estilos centralizados em header_admin.css */
 
+        /*Paginação*/ 
+        .pagination {
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .page-link {
+            color: #072855;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .page-item.active .page-link {
+            background-color: #072855;
+            border-color: #072855;
+        }
+
+        .page-link:hover {
+            color: #0084c1;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
         /* Lista de usuários */
         .user-list {
             border: 1px solid #dee2e6;
@@ -232,10 +255,6 @@
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
-
-                        <a href="">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
 
                         <a href="">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
