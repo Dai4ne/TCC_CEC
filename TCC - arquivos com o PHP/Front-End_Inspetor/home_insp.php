@@ -40,9 +40,10 @@ $nomeUsuario = $_SESSION['nome_usuario'];
             padding: 2rem;
         }
 
-        h1 {
+        .welcome-title {
             font-size: 2rem;
             font-weight: bold;
+            margin-top: 0.5rem;
             margin-bottom: 2rem;
             color: #1f2937;
             text-align: center;
@@ -85,14 +86,15 @@ $nomeUsuario = $_SESSION['nome_usuario'];
 
         @media (max-width:768px) {
             h1 {
-                font-size: 1.6rem;
-                margin-bottom: 1.5rem;
+                font-size: 1.8rem;
+                margin-bottom: 30px;
             }
         }
 
         @media (max-width:576px) {
             h1 {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
+                text-align: center;
             }
 
             td,
@@ -149,7 +151,13 @@ $nomeUsuario = $_SESSION['nome_usuario'];
     </header>
 
     <main>
-        <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?></h1>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="table-section">

@@ -135,17 +135,16 @@ if (isset($_SESSION['id_usuario'])) {
         }
 
         .welcome-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
             color: #1f2937;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             text-align: center;
         }
 
         .dashboard-card {
-            height: 300px;
+            height: 400px;
             background: #e5e7eb;
             border-radius: 12px;
             padding: 30px;
@@ -171,7 +170,7 @@ if (isset($_SESSION['id_usuario'])) {
 
         /* Limita a lista dentro do card para evitar overflow e melhora legibilidade */
         .dashboard-card .list-group {
-            max-height: 220px; /* mais espaço para itens maiores */
+            max-height: 300px; /* mais espaço para itens maiores */
             overflow-y: auto;
             padding-right: 6px; /* espaço para scrollbar */
         }
@@ -287,17 +286,21 @@ if (isset($_SESSION['id_usuario'])) {
 
     <main class="main-content">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-12">
                     <h1 class="welcome-title">BEM-VINDO, <?= strtoupper(htmlspecialchars($nomeUsuario)); ?>!</h1>
                 </div>
             </div>
+
             <div class="row">
+
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
                     </div>
                 </div>
+
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-laptop-fill me-2"></i>EMPRESTADOS</h2>

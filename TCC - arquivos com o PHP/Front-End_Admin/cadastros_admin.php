@@ -49,7 +49,7 @@
             text-align: center;
             font-size: 1.8rem;
             font-weight: bold;
-            background-color: #d0d0d0;
+            background-color: #e5e7eb;
             padding: 20px 0;
             margin-bottom: 0;
             flex-shrink: 0; 
@@ -202,7 +202,7 @@
                             <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
                         </a> <!-- HOMEPAGE-->
 
-                        <a href="">
+                        <a href="equip_televisao_admin.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
 
@@ -210,11 +210,11 @@
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="">
+                        <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 
-                        <a href="">
+                        <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
@@ -251,7 +251,7 @@
                 </div>
             </a>
 
-            <a href="">
+            <a href="equip_televisao_admin.php">
                 <div class="dashboard-card">
                     EQUIPAMENTOS REGISTRADOS NO SISTEMA
                 </div>

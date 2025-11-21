@@ -256,7 +256,7 @@ $userData = searchUsers($searchTerm, $tipo, $page);
                             <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
                         </a> <!-- HOMEPAGE-->
 
-                        <a href="">
+                        <a href="equip_televisao_admin.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
 
@@ -264,11 +264,11 @@ $userData = searchUsers($searchTerm, $tipo, $page);
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="">
+                        <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 
-                        <a href="">
+                        <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
