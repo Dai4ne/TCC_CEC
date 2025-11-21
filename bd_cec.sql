@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Banco de dados: `bd_cec`
 --
 
+CREATE DATABASE IF NOT EXISTS bd_cec;
+USE bd_cec;
+
 -- --------------------------------------------------------
 
 --

@@ -23,6 +23,7 @@
             margin-right: auto;
             margin-bottom: auto;
             margin-left: auto;
+            box-shadow: 2px 2px 5px #0000003e;
         }
 
         #circulo {
@@ -35,6 +36,7 @@
             margin-right: auto;
             margin-bottom: -30px;
             margin-left: auto;
+            box-shadow: 2px 2px 5px #0000003e;
         }
 
         img {
@@ -68,10 +70,8 @@
             margin-bottom: 35px;
             margin-left: auto;
             text-align: center;
-            font-weight: normal;
-            /* Espessura*/
+            font-weight: normal; /* Espessura*/
             font-size: 25px;
-            /* Tamanho*/
         }
 
         a {
@@ -81,7 +81,7 @@
 
         h2:hover {
             /* Quando o cursor do mouse passa por cima do h2*/
-            background-color: #c7c7c7;
+            background-color: #c9c9c9ff;
         }
     </style>
 </head>

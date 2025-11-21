@@ -85,8 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 0;
         }
 
-        html,
-        body {
+        html, body {
             height: 100%;
         }
 
@@ -99,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #e5e5e5;
             border-radius: 20px;
             padding: 10px;
+            box-shadow: 2px 2px 5px #0000003e;
         }
 
         h3 {
@@ -116,12 +116,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         #login-acessar {
+            background-color: white;
             color: black;
+        }
+
+        #link_voltar {
+            background-color: white;
+        }
+
+        #login-acessar:hover, #link_voltar:hover{
+            background-color: #c9c9c9ff ;
         }
 
         #esqueci-senha {
             display: block;
-            color: rgb(147, 147, 147);
+            color: #767676ff;
         }
     </style>
 </head>
@@ -132,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <main class="h-auto">
         <!-- Formulário -->
-        <form action="login.php?tipo=<?= htmlspecialchars($tipoUsuario); ?>" method="post" class="py-4 px-3">
+        <form action="login.php?tipo=<?= htmlspecialchars($tipoUsuario); ?>" method="post" class="py-3 px-3">
             <h3 class="fw-bold a-center mb-3 text-capitalize">
                 <?= htmlspecialchars($tipoUsuario); ?>
             </h3>
@@ -150,14 +159,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!--Esqueci a senha-->
-            <a href="" class="mb-3 d-flex justify-content-end small" id="esqueci-senha">Esqueci a senha</a>
+            <a href="esqueceu_senha.php" class="mt-2 mb-3 d-flex justify-content-end small" id="esqueci-senha">Esqueci a senha</a>
 
             <div class="div col-12 d-flex justify-content-end">
                 <!--Botão de voltar-->
-                <a href="index.php" class="btn text-black p-2 bg-white me-3" id="link_voltar">Voltar</a>
+                <a href="index.php" class="btn text-black p-2 me-3" id="link_voltar">Voltar</a>
 
                 <!--Botão de logar-->
-                <button type="submit" class="btn p-2 bg-white" id="login-acessar">Acessar</button>
+                <button type="submit" class="btn p-2" id="login-acessar">Acessar</button>
             </div>
         </form>
     </main>
