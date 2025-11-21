@@ -139,7 +139,7 @@ if (isset($_SESSION['id_usuario'])) {
             font-weight: bold;
             margin-top: 2rem;
             margin-bottom: 2rem;
-            color: #1f2937;
+            color: #000000ff;
             text-align: center;
         }
 
@@ -149,7 +149,7 @@ if (isset($_SESSION['id_usuario'])) {
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px #0000000d;
             transition: 0.3s;
         }
 
@@ -293,7 +293,7 @@ if (isset($_SESSION['id_usuario'])) {
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row justify-content-center">
 
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
@@ -346,11 +346,6 @@ if (isset($_SESSION['id_usuario'])) {
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>RECADOS</h2>
                     </div>
                 </div>
             </div>

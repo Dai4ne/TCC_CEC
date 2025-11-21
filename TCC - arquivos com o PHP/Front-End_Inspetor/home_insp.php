@@ -45,7 +45,7 @@ $nomeUsuario = $_SESSION['nome_usuario'];
             font-weight: bold;
             margin-top: 0.5rem;
             margin-bottom: 2rem;
-            color: #1f2937;
+            color: #000000ff;
             text-align: center;
         }
 
@@ -161,14 +161,12 @@ $nomeUsuario = $_SESSION['nome_usuario'];
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="table-section">
-                    <div class="table-title">HISTÓRICO RECENTE</div>
+                    <div class="table-title">NOTIFICAÇÕES</div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Professor</th>
-                                <th>Aparelho</th>
-                                <th>Data</th>
-                                <th>Hora</th>
+                                <th>Remetente</th>
+                                <th>Mensagem</th>
                             </tr>
                         </thead>
                         <tbody>

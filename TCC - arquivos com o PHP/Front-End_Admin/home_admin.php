@@ -49,7 +49,7 @@
             font-weight: bold;
             margin-top: 2rem;
             margin-bottom: 2rem;
-            color: #1f2937;
+            color: #000000ff;
             text-align: center;
         }
 
@@ -71,7 +71,7 @@
         .card-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #374151;
+            color: #000000ff;
             text-align: center;
             margin-bottom: 25px;
             text-transform: uppercase;
@@ -162,7 +162,7 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i>PENDÊNCIAS</h2>
+                        <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i></h2>
                     </div>
                 </div>
             </div>

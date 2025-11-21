@@ -284,7 +284,7 @@
                                 </li>
 
                                 <li class="history-item">
-                                    <span class="history-title">Relatório</span>
+                                    <span class="history-title">Vai toma no cu arthur</span>
                                     <div class="history-details">
                                         <span class="history-time">13:20</span>
                                         <span class="history-date">28/09/2025</span>
