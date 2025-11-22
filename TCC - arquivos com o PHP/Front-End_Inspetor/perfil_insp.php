@@ -115,6 +115,15 @@ if (isset($_SESSION['id_usuario'])) {
             gap: 10px;
         }
 
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+
+        a:hover{
+            color: white;
+        }
+
         .btn {
             display: flex;
             align-items: center;
@@ -137,7 +146,7 @@ if (isset($_SESSION['id_usuario'])) {
 
 <body>
 
-  <header class="header">
+    <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-6 col-md-3">
@@ -157,15 +166,19 @@ if (isset($_SESSION['id_usuario'])) {
 
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->   
+
+                        <a href="atrasos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-exclamation-circle-fill"></i></div>
+                        </a> <!-- ATRASOS -->
+
+                        <a href="emprest_ativos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        </a> <!-- EMPRÉSTIMOS ATIVOS -->
 
                         <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
-
-                        <a href="atrasos_insp.php">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
 
                         <a href="perfil_insp.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
@@ -212,11 +225,12 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="botoes">
 
                     <button class="btn">
-                        <i class="bi bi-exclamation-circle-fill"></i> Avisos
+                        <i class="bi bi-clock-history"></i> <a href="historico_insp.php">Empréstimos ativos</a>
                     </button>
 
                     <button class="btn">
-                        <i class="bi bi-clock-history"></i> Histórico geral
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        <a href="atrasos_insp.php">Atrasos</a> 
                     </button>
 
                     <button class="btn">

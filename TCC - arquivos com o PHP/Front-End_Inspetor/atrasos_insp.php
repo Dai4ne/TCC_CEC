@@ -119,6 +119,8 @@ if ($resultado) {
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
 
@@ -167,15 +169,19 @@ if ($resultado) {
 
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->   
+
+                        <a href="atrasos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-exclamation-circle-fill"></i></div>
+                        </a> <!-- ATRASOS -->
+
+                        <a href="emprest_ativos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        </a> <!-- EMPRÉSTIMOS ATIVOS -->
 
                         <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a> <!-- EQUIPAMENTOS -->
-
-                        <a href="atrasos_insp.php">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                        </a> <!-- ATRASOS -->
 
                         <a href="perfil_insp.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>

@@ -146,7 +146,7 @@
                         </a> <!-- EQUIPAMENTOS -->
 
                         <a href="atrasos_insp.php">
-                            <div class="nav-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                            <div class="nav-icon"><i class="bi bi-exclamation-circle-fill"></i></div>
                         </a> <!-- ATRASOS -->
 
                         <a href="perfil_insp.php">
