@@ -132,15 +132,44 @@ if ($resultado) {
 
         .page-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
+            background-color: #e5e7eb;
+        }
+
+        /*Botões de solicitação e notificação*/
+        .category-buttons {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .category-button{
+            background-color: #0e78a9;
+            color: white;
+            font-weight: bold;
+            margin-top: -10px;
+            margin-left: 10px;
+            border-radius: 5px;
+            padding: 10px;        
+        }
+
+        .category-button:hover{
+            background-color: #053968;
+            color: white;
+            font-weight: bold;
+        }
+
+        a{
+            text-decoration: none;
         }
 
 
         .requests-table {
             background: white;
-            border-radius: 12px;
+            border-radius: 5px;
+            margin-left: 10px;
+            margin-right: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -213,9 +242,13 @@ if ($resultado) {
                             <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> 
                         </a> <!-- HOMEPAGE-->
 
+                        <a href="nova_notificacao_insp.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
+
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- SOLICITAÇÕES -->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
 
                         <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
@@ -239,12 +272,24 @@ if ($resultado) {
         </div>
     </header>
 
+    <h1 class="page-title p-4">SOLICITAÇÕES</h1>
+
     <main class="main-content container-fluid">
-        <h1 class="page-title">SOLICITAÇÕES</h1>
+        
+        <div class="category-buttons">
+            <a href="notificacao_insp.php">
+                <div class="category-button">NOTIFICAÇÃO</div>
+            </a>
+
+            <a href="solicitacao_insp.php">
+                <div class="category-button">SOLICITAÇÃO</div>
+            </a>
+        </div>
+        
 
         <div class="requests-table table-responsive">
             <table class="table table-hover mb-0">
-                <thead>
+                <thead class="">
                     <tr>
                         <th>Professor</th>
                         <th>Aparelho</th>

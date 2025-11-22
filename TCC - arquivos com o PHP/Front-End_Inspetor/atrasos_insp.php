@@ -108,9 +108,10 @@ if ($resultado) {
 
         .page-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
+            background-color: #e5e7eb;
         }
 
 
@@ -160,9 +161,13 @@ if ($resultado) {
                             <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> 
                         </a> <!-- HOMEPAGE-->
 
+                        <a href="nova_notificacao_insp.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
+
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- SOLICITAÇÕES -->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
 
                         <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
@@ -186,8 +191,9 @@ if ($resultado) {
         </div>
     </header>
 
+    <h1 class="page-title p-4">ATRASOS</h1>
+
     <main class="main-content container-fluid">
-        <h1 class="page-title">ATRASOS</h1>
 
         <div class="requests-table table-responsive">
             <table class="table table-hover mb-0">

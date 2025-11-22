@@ -124,9 +124,13 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                             <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div> 
                         </a> <!-- HOMEPAGE-->
 
+                        <a href="nova_notificacao_insp.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
+
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES ou SOLICITAÇÕES TEM QUE VER ISSO AQUI -->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
 
                         <a href="equipamentos_insp.php">
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
