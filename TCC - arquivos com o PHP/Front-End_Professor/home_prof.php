@@ -161,7 +161,7 @@ if (isset($_SESSION['id_usuario'])) {
         .card-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #374151;
+            color: #000000ff;
             text-align: center;
             margin-bottom: 25px;
             text-transform: uppercase;

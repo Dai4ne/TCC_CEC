@@ -17,11 +17,11 @@ $TIPOS_EQUIPAMENTO = [
 // Mapeamento de imagens por tipo (usando placeholders)
 $IMAGENS_EQUIPAMENTO = [
     '1' => '../Imagens/tv_lg.png',           // Televisão
-    '2' => '../Imagens/notebook.png',         // Notebook
-    '3' => '../Imagens/chromebook.png',       // Chromebook
-    '4' => '../Imagens/tablet.png',           // Tablet
-    '5' => '../Imagens/projetor.png',         // Projetor
-    '6' => '../Imagens/fone.png'              // Fone
+    '2' => '../Imagens/note_lenovo.jpg',         // Notebook
+    '3' => '../Imagens/chromebook.jpg',       // Chromebook
+    '4' => '../Imagens/tablet_positivo400.png',           // Tablet
+    '5' => '../Imagens/projetor_epson.jpg',         // Projetor
+    '6' => '../Imagens/fone.jpg'              // Fone
 ];
 
 /**

@@ -105,14 +105,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
             width: 200px;
         }
 
-        .btn-lend { /*Botão EMPRESTAR*/
+        .btn { /*Botão EMPRESTAR*/
             background-color: #0e78a9;
             color: white;
             font-weight: 600;
             border: none;
         }
 
-        .btn-lend:hover {
+        .btn:hover {
             background-color: #fd4463;
             color: white;
         }
@@ -282,7 +282,7 @@ while ($linha = mysqli_fetch_array($resultado)) {
             <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
 
             <?php if ($estado === 'emp'): ?>
-                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modalEmprestimo" onclick="setEquipamentoModal(<?= $idEquip ?>, '<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>')">EMPRESTAR</button>
+                <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#modalEmprestimo" onclick="setEquipamentoModal(<?= $idEquip ?>, '<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>')">EMPRESTAR</button>
             <?php elseif ($estado === 'solicitado'): ?>
                 <button class="btn btn-warning w-100" disabled>SOLICITADO</button>
             <?php else: ?>
