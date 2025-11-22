@@ -86,7 +86,7 @@ include('../verifica.php');
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
 
-                        <a href="">
+                        <a href="notificacao_prof.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 

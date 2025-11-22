@@ -32,33 +32,32 @@ if (isset($_SESSION['id_usuario'])) {
   }
 
   // Histórico de empréstimos do usuário (últimos 10)
-  $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca
+    $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca
         FROM emprestimo e
         JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
         LEFT JOIN marca m ON eq.id_marca = m.id_marca
         WHERE e.id_usuario = ?
         ORDER BY e.data_hora DESC
         LIMIT 4";
-  if ($stmt2 = $con->prepare($sqlHist)) {
-    $stmt2->bind_param('i', $idU);
-    $stmt2->execute();
-    $res2 = $stmt2->get_result();
-    $tipos = [
-      '1' => 'Televisão',
-      '2' => 'Notebook',
-      '3' => 'Chromebook',
-      '4' => 'Tablet',
-      '5' => 'Projetor',
-      '6' => 'Fone'
-    ];
-    while ($row = $res2->fetch_assoc()) {
-      $row['tipo_nome'] = $tipos[$row['tipo']] ?? ($row['tipo'] ?: 'Desconhecido');
-      $historico[] = $row;
-    }
-    $stmt2->close();
+     if ($stmt2 = $con->prepare($sqlHist)) {
+        $stmt2->bind_param('i', $idU);
+        $stmt2->execute();
+        $res2 = $stmt2->get_result();
+        $tipos = [
+        '1' => 'Televisão',
+        '2' => 'Notebook',
+        '3' => 'Chromebook',
+        '4' => 'Tablet',
+        '5' => 'Projetor',
+        '6' => 'Fone'
+        ];
+        while ($row = $res2->fetch_assoc()) {
+        $row['tipo_nome'] = $tipos[$row['tipo']] ?? ($row['tipo'] ?: 'Desconhecido');
+        $historico[] = $row;
+        }
+        $stmt2->close();
   }
 }
-
 
 ?>
 
@@ -80,137 +79,148 @@ if (isset($_SESSION['id_usuario'])) {
     </script>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-  <link rel="stylesheet" href="header_prof.css">
-  <title>CEC</title>
+    <link rel="stylesheet" href="header_prof.css">
+    <title>CEC</title>
 
 
-  <style>
-    body::-webkit-scrollbar {
-      display: none;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fa;
-    }
+    <style>
+        body::-webkit-scrollbar {
+            display: none;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
 
-    .topo-cinza {
-      background-color: #e4e4e4;
-      height: 200px;
-      width: 100%;
-    }
+        main{
+            box-shadow: 2px 2px 6px #0000001d;
+            width: 580px;
+        }
 
-    #perfil {
-      margin-top: -60px;
-    }
+        .topo-cinza {
+            background-color: #e5e7eb;
+            height: 200px;
+            width: 100%;
+            margin-top: 10px
+        }
 
-    .nome {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 10px;
-      color: #000;
-    }
+        #perfil {
+            margin-top: -60px;
+        }
 
-    .dados {
-      text-align: left;
-      max-width: 400px;
-      margin: 30px auto 0 auto;
-    }
+        .nome {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #000;
+        }
 
-    .dados h2 {
-      font-size: 12px;
-      color: #000;
-      margin-bottom: 20px;
-    }
+        .dados {
+            text-align: left;
+            max-width: 400px;
+            margin: 30px auto 0 auto;
+        }
 
-    .campo {
-      margin-bottom: 20px;
-    }
+        .dados h2 {
+            font-size: 12px;
+            color: #000;
+            margin-bottom: 20px;
+        }
 
-    .campo label {
-      display: block;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 2px;
-      color: #000;
-    }
+        .campo {
+            margin-bottom: 20px;
+        }
 
-    .valor {
-      border-bottom: 1px solid #ccc;
-      padding: 4px 0;
-      font-size: 14px;
-      color: #000;
-      margin: 0;
-    }
+        .campo label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 2px;
+            color: #000;
+        }
 
-    .historico-container {
-      padding: 30px 20px;
-      background-color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.21);
+        .valor {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 4px 0;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+        }
 
-    }
+        .historico-container {
+            padding: 30px 20px;
+            background-color: white;
+            box-shadow: 2px 2px 6px #0000001d;
 
-    .tabela {
-      background-color: #ebebebff;
-      border: none;
-    }
+        }
 
-    .titulo-tabela {
-      background-color: #acacac;
-      text-align: center;
-      font-weight: bold;
-      padding: 10px 0;
-      color: #000;
-    }
+        .tabela {
+            background-color: #e5e7eb;
+            border: none;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+        .titulo-tabela {
+            background-color: #e5e7eb;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px 0;
+            color: #000;
+        }
 
-    thead th {
-      font-size: 12px;
-      color: #000;
-      border-bottom: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    tbody td {
-      height: 40px;
-      border-bottom: 1px solid #ccc;
-      padding: 10px;
-      color: #000;
-    }
+        thead th {
+            font-size: 12px;
+            color: #000;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            }
 
-    .botoes {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+        tbody td {
+            height: 40px;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            color: #000;
+        }
 
-    .btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background-color: #072855;
-      border: none;
-      padding: 10px 15px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 6px;
-      color: white;
-    }
-  </style>
+        .botoes {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #072855;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .btn:hover{
+            background-color: #0e78a9;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
 
-  <header class="header">
+    <header class="header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-6 col-md-3">
@@ -229,7 +239,7 @@ if (isset($_SESSION['id_usuario'])) {
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
 
-                        <a href="">
+                        <a href="notificacao_prof.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 
@@ -252,96 +262,99 @@ if (isset($_SESSION['id_usuario'])) {
     </header>
 
 
-  <div class="container my-4">
-    <div class="row g-4">
-      <main class="col-12 col-lg-8">
-        <div class="topo-cinza"></div>
+    <div class="container my-4">
+        <div class="row g-4 justify-content-center">
+            <main class="col-12 col-lg-7">
+                <div class="topo-cinza"></div>
 
-        <section class="conteudo text-center">
-          <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
-          <p class="nome"><?= htmlspecialchars($usuarioDados['nome'] ?? $_SESSION['nome_usuario']) ?></p>
+                <section class="conteudo text-center">
+                    <img src="../Imagens/Ícones/foto-perfil.png" alt="" id="perfil" width="110px">
+                    <p class="nome"><?= htmlspecialchars($usuarioDados['nome'] ?? $_SESSION['nome_usuario']) ?></p>
 
-          <div class="dados">
-            <h2>DADOS PESSOAIS</h2>
+                    <div class="dados">
+                        <h2>DADOS PESSOAIS</h2>
 
-            <div class="campo">
-              <label>NOME:</label>
-              <p class="valor"><?= htmlspecialchars($usuarioDados['nome'] ?? '') ?></p>
-            </div>
+                        <div class="campo">
+                        <label>NOME:</label>
+                        <p class="valor"><?= htmlspecialchars($usuarioDados['nome'] ?? '') ?></p>
+                        </div>
 
-            <div class="campo">
-              <label>EMAIL:</label>
-              <p class="valor"><?= htmlspecialchars($usuarioDados['email'] ?? '') ?></p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <aside class="col-12 col-lg-4">
-        <div class="historico-container">
-          <div class="tabela">
-            <div class="titulo-tabela">HISTÓRICO</div>
-            <table>
-              <thead>
-                <tr>
-                  <th>APARELHO</th>
-                  <th>DATA</th>
-                  <th>HORA</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if (empty($historico)): ?>
-                  <tr>
-                    <td colspan="3" class="text-center">Nenhum histórico de empréstimos</td>
-                  </tr>
-                <?php else: ?>
-                  <?php foreach ($historico as $h): ?>
-                    <tr>
-                      <td><?= htmlspecialchars($h['tipo_nome']) ?> <?= htmlspecialchars($h['marca'] ?? '') ?> #<?= htmlspecialchars($h['numeracao'] ?? '') ?></td>
-                      <td><?= date('d/m/Y', strtotime($h['data_hora'])) ?></td>
-                      <td><?= date('H:i', strtotime($h['data_hora'])) ?></td>
-                    </tr>
-                  <?php endforeach; ?>
-                <?php endif; ?>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="margin-top:12px;">
-            <a href="historico_prof.php" class="btn btn-outline-primary w-100">Ver todos</a>
-          </div>
-
-          <div class="botoes">
-            <button class="btn">
-              <i class="bi bi-gear-fill"></i> Configurações
-            </button>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              <i class="bi bi-box-arrow-right"></i> Desconectar
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="text-center">
-                      <h4>Confirmar Saída</h4>
+                        <div class="campo">
+                        <label>EMAIL:</label>
+                        <p class="valor"><?= htmlspecialchars($usuarioDados['email'] ?? '') ?></p>
+                        </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="../logout.php" class="btn btn-primary"><i class="bi bi-box-arrow-right"></i> Sair</a>
-                  </div>
+                </section>
+            </main>
+
+            <aside class="col-12 col-lg-4">
+                <div class="historico-container">
+                <div class="tabela">
+                    <div class="titulo-tabela">HISTÓRICO</div>
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>APARELHO</th>
+                            <th>DATA</th>
+                            <th>HORA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($historico)): ?>
+                        <tr>
+                            <td colspan="3" class="text-center">Nenhum histórico de empréstimos</td>
+                        </tr>
+                        <?php else: ?>
+                        <?php foreach ($historico as $h): ?>
+                            <tr>
+                            <td><?= htmlspecialchars($h['tipo_nome']) ?> <?= htmlspecialchars($h['marca'] ?? '') ?> #<?= htmlspecialchars($h['numeracao'] ?? '') ?></td>
+                            <td><?= date('d/m/Y', strtotime($h['data_hora'])) ?></td>
+                            <td><?= date('H:i', strtotime($h['data_hora'])) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                    </table>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
+
+                <div style="margin-top:12px;">
+                    <a href="historico_prof.php" class="btn w-100">Ver todos</a>
+                </div>
+
+                <div class="botoes">
+                    <button class="btn">
+                        <i class="bi bi-gear-fill"></i> Configurações
+                    </button>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="bi bi-box-arrow-right"></i> Desconectar
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="text-center">
+                                    <h4>Confirmar Saída</h4>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="../logout.php" class="btn btn-primary"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </aside>
 
     </div>
   </div>
