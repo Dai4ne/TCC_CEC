@@ -148,7 +148,7 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_insp.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
                         </a> <!-- CONFIGURAÇÕES-->
 

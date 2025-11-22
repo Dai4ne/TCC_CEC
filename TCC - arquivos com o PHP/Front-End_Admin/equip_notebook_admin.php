@@ -156,15 +156,19 @@
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="nova_notificacao_admin.php">
+                        <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="nova_notificacao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
 
                         <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_admin.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
                         </a> <!-- CONFIGURAÇÕES-->
 
@@ -225,13 +229,7 @@
 
             <div class="col-12 col-lg-9">
                 <div class="bg-white rounded shadow-sm p-3">
-                    <div class="d-flex mb-3">
-                        <span class="filter-button marcas">Lenovo</span>
-                        <span class="filter-button marcas">Multilaser Ultra</span>
-                        <span class="filter-button marcas">Multilaser</span>
-                        <span class="filter-button marcas">Positivo</span>
-                    </div>
-
+                    
                     <div class="d-flex mb-3">
                         <span class="filter-button active-filter">Ativo</span>
                         <span class="filter-button inactive-filter">Inativo</span>

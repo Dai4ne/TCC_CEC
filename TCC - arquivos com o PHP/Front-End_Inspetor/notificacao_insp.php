@@ -139,21 +139,25 @@
 
                         <a href="solicitacao_insp.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->
-
-                        <a href="equipamentos_insp.php">
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-                        </a> <!-- EQUIPAMENTOS -->
+                        </a> <!-- NOTIFICAÇÕES E SOLICITAÇÕES-->   
 
                         <a href="atrasos_insp.php">
                             <div class="nav-icon"><i class="bi bi-exclamation-circle-fill"></i></div>
                         </a> <!-- ATRASOS -->
 
+                        <a href="emprest_ativos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
+                        </a> <!-- EMPRÉSTIMOS ATIVOS -->
+
+                        <a href="equipamentos_insp.php">
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+                        </a> <!-- EQUIPAMENTOS -->
+
                         <a href="perfil_insp.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_insp.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
                         </a> <!-- CONFIGURAÇÕES-->
 

@@ -118,12 +118,12 @@ include('../verifica.php');
 
         .page-title {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
             background-color: #e5e7eb;
         }
-
+        
         .form-container {
             max-width: 600px;
             margin: auto;
@@ -188,15 +188,19 @@ include('../verifica.php');
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="nova_notificacao_admin.php">
+                        <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="nova_notificacao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
 
                         <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_admin.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
                         </a> <!-- CONFIGURAÇÕES-->
 

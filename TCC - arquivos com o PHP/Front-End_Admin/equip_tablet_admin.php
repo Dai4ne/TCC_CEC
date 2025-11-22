@@ -154,9 +154,43 @@
 
                         <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
+                       <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo-container">
+                        <img src="../Imagens/logo-png.png" alt="logo">
+                    </div>
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="nav-icons justify-content-end">
+
+
+                        <a href="home_admin.php">
+                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
+                        </a> <!-- HOMEPAGE-->
+
+                        <a href="equip_televisao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
+                        </a> <!-- EQUIPAMENTOS -->
+
+                        <a href="cadastros_admin.php">
+                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
+                        </a> <!-- CADASTRAR -->
+
+                        <a href="notificacao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="nova_notificacao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
+
+                        <a href="perfil_admin.php">
+                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_admin.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
                         </a> <!-- CONFIGURAÇÕES-->
 

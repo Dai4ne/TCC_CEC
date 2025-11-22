@@ -127,15 +127,19 @@
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="nova_notificacao_admin.php">
+                        <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="nova_notificacao_admin.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
 
                         <a href="perfil_admin.php">
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!-- PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_admin.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div>
                         </a> <!-- CONFIGURAÇÕES-->
 
@@ -162,7 +166,7 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-chat-dots-fill me-2"></i></h2>
+                        <h2 class="card-title"><i class="bi bi-clock-history me-2"></i>Empréstimos ativos</h2>
                     </div>
                 </div>
             </div>

@@ -81,16 +81,19 @@ if (isset($_SESSION['id_usuario'])) {
 
         .page-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            background-color: #e5e7eb;
         }
 
 
         .requests-table {
             background: white;
-            border-radius: 12px;
+            border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
 
@@ -154,7 +157,7 @@ if (isset($_SESSION['id_usuario'])) {
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!--PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_prof.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
                         </a> <!-- CONFIGURAÇÕES-->
 
@@ -164,8 +167,9 @@ if (isset($_SESSION['id_usuario'])) {
         </div>
     </header>
 
+    <h1 class="page-title p-4">HISTÓRICO</h1>
+
     <main class="main-content container-fluid">
-        <h1 class="page-title">HISTÓRICO</h1>
 
         <div class="requests-table table-responsive">
             <table class="table mb-0">

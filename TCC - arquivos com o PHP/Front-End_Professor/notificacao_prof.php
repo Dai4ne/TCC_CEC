@@ -29,14 +29,14 @@
 
         .page-title {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
             background-color: #e5e7eb;
         }
 
         .main-content {
-            padding: 30px; 
+            padding: 10px; 
             min-height: calc(100vh - 70px);
             background-color: #ffffffff;
         }
@@ -55,7 +55,7 @@
 
         .requests-table {
             background: white;
-            border-radius: 12px;
+            border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -124,7 +124,7 @@
                             <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
                         </a> <!--PERFIL-->
 
-                        <a href="">
+                        <a href="config_termos_prof.php">
                             <div class="nav-icon"><i class="bi bi-gear-fill"></i></div> 
                         </a> <!-- CONFIGURAÇÕES-->
 
