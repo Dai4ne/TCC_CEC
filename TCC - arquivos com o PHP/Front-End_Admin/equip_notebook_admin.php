@@ -256,8 +256,8 @@ if ($resultado) {
                 <div class="bg-white rounded shadow-sm p-3">
                     
                     <div class="d-flex mb-3">
-                        <span class="filter-button active-filter">Ativo</span>
-                        <span class="filter-button inactive-filter">Inativo</span>
+                        <span class="filter-button active-filter">ATIVO</span>
+                        <span class="filter-button inactive-filter">INATIVO</span>
                     </div>
 
                     <div class="equipment-list">

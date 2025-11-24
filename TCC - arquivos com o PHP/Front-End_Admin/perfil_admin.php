@@ -216,7 +216,8 @@ $stmt->close();
                 </button>
 
                 <button class="btn">
-                    <i class="bi bi-gear-fill"></i> Configurações
+                    <i class="bi bi-gear-fill"></i>
+                    <a href="config_termos_admin.php">Configurações</a>
                 </button>
 
                 <!-- Button trigger modal -->

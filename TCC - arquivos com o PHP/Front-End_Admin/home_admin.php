@@ -110,13 +110,29 @@
         }
 
         .dashboard-card {
-            height: 400px;
-            background: #e5e7eb;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: 0.3s;
+        height: 480px; 
+        overflow-y: auto; /*barra de rolagem vertical*/
+        background: #e5e7eb;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+        }
+    
+        /* Barra de rolagem configurações*/
+        .dashboard-card::-webkit-scrollbar {
+            width: 8px; /* Largura da barra de rolagem */
+        }
+
+        .dashboard-card::-webkit-scrollbar-thumb {
+            background-color: #a0a0a0; /* Cor do "polegar" da barra */
+            border-radius: 10px;
+        }
+
+        .dashboard-card::-webkit-scrollbar-track {
+            background: #ffffffff; /* Cor do fundo da trilha */
+            border-radius: 10px;
         }
 
         .dashboard-card:hover {
@@ -214,9 +230,11 @@
             </div>
 
             <div class="row justify-content-center">
+
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÕES</h2>
+                        <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
+
                         <ul class="list-group">
                             <?php if (!empty($notificacoes)): ?>
                                 <?php foreach ($notificacoes as $n): ?>

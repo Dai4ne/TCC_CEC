@@ -225,7 +225,8 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="botoes">
 
                     <button class="btn">
-                        <i class="bi bi-clock-history"></i> <a href="historico_insp.php">Empréstimos ativos</a>
+                        <i class="bi bi-clock-history"></i>
+                        <a href="emprest_ativos_insp.php">Empréstimos ativos</a>
                     </button>
 
                     <button class="btn">
@@ -234,7 +235,8 @@ if (isset($_SESSION['id_usuario'])) {
                     </button>
 
                     <button class="btn">
-                        <i class="bi bi-gear-fill"></i> Configurações
+                        <i class="bi bi-gear-fill"></i>
+                        <a href="config_termos_insp.php">Configurações</a>
                     </button>
 
                     <!-- Button trigger modal -->

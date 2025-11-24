@@ -336,6 +336,7 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
+                        
                         <?php if (empty($notificacoes)): ?>
                             <p class="text-center" style="margin-top:18px;">Nenhuma notificação recente</p>
                         <?php else: ?>

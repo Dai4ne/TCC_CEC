@@ -215,6 +215,11 @@ if (isset($_SESSION['id_usuario'])) {
             background-color: #0e78a9;
             color: white;
         }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 
@@ -323,7 +328,8 @@ if (isset($_SESSION['id_usuario'])) {
 
                 <div class="botoes">
                     <button class="btn">
-                        <i class="bi bi-gear-fill"></i> Configurações
+                        <i class="bi bi-gear-fill"></i> 
+                        <a href="config_termos_prof.php">Configurações</a>
                     </button>
 
                     <!-- Button trigger modal -->

@@ -170,7 +170,7 @@ $stmt->close();
         .notification-box {
             display: flex;
             flex-direction: column;
-            min-height: 400px;
+            min-height: 350px;
             border-radius: 4px;
         }
 
@@ -208,6 +208,7 @@ $stmt->close();
         /* Mensagem */
         .message-textarea {
             width: 100%;
+            height: 160px;
             flex-grow: 1; 
             padding: 10px;
             border: 1px solid #ced4da;
@@ -230,10 +231,11 @@ $stmt->close();
 
         /* Caixa de histórico de envios */
         .history-box {
-            min-height: 400px; 
+            height: 450px; 
             border-radius: 4px;
             border: 1px solid #dee2e6; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            overflow-y: auto; /*barra de rolagem vertical*/ 
         }
 
         .history-list {

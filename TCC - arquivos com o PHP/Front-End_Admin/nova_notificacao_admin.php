@@ -165,7 +165,7 @@ $stmt_h->close();
         .notification-box {
             display: flex;
             flex-direction: column;
-            min-height: 400px;
+            min-height: 350px;
             border-radius: 4px;
         }
 
@@ -204,6 +204,7 @@ $stmt_h->close();
         .message-textarea {
             width: 100%;
             flex-grow: 1; 
+            height: 160px;
             padding: 10px;
             border: 1px solid #ced4da;
             border-radius: 4px;
@@ -225,7 +226,8 @@ $stmt_h->close();
 
         /* Caixa de histórico de envios */
         .history-box {
-            min-height: 400px; 
+            height: 450px; 
+            overflow-y: auto; /*barra de rolagem vertical*/            
             border-radius: 4px;
             border: 1px solid #dee2e6; 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); 

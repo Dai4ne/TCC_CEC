@@ -77,8 +77,10 @@ include __DIR__ . '/../includes/atrasos_query.php';
         .table-section {
             background: #e5e7eb;
             border-radius: 8px;
+            overflow-y: auto;
             padding: 1rem;
             margin-bottom: 2rem;
+            height: 400px;
         }
 
         .table-title {
@@ -89,6 +91,7 @@ include __DIR__ . '/../includes/atrasos_query.php';
 
         table {
             width: 100%;
+            min-height: 330px;
             border-collapse: collapse;
             background: white;
             border-radius: 8px;
