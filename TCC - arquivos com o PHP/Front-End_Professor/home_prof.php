@@ -296,13 +296,13 @@ if (isset($_SESSION['id_usuario'])) {
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
 
-                        <a href="notificacao_prof.php" style="position:relative;">
-                            <div class="nav-icon"><i class="bi bi-bell-fill"></i>
-                            <?php if (!empty($notificacoes_nao_lidas)): ?>
-                                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top:6px;right:6px;font-size:0.65rem;"><?= intval($notificacoes_nao_lidas) ?></span>
-                            <?php endif; ?>
-                            </div>
+                        <a href="notificacao_prof.php">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
+
+                        <a href="nova_notificacao_prof.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
 
                         <a href="historico_prof.php">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>

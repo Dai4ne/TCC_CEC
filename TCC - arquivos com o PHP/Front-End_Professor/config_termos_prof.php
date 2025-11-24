@@ -168,6 +168,10 @@ include __DIR__ . '/../Front-End_Admin/conect.php';
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
 
+                        <a href="nova_notificacao_prof.php">
+                            <div class="nav-icon"><i class="bi bi-pencil-square"></i></div> 
+                        </a> <!-- CRIAR NOTIFICAÇÃO-->
+
                         <a href="historico_prof.php">
                             <div class="nav-icon"><i class="bi bi-clock-history"></i></div>
                         </a> <!--HISTÓRICO-->
