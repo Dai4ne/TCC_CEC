@@ -249,7 +249,7 @@ $stmt->close();
                                 <td><?php echo date('d/m/Y', strtotime($n['data_envio'])); ?></td>
                                 <td><?php echo date('H:i', strtotime($n['data_envio'])); ?></td>
                                 <td class="action-buttons">
-                                    <form method="post" style="display:inline;">
+                                    <form method="post" class="mark-read-form" style="display:inline;">
                                         <input type="hidden" name="id_notificacao" value="<?php echo intval($n['id_notificacao']); ?>">
                                         <input type="hidden" name="acao" value="marcar_lida">
                                         <button type="submit" class="btn"><i class="bi bi-check-lg"></i></button>
@@ -271,4 +271,24 @@ $stmt->close();
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="../script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
+
+<script>
+$(function(){
+    $('.mark-read-form').on('submit', function(e){
+        e.preventDefault();
+        var $form = $(this);
+        var id = $form.find('input[name="id_notificacao"]').val();
+        $.post('../marcar_notificacao_ajax.php', {id_notificacao: id}, function(resp){
+            if(resp && resp.success){
+                $form.closest('tr').fadeOut(200, function(){ $(this).remove(); });
+                $('[data-notif-id="'+id+'"]').fadeOut(200, function(){ $(this).remove(); });
+            } else {
+                alert(resp.error || 'Erro ao marcar notificação.');
+            }
+        }, 'json').fail(function(){ alert('Erro de rede ao marcar notificação.'); });
+    });
+});
+</script>
 </html>

@@ -1,3 +1,110 @@
+<?php
+session_start();
+
+// Normaliza msg_alert para evitar aviso de variável indefinida
+$msg_alert = isset($_SESSION['msg_alert']) ? $_SESSION['msg_alert'] : null;
+unset($_SESSION['msg_alert']);
+
+/*
+ * nova_notificacao_prof.php
+ * - Propósito: permitir que um professor reporte dano para inspetores, administradores ou ambos.
+ */
+
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
+$perfil_verifica = '2'; // PROFESSOR
+include('../verifica.php');
+
+// Caminho da conexão
+include __DIR__ . '/../Front-End_Admin/conect.php';
+
+$msg_history = [];
+
+
+/* ===========================================================
+   📨 PROCESSAMENTO DO FORMULÁRIO (ENVIO NO MESMO ARQUIVO)
+   =========================================================== */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $mensagem = trim($_POST['mensagem'] ?? '');
+    $destino = $_POST['destino'] ?? '';
+
+    if ($mensagem === '' || $destino === '') {
+        $_SESSION['msg_alert'] = ['danger', 'Preencha todos os campos!'];
+        header('Location: nova_notificacao_prof.php');
+        exit;
+    }
+
+    $ids = [];
+
+    /* ==== DESTINOS ==== */
+    if ($destino === 'administradores' || $destino === 'ambos') {
+        $stmt = $con->prepare("SELECT id_usuario FROM usuario WHERE tipo = 1");
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($r = $res->fetch_assoc()) $ids[] = $r['id_usuario'];
+        $stmt->close();
+    }
+
+    if ($destino === 'inspetores' || $destino === 'ambos') {
+        $stmt = $con->prepare("SELECT id_usuario FROM usuario WHERE tipo = 3");
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($r = $res->fetch_assoc()) $ids[] = $r['id_usuario'];
+        $stmt->close();
+    }
+
+    if (empty($ids)) {
+        $_SESSION['msg_alert'] = ['warning', 'Nenhum usuário encontrado para este destino.'];
+        header('Location: nova_notificacao_prof.php');
+        exit;
+    }
+
+    /* ==== INSERIR NOTIFICAÇÕES ==== */
+    $ins = $con->prepare("
+        INSERT INTO notificacao (id_remetente, id_destinatario, mensagem, status_notificacao)
+        VALUES (?, ?, ?, 'P')
+    ");
+
+    foreach ($ids as $id_dest) {
+        $ins->bind_param("iis", $_SESSION['id_usuario'], $id_dest, $mensagem);
+        $ins->execute();
+    }
+
+    $ins->close();
+
+    $_SESSION['msg_alert'] = ['success', 'Dano reportado com sucesso!'];
+    header('Location: nova_notificacao_prof.php');
+    exit;
+}
+
+
+/* ===========================================================
+   📜 HISTÓRICO DE NOTIFICAÇÕES DO PROFESSOR
+   =========================================================== */
+$stmt = $con->prepare("
+    SELECT n.*, u.nome AS destinatario_nome 
+    FROM notificacao n 
+    JOIN usuario u ON n.id_destinatario = u.id_usuario 
+    WHERE n.id_remetente = ? 
+    ORDER BY n.data_envio DESC
+");
+
+$stmt->bind_param('i', $_SESSION['id_usuario']);
+$stmt->execute();
+$res = $stmt->get_result();
+
+while ($row = $res->fetch_assoc()) {
+    $msg_history[] = $row;
+}
+
+$stmt->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -243,7 +350,7 @@
         </div>
     </header>
 
-    <h1 class="page-title p-4">ENVIAR NOTIFICAÇÃO</h1>
+    <h1 class="page-title p-4">REPORTAR DANO</h1>
 
     <main class="main-content">
         <div class="container">
@@ -255,19 +362,28 @@
                         <div class="notification-button-history">NOTIFICAÇÕES</div> 
                     </a>
 
+                    <?php if ($msg_alert): ?>
+                    <div class="alert alert-<?php echo $msg_alert[0]; ?> alert-dismissible fade show" role="alert">
+                        <?php echo $msg_alert[1]; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="notification-box">
-                        <div class="box-header">NOVA NOTIFICAÇÃO</div>
+                        <div class="box-header">REPORTAR DANO</div>
 
                         <div class="notification-content">
-                            <form method="post">
+                            <form method="post" action="">
                                 <div class="category-buttons">
-                                    <select name="destino" class="form-select">
-                                        <option value="professores">Inspetores</option>
+                                    <select name="destino" class="form-select" required>
+                                        <option value="">Selecione o destino</option>
+                                        <option value="inspetores">Inspetores</option>
                                         <option value="administradores">Administradores</option>
+                                        <option value="ambos">Ambos</option>
                                     </select>
                                 </div>
                                 
-                                <textarea name="mensagem" class="message-textarea" placeholder="Digite sua mensagem"></textarea>
+                                <textarea name="mensagem" class="message-textarea" placeholder="Descreva o dano do equipamento..." required></textarea>
 
                                 <button type="submit" name="action" value="Enviar" class="btn mt-3">Enviar</button>
                             </form>
@@ -281,9 +397,22 @@
                         
                         
                         <div class="history-box">
-                            <div class="box-header">HISTÓRICO DE ENVIOS</div>
+                            <div class="box-header">HISTÓRICO DE REPORTES</div>
                             <ul class="history-list">
-                                
+                                <?php foreach ($msg_history as $h): ?>
+                                <li class="history-item">
+                                    <div><?php echo htmlspecialchars($h['mensagem']); ?></div>
+                                    <div class="history-details">
+                                        <span><?php echo htmlspecialchars($h['destinatario_nome']); ?></span>
+                                        <span><?php echo date('d/m/Y H:i', strtotime($h['data_envio'])); ?></span>
+                                    </div>
+                                </li>
+                                <?php endforeach; ?>
+                                <?php if (empty($msg_history)): ?>
+                                <li class="history-item" style="justify-content: center; color: #ccc;">
+                                    Nenhum reporte enviado
+                                </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
 
@@ -292,7 +421,7 @@
 
                 
             </div>
-        </div>
+        </di>v
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

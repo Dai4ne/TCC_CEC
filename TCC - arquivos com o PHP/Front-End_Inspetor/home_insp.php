@@ -203,14 +203,16 @@ include __DIR__ . '/../includes/atrasos_query.php';
                             <tr>
                                 <th>Remetente</th>
                                 <th>Mensagem</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (!empty($notificacoes)): ?>
                                 <?php foreach ($notificacoes as $n): ?>
-                                    <tr>
+                                    <tr data-notif-id="<?php echo intval($n['id_notificacao']); ?>">
                                         <td><?php echo htmlspecialchars($n['remetente_nome']); ?></td>
                                         <td style="text-align:left"><?php echo nl2br(htmlspecialchars($n['mensagem'])); ?></td>
+                                        <td><button class="btn btn-sm btn-success mark-read-btn" data-id="<?php echo intval($n['id_notificacao']); ?>"><i class="bi bi-check-lg"></i></button></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -260,4 +262,16 @@ include __DIR__ . '/../includes/atrasos_query.php';
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="../script.js"></script>
+<script>
+$(document).on('click', '.mark-read-btn', function(e) {
+    e.preventDefault();
+    var id_notificacao = $(this).data('id-notificacao');
+    
+    $.post('../marcar_notificacao_ajax.php', {
+        id_notificacao: id_notificacao
+    }, function(response) {
+        $('[data-notif-id="' + id_notificacao + '"]').remove();
+    });
+});
+</script>
 </html>

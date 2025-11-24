@@ -238,12 +238,15 @@
                         <ul class="list-group">
                             <?php if (!empty($notificacoes)): ?>
                                 <?php foreach ($notificacoes as $n): ?>
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start" data-notif-id="<?php echo intval($n['id_notificacao']); ?>">
                                         <div class="ms-2 me-auto">
                                             <div class="fw-bold"><?php echo htmlspecialchars($n['remetente_nome']); ?></div>
                                             <small class="text-muted"><?php echo nl2br(htmlspecialchars($n['mensagem'])); ?></small>
                                         </div>
-                                        <span class="badge bg-secondary rounded-pill"><?php echo date('d/m H:i', strtotime($n['data_envio'])); ?></span>
+                                        <div class="d-flex flex-column align-items-end">
+                                            <span class="badge bg-secondary rounded-pill"><?php echo date('d/m H:i', strtotime($n['data_envio'])); ?></span>
+                                            <button class="btn btn-sm btn-success mark-read-btn mt-2" data-id="<?php echo intval($n['id_notificacao']); ?>"><i class="bi bi-check-lg"></i></button>
+                                        </div>
                                     </li>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -281,4 +284,24 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="../script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../script.js"></script>
+
+<script>
+$(function(){
+    $('.mark-read-btn').on('click', function(){
+        var id = $(this).data('id');
+        var $li = $(this).closest('[data-notif-id]');
+        $.post('../marcar_notificacao_ajax.php', {id_notificacao: id}, function(resp){
+            if(resp && resp.success){
+                $li.fadeOut(200, function(){ $(this).remove(); });
+                // também remove de páginas de notificações caso estejam abertas
+                $('[data-notif-id="'+id+'"]').fadeOut(200, function(){ $(this).remove(); });
+            } else {
+                alert(resp.error || 'Erro ao marcar notificação.');
+            }
+        }, 'json').fail(function(){ alert('Erro de rede ao marcar notificação.'); });
+    });
+});
+</script>
 </html>

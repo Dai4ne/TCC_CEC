@@ -346,13 +346,14 @@ if (isset($_SESSION['id_usuario'])) {
                                         $status = (isset($n['status_notificacao']) && $n['status_notificacao'] === 'P') ? ['texto' => 'Nova', 'classe' => 'bg-primary'] : ['texto' => 'Lida', 'classe' => 'bg-secondary'];
                                         $remetente = !empty($n['remetente_nome']) ? htmlspecialchars($n['remetente_nome']) : 'Sistema';
                                     ?>
-                                    <div class="list-group-item d-flex justify-content-between align-items-start mb-2" style="background:#fff;border-radius:8px;">
+                                    <div class="list-group-item d-flex justify-content-between align-items-start mb-2" style="background:#fff;border-radius:8px;" data-notif-id="<?= intval($n['id_notificacao']) ?>">
                                         <div>
                                             <div class="fw-bold"><?= htmlspecialchars(mb_strimwidth($n['mensagem'], 0, 80, '...')) ?></div>
                                             <small class="text-muted">De: <?= $remetente ?> • <?= date('d/m H:i', strtotime($n['data_envio'])) ?></small>
                                         </div>
                                         <div class="d-flex flex-column align-items-end">
                                             <span class="badge <?= $status['classe'] ?> rounded-pill" style="height:26px;padding:5px 8px;align-self:center;"><?= $status['texto'] ?></span>
+                                            <button class="btn btn-sm btn-success mark-read-btn mt-2" data-id="<?= intval($n['id_notificacao']) ?>"><i class="bi bi-check-lg"></i></button>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -416,4 +417,25 @@ if (isset($_SESSION['id_usuario'])) {
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="../script.js"></script>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.mark-read-btn', function(e) {
+        e.preventDefault();
+        var btn = $(this);
+        var idNotificacao = btn.data('id');
+        
+        $.post('../marcar_notificacao_ajax.php', {
+            id_notificacao: idNotificacao
+        }, function(resp) {
+            if(resp && resp.success === true){
+                $('[data-notif-id="' + idNotificacao + '"]').fadeOut(300, function(){ $(this).remove(); });
+            } else {
+                alert('Erro: ' + (resp.error || 'tente novamente'));
+            }
+        }, 'json').fail(function(){
+            alert('Erro de rede ao marcar como lido.');
+        });
+    });
+});
+</script>
 </html>
