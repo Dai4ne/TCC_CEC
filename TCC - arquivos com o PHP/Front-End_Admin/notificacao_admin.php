@@ -1,3 +1,55 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include('../verifica.php');
+include 'conect.php';
+
+/*
+ * notificacao_admin.php
+ * - Propósito: listar notificações do usuário logado e permitir que ele marque notificações como lidas.
+ * - Fluxo:
+ *   1) Verifica sessão e perfil (administrador) antes de executar ações.
+ *   2) Se houver POST com ação 'marcar_lida', atualiza o campo `status_notificacao` para 'L'
+ *      apenas para notificações cujo `id_destinatario` corresponda ao usuário logado.
+ *   3) Seleciona as notificações do usuário logado (JOIN com remetente) para exibição.
+ * - Observações de segurança:
+ *   - A operação de marcação usa prepared statements e valida o `id_destinatario` com a sessão,
+ *     evitando que um usuário marque notificações de terceiros.
+ */
+
+// Marcar notificação como lida
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'], $_POST['id_notificacao'])) {
+    $acao = $_POST['acao'];
+    $id_not = intval($_POST['id_notificacao']);
+    if ($acao === 'marcar_lida') {
+        $upd = $con->prepare("UPDATE notificacao SET status_notificacao = 'L' WHERE id_notificacao = ? AND id_destinatario = ?");
+        $upd->bind_param('ii', $id_not, $_SESSION['id_usuario']);
+        $upd->execute();
+        $upd->close();
+        $_SESSION['msg_alert'] = ['success', 'Notificação marcada como lida.'];
+    }
+    header('Location: notificacao_admin.php');
+    exit;
+}
+
+// Buscar notificações do usuário logado
+$idLogado = intval($_SESSION['id_usuario']);
+$stmt = $con->prepare("SELECT n.*, u.nome as remetente_nome FROM notificacao n JOIN usuario u ON n.id_remetente = u.id_usuario WHERE n.id_destinatario = ? ORDER BY n.data_envio DESC");
+$stmt->bind_param('i', $idLogado);
+$stmt->execute();
+$res = $stmt->get_result();
+$notificacoes = [];
+while ($row = $res->fetch_assoc()) {
+    $notificacoes[] = $row;
+}
+$stmt->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -154,20 +206,27 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if (!empty($notificacoes)): ?>
+                        <?php foreach ($notificacoes as $n): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($n['remetente_nome']); ?></td>
+                                <td style="text-align:left"><?php echo nl2br(htmlspecialchars($n['mensagem'])); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($n['data_envio'])); ?></td>
+                                <td><?php echo date('H:i', strtotime($n['data_envio'])); ?></td>
+                                <td class="action-buttons">
+                                    <form method="post" style="display:inline;">
+                                        <input type="hidden" name="id_notificacao" value="<?php echo intval($n['id_notificacao']); ?>">
+                                        <input type="hidden" name="acao" value="marcar_lida">
+                                        <button type="submit" class="btn"><i class="bi bi-check-lg"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td>Arthur</td>
-
-                            <td>Notebook lenovo número 10 está com problema PARA CARREGAR</td>
-
-                            <td>22/11/2025</td>
-
-                            <td>11:00</td>
-                                
-                            <td class="action-buttons">
-                                <button type="submit" class="btn btn-approve"><i class="bi bi-check-lg"></i></button>
-                            </td>
+                            <td colspan="5">Nenhuma notificação encontrada.</td>
                         </tr>
-                        
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

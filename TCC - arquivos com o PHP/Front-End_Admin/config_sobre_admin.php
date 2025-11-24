@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/conect.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 

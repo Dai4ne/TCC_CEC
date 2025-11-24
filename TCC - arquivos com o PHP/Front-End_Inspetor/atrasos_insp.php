@@ -1,5 +1,14 @@
 <?php
 session_start();
+/*
+ * atrasos_insp.php
+ * - Propósito: listar empréstimos atrasados e permitir que o inspetor envie notificações
+ *   ao professor responsável pelo empréstimo.
+ * - Fluxo:
+ *   1) Verifica autenticação e perfil.
+ *   2) Trata requisições POST para ações (ex: notificar professor) e insere notificações.
+ *   3) Inclui `includes/atrasos_query.php` que popula a variável `$atrasos` sem gerar saída HTML.
+ */
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
@@ -55,26 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Buscar empréstimos atrasados
-$sql = "SELECT e.*, u.nome as nome_professor, eq.tipo, eq.numeracao, m.nome as marca,
-        TIMESTAMPDIFF(HOUR, e.data_devolucao, CURRENT_TIMESTAMP) as horas_atraso
-        FROM emprestimo e
-        JOIN usuario u ON e.id_usuario = u.id_usuario
-        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
-        JOIN marca m ON eq.id_marca = m.id_marca
-        WHERE e.status_emprestimo IN ('A','T') 
-            AND e.data_devolucao < CURRENT_TIMESTAMP
-        ORDER BY e.data_devolucao ASC";
-
-$resultado = $con->query($sql);
-$atrasos = [];
-
-if ($resultado) {
-    while ($row = $resultado->fetch_assoc()) {
-        $row['tipo_nome'] = getTipoEquipamento($row['tipo']);
-        $atrasos[] = $row;
-    }
-}
+// Buscar empréstimos atrasados (usar include que apenas popula $atrasos)
+include __DIR__ . '/../includes/atrasos_query.php';
 ?>
 
 <!DOCTYPE html>
@@ -207,6 +198,7 @@ if ($resultado) {
                     <tr>
                         <th>Professor</th>
                         <th>Aparelho</th>
+                        <th>Local</th>
                         <th>Data/Hora Prevista</th>
                         <th>Atraso</th>
                         <th>Ação</th>
@@ -223,6 +215,7 @@ if ($resultado) {
                             <tr>
                                 <td><?= htmlspecialchars($a['nome_professor']) ?></td>
                                 <td><?= htmlspecialchars($a['tipo_nome']) ?> <?= htmlspecialchars($a['marca']) ?> #<?= htmlspecialchars($a['numeracao']) ?></td>
+                                <td><?= htmlspecialchars($a['local_nome'] ?? 'Sem localização') ?></td>
                                 <td><?= date('d/m/Y H:i', strtotime($a['data_devolucao'])) ?></td>
                                 <td>
                                     <span class="badge bg-danger">

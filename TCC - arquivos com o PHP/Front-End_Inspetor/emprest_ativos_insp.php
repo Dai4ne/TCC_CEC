@@ -1,3 +1,50 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '3';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/../Front-End_Admin/conect.php';
+/*
+ * emprest_ativos_insp.php
+ * - Propósito: listar empréstimos ativos e atrasados para os inspetores monitorarem os equipamentos.
+ * - Fluxo:
+ *   1) Verifica sessão e perfil.
+ *   2) Executa consulta que junta `emprestimo`, `usuario`, `equipamento`, `marca` e `local`.
+ *   3) Traduz o campo `tipo` do equipamento para uma string legível e popula `$emprestimos_ativos`.
+ * - Observações:
+ *   - A página usa o status do empréstimo para destacar empréstimos atrasados (`T`).
+ */
+// Consulta empréstimos ativos (status 'A' = em uso, 'T' = atrasado)
+$emprestimos_ativos = [];
+$sqlAtivos = "SELECT e.*, u.nome as nome_professor, eq.tipo, eq.numeracao, m.nome as marca, l.nome as local_nome
+              FROM emprestimo e
+              JOIN usuario u ON e.id_usuario = u.id_usuario
+              JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+              JOIN marca m ON eq.id_marca = m.id_marca
+              LEFT JOIN `local` l ON eq.id_local = l.id_local
+              WHERE e.status_emprestimo IN ('A','T')
+              ORDER BY e.data_devolucao ASC";
+$resAt = $con->query($sqlAtivos);
+if ($resAt) {
+    while ($r = $resAt->fetch_assoc()) {
+        // traduzir tipo para nome legível (seguindo padrão do projeto)
+        $tipos = [
+            '1' => 'Televisão',
+            '2' => 'Notebook',
+            '3' => 'Chromebook',
+            '4' => 'Tablet',
+            '5' => 'Projetor',
+            '6' => 'Fone'
+        ];
+        $r['tipo_nome'] = $tipos[$r['tipo']] ?? 'Desconhecido';
+        $emprestimos_ativos[] = $r;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -134,20 +181,49 @@
                         <th>Professor</th>
                         <th>Aparelho</th>
                         <th>Marca</th>
+                        <th>Local</th>
                         <th>Data</th>
                         <th>Horário</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Enso</td>
-                        <td>Televisão 5</td>
-                        <td>LG</td>
-                        <td>24/11/2025</td>
-                        <td>11:00</td>
-                    </tr>
-                
+                    <?php if (!empty($emprestimos_ativos)): ?>
+                        <?php foreach ($emprestimos_ativos as $ea): ?>
+                            <?php
+                                // Determina status e classes visuais
+                                $statusLabel = '';
+                                $badgeClass = 'bg-secondary';
+                                $rowClass = '';
+                                if (isset($ea['status_emprestimo'])) {
+                                    if ($ea['status_emprestimo'] === 'T') {
+                                        $statusLabel = 'ATRASADO';
+                                        $badgeClass = 'bg-danger';
+                                        $rowClass = 'table-danger';
+                                    } elseif ($ea['status_emprestimo'] === 'A') {
+                                        $statusLabel = 'Em uso';
+                                        $badgeClass = 'bg-success';
+                                    } else {
+                                        $statusLabel = htmlspecialchars($ea['status_emprestimo']);
+                                    }
+                                }
+                            ?>
+                            <tr class="<?= $rowClass ?>">
+                                <td><?php echo htmlspecialchars($ea['nome_professor']); ?></td>
+                                <td style="text-align:left"><?php echo htmlspecialchars($ea['tipo_nome'] . ' #' . ($ea['numeracao'] ?? '')); ?></td>
+                                <td><?php echo htmlspecialchars($ea['marca']); ?></td>
+                                <td><?php echo htmlspecialchars($ea['local_nome'] ?? 'Sem localização'); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($ea['data_hora'] ?? $ea['data_devolucao'] ?? '')); ?></td>
+                                <td><?php echo date('H:i', strtotime($ea['data_hora'] ?? $ea['data_devolucao'] ?? '')); ?></td>
+                                <td><span class="badge <?= $badgeClass ?> rounded-pill"><?php echo $statusLabel; ?></span></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7" class="text-center">Nenhum empréstimo ativo no momento.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
 
             </table>

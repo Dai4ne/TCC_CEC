@@ -1,6 +1,13 @@
 <?php
-include "conect.php";
-require_once "search_users.php";
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/conect.php';
+require_once __DIR__ . '/search_users.php';
 
 // Obtém os parâmetros de pesquisa
 $searchTerm = $_GET['search'] ?? '';

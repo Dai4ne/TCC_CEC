@@ -4,6 +4,7 @@
     </div>
     <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
     <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+    <p class="card-text small text-muted mb-3">Local: <?= htmlspecialchars($equipamentos['local_nome'] ?? 'Sem localização') ?></p>
     <?php 
     // Dados do equipamento
     $idEquip = intval($equipamentos['id_equipamento']);

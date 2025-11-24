@@ -9,15 +9,20 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $perfil_verifica = '3';
 include('../verifica.php');
+/*
+ * equip_notebook_insp.php
+ * - Propósito: listar equipamentos do tipo 'Notebook' para inspetores.
+ * - Fluxo: valida sessão/perfil, consulta `equipamento` com joins em `marca` e `local` filtrando `tipo = 2`.
+ */
 
 include "../Front-End_Admin/conect.php";
 include "../equip_config.php";
 
-// Consulta com JOIN para obter o nome da marca e somente Notebooks (tipo = 2)
 $sql = "
-    SELECT e.*, m.nome AS marca_nome
+    SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    LEFT JOIN `local` l ON e.id_local = l.id_local
     WHERE e.tipo = '2'
 ";
 $resultado = mysqli_query($con, $sql);
@@ -299,7 +304,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>">
             </div>
             <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
-            <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text text-uppercase small mb-1"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text small text-muted mb-3">Local: <?= htmlspecialchars($equipamentos['local_nome'] ?? 'Sem localização') ?></p>
 
             <?php if ($estado === 'disponivel'): ?>
                 <button class="btn btn-success w-100" disabled>DISPONÍVEL</button>

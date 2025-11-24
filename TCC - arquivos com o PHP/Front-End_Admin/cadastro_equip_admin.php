@@ -2,6 +2,18 @@
 session_start();
 include "conect.php";
 
+/*
+ * cadastro_equip_admin.php
+ * - Propósito: formulário e processamento para cadastro de novos equipamentos pelo administrador.
+ * - Funcionalidades principais:
+ *   1) Carrega listas de `marca` e `local` do banco para popular selects no formulário.
+ *   2) Valida os campos enviados via POST e verifica se `marca` e `local` existem nas listas carregadas.
+ *   3) Insere um novo registro em `equipamento` usando prepared statement, incluindo `id_local`.
+ * - Observações:
+ *   - Em caso de erro, define `$_SESSION['msg_alert']` e redireciona de volta ao formulário.
+ *   - Evitar duplicidade de número de série é tratado verificando o código de erro SQL (1062).
+ */
+
 // Arrays para seleção no formulário
 $tipos = [
     '1' => 'Televisão',
@@ -25,16 +37,29 @@ if ($result) {
     $_SESSION['msg_alert'] = ['error', 'Erro ao carregar marcas. Por favor, verifique se as marcas foram cadastradas.'];
 }
 
+// Buscar locais do banco de dados (tabela `local`)
+$sqlLoc = "SELECT id_local, nome FROM `local` ORDER BY id_local";
+$resLoc = $con->query($sqlLoc);
+$locais = [];
+if ($resLoc) {
+    while ($r = $resLoc->fetch_assoc()) {
+        $locais[$r['id_local']] = $r['nome'];
+    }
+} else {
+    $_SESSION['msg_alert'] = ['error', 'Erro ao carregar locais.'];
+}
+
 // ===== CADASTRO =====
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'Cadastrar') {
     $tipo          = trim($_POST['tipo'] ?? '');
     $numeracao     = trim($_POST['numeracao'] ?? '');
     $marca         = intval($_POST['marca'] ?? 0);
+    $local         = intval($_POST['local'] ?? 0);
     $descricao     = trim($_POST['descricao'] ?? '');
     $numero_serie  = trim($_POST['numero_serie'] ?? '');
 
     // Validação de campos
-    if (empty($tipo) || empty($numeracao) || empty($marca) || empty($descricao) || empty($numero_serie)) {
+    if (empty($tipo) || empty($numeracao) || empty($marca) || empty($local) || empty($descricao) || empty($numero_serie)) {
         echo "<script>alert('Preencha todos os campos!'); window.history.back();</script>";
         exit;
     }
@@ -47,8 +72,17 @@ if (!array_key_exists($marca, $marcas)) {
     exit;
 }
 
+// valida local
+if (!array_key_exists($local, $locais)) {
+    session_start();
+    $_SESSION['msg_alert'] = ['error', 'Local inválido!'];
+    header("Location: cadastro_equip_admin.php");
+    exit;
+}
+
 // Prepared statement para inserir equipamento
-$stmt = $con->prepare("INSERT INTO equipamento (tipo, numeracao, id_marca, descricao, numero_serie) VALUES (?, ?, ?, ?, ?)");
+// Inserir também o id_local
+$stmt = $con->prepare("INSERT INTO equipamento (tipo, numeracao, id_marca, descricao, numero_serie, id_local) VALUES (?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     session_start();
     $_SESSION['msg_alert'] = ['error', 'Erro ao preparar a query: ' . $con->error];
@@ -56,7 +90,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("ssiss", $tipo, $numeracao, $marca, $descricao, $numero_serie);
+$stmt->bind_param("ssissi", $tipo, $numeracao, $marca, $descricao, $numero_serie, $local);
 
 if ($stmt->execute()) {
     session_start();
@@ -238,6 +272,16 @@ include('../verifica.php');
                             <option disabled selected value="">Selecione uma opção</option>
                             <?php foreach ($marcas as $codigo => $nome): ?>
                             <option value="<?= $codigo ?>"><?= $nome ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="local" class="form-label">Localização</label>
+                        <select class="form-select" id="local" name="local" required>
+                            <option disabled selected value="">Selecione uma opção</option>
+                            <?php foreach ($locais as $idl => $nomel): ?>
+                                <option value="<?= intval($idl) ?>"><?= htmlspecialchars($nomel) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

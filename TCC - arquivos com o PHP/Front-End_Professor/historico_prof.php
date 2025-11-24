@@ -23,12 +23,13 @@ if (isset($_SESSION['id_usuario'])) {
   $idU = intval($_SESSION['id_usuario']);
 
   // Histórico de empréstimos do usuário (todos)
-  $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca
-        FROM emprestimo e
-        JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
-        LEFT JOIN marca m ON eq.id_marca = m.id_marca
-        WHERE e.id_usuario = ?
-        ORDER BY e.data_hora DESC";
+  $sqlHist = "SELECT e.*, eq.tipo, eq.numeracao, m.nome AS marca, l.nome AS local_nome
+      FROM emprestimo e
+      JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+      LEFT JOIN marca m ON eq.id_marca = m.id_marca
+      LEFT JOIN `local` l ON eq.id_local = l.id_local
+      WHERE e.id_usuario = ?
+      ORDER BY e.data_hora DESC";
   if ($stmt2 = $con->prepare($sqlHist)) {
     $stmt2->bind_param('i', $idU);
     $stmt2->execute();
@@ -177,6 +178,7 @@ if (isset($_SESSION['id_usuario'])) {
                     <tr>
                         <th>Aparelho</th>
                         <th>Marca</th>
+                        <th>Local</th>
                         <th>Data</th>
                         <th>Emprestado em</th>
                         <th>Devolvido em</th>
@@ -186,13 +188,14 @@ if (isset($_SESSION['id_usuario'])) {
                 <tbody>
                     <?php if (empty($historico)): ?>
                         <tr>
-                            <td colspan="5" class="text-center py-4">Nenhum histórico de empréstimos</td>
+                            <td colspan="6" class="text-center py-4">Nenhum histórico de empréstimos</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($historico as $item): ?>
                             <tr>
                                 <td><?= htmlspecialchars($item['tipo_nome']) ?> #<?= htmlspecialchars($item['numeracao']) ?></td>
                                 <td><?= htmlspecialchars($item['marca'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($item['local_nome'] ?? 'Sem localização') ?></td>
                                 <td><?= date('d/m/Y', strtotime($item['data_hora'])) ?></td>
                                 <td><?= date('H:i', strtotime($item['data_hora'])) ?></td>
                                 <td>

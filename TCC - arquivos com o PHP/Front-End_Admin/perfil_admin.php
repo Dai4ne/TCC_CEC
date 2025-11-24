@@ -1,3 +1,27 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/conect.php';
+
+// Buscar dados do usuário logado
+$usuarioDados = [];
+$stmt = $con->prepare("SELECT id_usuario, nome, email, tipo FROM usuario WHERE id_usuario = ?");
+$idLogado = intval($_SESSION['id_usuario']);
+$stmt->bind_param('i', $idLogado);
+$stmt->execute();
+$res = $stmt->get_result();
+if ($res && $row = $res->fetch_assoc()) {
+    $usuarioDados = $row;
+}
+$stmt->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 

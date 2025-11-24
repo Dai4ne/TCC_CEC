@@ -1,3 +1,28 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/conect.php';
+// Carregar notebooks do banco com marca e local
+$equipamento = [];
+$sql = "SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
+        FROM equipamento e
+        JOIN marca m ON e.id_marca = m.id_marca
+        LEFT JOIN `local` l ON e.id_local = l.id_local
+        WHERE e.tipo = '2'
+        ORDER BY e.numeracao ASC";
+$resultado = $con->query($sql);
+if ($resultado) {
+    while ($linha = $resultado->fetch_assoc()) {
+        $equipamento[] = $linha;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -236,41 +261,23 @@
                     </div>
 
                     <div class="equipment-list">
-                        
-                    
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">NOTEBOOK 3</span>
-                                <span class="item-model">Lenovo</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag active-tag me-4">ATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">NOTEBOOK 2</span>
-                                <span class="item-model">Multilaser Ultra</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag inactive-tag me-4">INATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">NOTEBOOK 1</span>
-                                <span class="item-model">Positivo</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag active-tag me-4">ATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
+                        <?php if (!empty($equipamento)): ?>
+                            <?php foreach ($equipamento as $eq): ?>
+                                <div class="equipment-list-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <span class="item-details"><?php echo htmlspecialchars(($eq['descricao'] ?? strtoupper(getTipoEquipamento($eq['tipo'] ?? ''))) . ' ' . ($eq['numeracao'] ?? '')); ?></span>
+                                        <span class="item-model"><?php echo htmlspecialchars($eq['marca_nome'] ?? ''); ?></span>
+                                        <small class="text-muted">Local: <?php echo htmlspecialchars($eq['local_nome'] ?? 'Sem localização'); ?></small>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <span class="status-tag active-tag me-4">ATIVO</span>
+                                        <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="p-3 text-center">Nenhum equipamento cadastrado.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

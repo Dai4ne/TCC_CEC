@@ -1,4 +1,17 @@
 <?php
+/*
+ * cadastro_usuario_admin.php
+ * - Propósito: formulário e processamento para cadastro de novos usuários pelo administrador.
+ * - Fluxo:
+ *   1) Recebe POST com nome, email, senha e tipo; valida campos e força da senha.
+ *   2) Verifica se o e-mail já está cadastrado para evitar duplicidade.
+ *   3) Gera hash seguro da senha via `createPasswordHash` (em `functions.php`) e insere o usuário
+ *      usando prepared statement.
+ * - Observações de segurança:
+ *   - As senhas são armazenadas como hash; não armazene senhas em texto plano.
+ *   - Em produção, valide também políticas de complexidade e limite tentativas de cadastro.
+ */
+
 include "conect.php";
 include "../functions.php";
 

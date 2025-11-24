@@ -9,15 +9,21 @@ if (!isset($_SESSION['id_usuario'])) {
 
 $perfil_verifica = '2';
 include('../verifica.php');
+/*
+ * equip_projetor_prof.php
+ * - Propósito: listar os equipamentos do tipo 'Projetor' para os professores.
+ * - Fluxo: valida sessão, consulta equipamentos com joins em `marca` e `local` filtrando
+ *   por `tipo = 5` e popula `$equipamento`.
+ */
 
 include "../Front-End_Admin/conect.php";
 include "../equip_config.php";
 
-// Consulta com JOIN para obter o nome da marca e filtrar projetores (tipo = 5)
 $sql = "
-    SELECT e.*, m.nome AS marca_nome
+    SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    LEFT JOIN `local` l ON e.id_local = l.id_local
     WHERE e.tipo = '5'
 ";
 $resultado = mysqli_query($con, $sql);
@@ -279,7 +285,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>">
             </div>
             <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
-            <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text text-uppercase small mb-1"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text small text-muted mb-3">Local: <?= htmlspecialchars($equipamentos['local_nome'] ?? 'Sem localização') ?></p>
 
             <?php if ($estado === 'emp'): ?>
                 <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#modalEmprestimo" onclick="setEquipamentoModal(<?= $idEquip ?>, '<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>')">EMPRESTAR</button>

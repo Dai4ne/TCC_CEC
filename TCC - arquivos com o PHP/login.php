@@ -3,6 +3,23 @@ session_start();
 include "Front-End_Admin/conect.php";
 include "functions.php";
 
+/*
+ * login.php
+ * - Propósito: apresentar o formulário de login e autenticar o usuário.
+ * - Fluxo principal:
+ *   1) Valida o parâmetro `tipo` na URL para garantir que é um dos perfis aceitos
+ *      (administrador / professor / inspetor). Se inválido, redireciona para `index.php`.
+ *   2) Ao receber requisição POST, lê `email` e `senha` do form.
+ *   3) Usa prepared statement para buscar o usuário por email e evita SQL injection.
+ *   4) Verifica a senha com a função `verifyPassword` (definida em `functions.php`).
+ *   5) Se autenticado, popula variáveis de sessão (`id_usuario`, `nome_usuario`, `perfil`)
+ *      e redireciona para a home do perfil correspondente.
+ * - Observações de segurança:
+ *   - As sessões são gerenciadas via `session_start()`; considere regenerar o id de sessão
+ *     após o login bem-sucedido para mitigar fixation attacks.
+ *   - `verifyPassword` deve usar hashing seguro (password_hash / password_verify) — ver `functions.php`.
+ */
+
 // Pega o tipo passado na URL e valida
 $tipoUsuario = $_GET['tipo'] ?? '';
 $tiposValidos = ['administrador', 'professor', 'inspetor'];

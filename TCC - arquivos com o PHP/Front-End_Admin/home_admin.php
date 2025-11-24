@@ -10,9 +10,65 @@
     $perfil_verifica = '1';
     include('../verifica.php');
 
+    /*
+     * home_admin.php
+     * - Propósito: página inicial do administrador com resumo rápido (notificações e
+     *   empréstimos ativos) para monitoramento.
+     * - Queries principais:
+     *   - Seleciona as últimas notificações direcionadas ao admin (limit 8) para exibição.
+     *   - Seleciona empréstimos com status ativo/atrasado, juntando dados de equipamento,
+     *     marca, usuário e local para mostrar detalhes no painel.
+     * - Observações:
+     *   - Ambas as consultas usam prepared statements (ou prepared SQL) e retornam arrays
+     *     que são iterados para renderizar os cards da dashboard.
+     */
+
 
     // Para exibir o nome
     $nomeUsuario = $_SESSION['nome_usuario'];
+    // Conexão com o banco
+    include __DIR__ . '/conect.php';
+
+    // Buscar notificações direcionadas ao admin
+    $notificacoes = [];
+    $idLogado = intval($_SESSION['id_usuario']);
+    if ($stmtN = $con->prepare("SELECT n.*, u.nome as remetente_nome FROM notificacao n JOIN usuario u ON n.id_remetente = u.id_usuario WHERE n.id_destinatario = ? ORDER BY n.data_envio DESC LIMIT 8")) {
+        $stmtN->bind_param('i', $idLogado);
+        $stmtN->execute();
+        $resN = $stmtN->get_result();
+        while ($r = $resN->fetch_assoc()) {
+            $notificacoes[] = $r;
+        }
+        $stmtN->close();
+    }
+
+    // Buscar empréstimos ativos (equipamentos sendo usados no momento)
+    $emprestimosAtivos = [];
+        $sql = "SELECT e.id_emprestimo, e.id_equipamento, e.data_hora, e.data_devolucao, e.status_emprestimo, eq.tipo, eq.numeracao, m.nome as marca, u.nome as usuario_nome, l.nome as local_nome
+            FROM emprestimo e
+            JOIN equipamento eq ON e.id_equipamento = eq.id_equipamento
+            JOIN marca m ON eq.id_marca = m.id_marca
+            LEFT JOIN `local` l ON eq.id_local = l.id_local
+            JOIN usuario u ON e.id_usuario = u.id_usuario
+            WHERE e.status_emprestimo IN ('A','T')
+            ORDER BY e.data_hora DESC";
+    if ($stmtE = $con->prepare($sql)) {
+        $stmtE->execute();
+        $resE = $stmtE->get_result();
+        $tipos = [
+            '1' => 'Televisão',
+            '2' => 'Notebook',
+            '3' => 'Chromebook',
+            '4' => 'Tablet',
+            '5' => 'Projetor',
+            '6' => 'Fone'
+        ];
+        while ($row = $resE->fetch_assoc()) {
+            $row['tipo_nome'] = $tipos[$row['tipo']] ?? 'Desconhecido';
+            $emprestimosAtivos[] = $row;
+        }
+        $stmtE->close();
+    }
     ?>
 
 <!DOCTYPE html>
@@ -160,13 +216,43 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
-                        <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
+                        <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÕES</h2>
+                        <ul class="list-group">
+                            <?php if (!empty($notificacoes)): ?>
+                                <?php foreach ($notificacoes as $n): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold"><?php echo htmlspecialchars($n['remetente_nome']); ?></div>
+                                            <small class="text-muted"><?php echo nl2br(htmlspecialchars($n['mensagem'])); ?></small>
+                                        </div>
+                                        <span class="badge bg-secondary rounded-pill"><?php echo date('d/m H:i', strtotime($n['data_envio'])); ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li class="list-group-item">Nenhuma notificação.</li>
+                            <?php endif; ?>
+                        </ul>
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-clock-history me-2"></i>Empréstimos ativos</h2>
+                        <ul class="list-group">
+                            <?php if (!empty($emprestimosAtivos)): ?>
+                                <?php foreach ($emprestimosAtivos as $a): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold"><?php echo htmlspecialchars($a['tipo_nome'] . ' - ' . ($a['numeracao'] ?? '')); ?></div>
+                                            <small class="text-muted">Usuário: <?php echo htmlspecialchars($a['usuario_nome']); ?> &nbsp;•&nbsp; Marca: <?php echo htmlspecialchars($a['marca']); ?> &nbsp;•&nbsp; Local: <?php echo htmlspecialchars($a['local_nome'] ?? 'Sem localização'); ?></small>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill"><?php echo date('d/m H:i', strtotime($a['data_hora'])); ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li class="list-group-item">Nenhum empréstimo ativo.</li>
+                            <?php endif; ?>
+                        </ul>
                     </div>
                 </div>
             </div>

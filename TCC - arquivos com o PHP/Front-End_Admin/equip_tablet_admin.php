@@ -1,3 +1,28 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include(__DIR__ . '/../verifica.php');
+include __DIR__ . '/conect.php';
+
+// Carregar tablets do banco com marca e local
+$equipamento = [];
+$sql = "SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
+        FROM equipamento e
+        JOIN marca m ON e.id_marca = m.id_marca
+        LEFT JOIN `local` l ON e.id_local = l.id_local
+        WHERE e.tipo = '4'
+        ORDER BY e.numeracao ASC";
+$resultado = $con->query($sql);
+if ($resultado) {
+    while ($linha = $resultado->fetch_assoc()) {
+        $equipamento[] = $linha;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -148,36 +173,6 @@
                             <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
                         </a> <!-- CADASTRAR -->
 
-                        <a href="nova_notificacao_admin.php">
-                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
-                        </a> <!-- NOTIFICAÇÕES -->
-
-                        <a href="perfil_admin.php">
-                            <div class="nav-icon"><i class="bi bi-person-fill"></i></div>
-                       <header class="header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-6 col-md-3">
-                    <div class="logo-container">
-                        <img src="../Imagens/logo-png.png" alt="logo">
-                    </div>
-                </div>
-                <div class="col-6 col-md-9">
-                    <div class="nav-icons justify-content-end">
-
-
-                        <a href="home_admin.php">
-                            <div class="nav-icon"><i class="bi bi-house-door-fill"></i></div>
-                        </a> <!-- HOMEPAGE-->
-
-                        <a href="equip_televisao_admin.php">
-                            <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
-                        </a> <!-- EQUIPAMENTOS -->
-
-                        <a href="cadastros_admin.php">
-                            <div class="nav-icon"><i class="bi bi-plus-square-fill"></i></div>
-                        </a> <!-- CADASTRAR -->
-
                         <a href="notificacao_admin.php">
                             <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
                         </a> <!-- NOTIFICAÇÕES -->
@@ -256,41 +251,23 @@
                     </div>
 
                     <div class="equipment-list">
-                        
-                    
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">TABLET 3</span>
-                                <span class="item-model">Positivo</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag active-tag me-4">ATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">TABLET 2</span>
-                                <span class="item-model">Positivo</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag inactive-tag me-4">INATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="equipment-list-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex flex-column">
-                                <span class="item-details">TABLET 1</span>
-                                <span class="item-model">Positivo</span>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="status-tag active-tag me-4">ATIVO</span>
-                                <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
-                            </div>
-                        </div>
-
+                        <?php if (!empty($equipamento)): ?>
+                            <?php foreach ($equipamento as $eq): ?>
+                                <div class="equipment-list-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <span class="item-details"><?php echo htmlspecialchars(($eq['descricao'] ?? strtoupper(getTipoEquipamento($eq['tipo'] ?? ''))) . ' ' . ($eq['numeracao'] ?? '')); ?></span>
+                                        <span class="item-model"><?php echo htmlspecialchars($eq['marca_nome'] ?? ''); ?></span>
+                                        <small class="text-muted">Local: <?php echo htmlspecialchars($eq['local_nome'] ?? 'Sem localização'); ?></small>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <span class="status-tag active-tag me-4">ATIVO</span>
+                                        <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="p-3 text-center">Nenhum equipamento cadastrado.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

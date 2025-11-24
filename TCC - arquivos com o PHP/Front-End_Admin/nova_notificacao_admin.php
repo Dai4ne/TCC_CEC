@@ -1,3 +1,81 @@
+<?php
+session_start();
+/*
+ * nova_notificacao_admin.php
+ * - Propósito: permitir que um administrador envie notificações para grupos de usuários
+ *   (professores ou inspetores) e visualizar histórico de envios.
+ * - Fluxo:
+ *   1) Verifica autenticação e perfil do remetente (admin).
+ *   2) Ao receber POST, determina o público-alvo e insere registros na tabela `notificacao`
+ *      para cada destinatário usando prepared statements.
+ *   3) Monta também o histórico de envios do remetente para exibição.
+ * - Observações:
+ *   - O envio múltiplo é feito buscando usuários por tipo e inserindo um registro por destinatário.
+ *   - Em cargas maiores, prefira operações em lote ou jobs em background para escalabilidade.
+ */
+// verifica sessão e perfil
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../login.php');
+    exit;
+}
+$perfil_verifica = '1';
+include('../verifica.php');
+include 'conect.php';
+
+// Processa envio de nova notificação
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'Enviar') {
+    $mensagem = trim($_POST['mensagem'] ?? '');
+    $destino = $_POST['destino'] ?? '';
+
+    if (empty($mensagem) || empty($destino)) {
+        $_SESSION['msg_alert'] = ['danger', 'Preencha a mensagem e selecione o destino.'];
+        header('Location: nova_notificacao_admin.php');
+        exit;
+    }
+
+    // determinar tipo de usuário alvo
+    if ($destino === 'professores') {
+        $tipo_alvo = 2;
+    } elseif ($destino === 'inspetores') {
+        $tipo_alvo = 3;
+    } else {
+        $tipo_alvo = null;
+    }
+
+    $remetente = intval($_SESSION['id_usuario']);
+
+    if ($tipo_alvo !== null) {
+        $stmt = $con->prepare("SELECT id_usuario FROM usuario WHERE tipo = ?");
+        $stmt->bind_param('i', $tipo_alvo);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $insert = $con->prepare("INSERT INTO notificacao (id_remetente, id_destinatario, mensagem, status_notificacao) VALUES (?, ?, ?, 'P')");
+        while ($row = $res->fetch_assoc()) {
+            $id_dest = intval($row['id_usuario']);
+            $insert->bind_param('iis', $remetente, $id_dest, $mensagem);
+            $insert->execute();
+        }
+        $insert->close();
+        $stmt->close();
+        $_SESSION['msg_alert'] = ['success', 'Notificações enviadas.'];
+        header('Location: nova_notificacao_admin.php');
+        exit;
+    }
+}
+
+// Histórico de envios do usuário logado
+$msg_history = [];
+$stmt_h = $con->prepare("SELECT n.*, u.nome as destinatario_nome FROM notificacao n JOIN usuario u ON n.id_destinatario = u.id_usuario WHERE n.id_remetente = ? ORDER BY n.data_envio DESC");
+$stmt_h->bind_param('i', $_SESSION['id_usuario']);
+$stmt_h->execute();
+$res_h = $stmt_h->get_result();
+while ($r = $res_h->fetch_assoc()) {
+    $msg_history[] = $r;
+}
+$stmt_h->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -258,14 +336,18 @@
                         <div class="box-header">NOVA NOTIFICAÇÃO</div>
 
                         <div class="notification-content">
-                            <div class="category-buttons">
-                                <div class="category-button">PROFESSORES</div>
-                                <div class="category-button" >INSPETORES</div>
-                            </div>
-                            
-                            <textarea class="message-textarea" placeholder="Digite sua mensagem"></textarea>
+                            <form method="post">
+                                <div class="category-buttons mb-2">
+                                    <select name="destino" class="form-select">
+                                        <option value="professores">Professores</option>
+                                        <option value="inspetores">Inspetores</option>
+                                    </select>
+                                </div>
 
-                            <button type="submit" name="action" value="Enviar" class="btn mt-3">Enviar</button>
+                                <textarea name="mensagem" class="message-textarea" placeholder="Digite sua mensagem"></textarea>
+
+                                <button type="submit" name="action" value="Enviar" class="btn mt-3">Enviar</button>
+                            </form>
                         </div>
                         
                     </div>
@@ -278,40 +360,20 @@
                         <div class="history-box">
                             <div class="box-header">HISTÓRICO DE ENVIOS</div>
                             <ul class="history-list">
-
-                                <li class="history-item">
-                                    <span class="history-title">Reunião de Pais</span>
-                                    <div class="history-details">
-                                        <span class="history-time">12:00</span>
-                                        <span class="history-date">25/09/2025</span>
-                                    </div>
-                                </li>
-
-                                <li class="history-item">
-                                    <span class="history-title">Vai toma no cu arthur</span>
-                                    <div class="history-details">
-                                        <span class="history-time">13:20</span>
-                                        <span class="history-date">28/09/2025</span>
-                                    </div>
-                                </li>
-
-    
-                                <li class="history-item">
-                                    <span class="history-title">Reunião de concelho</span>
-                                    <div class="history-details">
-                                        <span class="history-time">15:10</span>
-                                        <span class="history-date">05/08/2025</span>
-                                    </div>
-                                </li>
-
-                                <li class="history-item">
-                                    <span class="history-title">Não usar a tv número 5</span>
-                                    <div class="history-details">
-                                        <span class="history-time">15:30</span>
-                                        <span class="history-date">14/08/2025</span>
-                                    </div>
-                                </li>
-                                
+                                <?php if (!empty($msg_history)): ?>
+                                    <?php foreach ($msg_history as $h): ?>
+                                        <li class="history-item">
+                                            <span class="history-title"><?php echo nl2br(htmlspecialchars($h['mensagem'])); ?></span>
+                                            <div class="history-details">
+                                                <span class="history-time"><?php echo date('H:i', strtotime($h['data_envio'])); ?></span>
+                                                <span class="history-date"><?php echo date('d/m/Y', strtotime($h['data_envio'])); ?></span>
+                                                <span class="history-target">&nbsp;-&nbsp;<?php echo htmlspecialchars($h['destinatario_nome']); ?></span>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li class="history-item">Nenhum envio encontrado.</li>
+                                <?php endif; ?>
                             </ul>
                         </div>
 

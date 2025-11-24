@@ -1,6 +1,19 @@
 <?php
 session_start();
 
+/*
+ * process_emprestimo.php
+ * - Propósito: endpoint que processa a solicitação de empréstimo de equipamento.
+ * - Fluxo:
+ *   1) Verifica sessão/autenticação e método POST.
+ *   2) Recebe `id_equipamento` e `data_devolucao` do formulário.
+ *   3) Verifica existência do equipamento e se já está emprestado/pendente.
+ *   4) Insere um registro em `emprestimo` com status 'P' (pendente) e data/hora atual.
+ * - Observações:
+ *   - Usa prepared statements para evitar SQL injection.
+ *   - Redireciona de volta para a página anterior, definindo mensagens de sessão em `$_SESSION['msg_alert']`.
+ */
+
 if (!isset($_SESSION['id_usuario'])) {
     header('Location: login.php');
     exit;

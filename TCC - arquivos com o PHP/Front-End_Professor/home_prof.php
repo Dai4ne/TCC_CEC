@@ -10,6 +10,18 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '2';
 include('../verifica.php');
    
+/*
+ * home_prof.php
+ * - Propósito: dashboard do professor que mostra notificações, empréstimos atuais/pendentes
+ *   e permite ações como devolução de equipamento.
+ * - Fluxo principal:
+ *   - Verifica autenticação e perfil.
+ *   - Processa ações POST (ex: devolução) com transação para manter consistência.
+ *   - Busca notificações recentes e os empréstimos do usuário atual (P/A/T).
+ * - Observações de integridade:
+ *   - A devolução atualiza o status do empréstimo e também a disponibilidade do equipamento
+ *     dentro de uma transação (`begin_transaction` / `commit` / `rollback`).
+ */
 
 // Para exibir o nome
 $nomeUsuario = $_SESSION['nome_usuario'];
@@ -65,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             }
         }
 
+            
+
         if ($ok) {
             $con->commit();
             $_SESSION['msg_alert'] = ['success', 'Equipamento devolvido com sucesso.'];
@@ -75,6 +89,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         header('Location: home_prof.php');
         exit;
+    }
+}
+
+// Buscar notificações do professor logado (últimas 8) e contar não-lidas
+$notificacoes = [];
+$notificacoes_nao_lidas = 0;
+if (isset($_SESSION['id_usuario'])) {
+    $idUsuario = intval($_SESSION['id_usuario']);
+    $sqlN = "SELECT n.*, u.nome as remetente_nome FROM notificacao n LEFT JOIN usuario u ON n.id_remetente = u.id_usuario WHERE n.id_destinatario = ? ORDER BY n.data_envio DESC LIMIT 8";
+    if ($stmtN = $con->prepare($sqlN)) {
+        $stmtN->bind_param('i', $idUsuario);
+        $stmtN->execute();
+        $resN = $stmtN->get_result();
+        while ($rowN = $resN->fetch_assoc()) {
+            $notificacoes[] = $rowN;
+            if (isset($rowN['status_notificacao']) && $rowN['status_notificacao'] === 'P') {
+                $notificacoes_nao_lidas++;
+            }
+        }
+        $stmtN->close();
     }
 }
 
@@ -262,8 +296,12 @@ if (isset($_SESSION['id_usuario'])) {
                             <div class="nav-icon"><i class="bi bi-tv-fill"></i></div>
                         </a><!--EQUIPAMENTOS-->
 
-                        <a href="notificacao_prof.php">
-                            <div class="nav-icon"><i class="bi bi-bell-fill"></i></div>
+                        <a href="notificacao_prof.php" style="position:relative;">
+                            <div class="nav-icon"><i class="bi bi-bell-fill"></i>
+                            <?php if (!empty($notificacoes_nao_lidas)): ?>
+                                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top:6px;right:6px;font-size:0.65rem;"><?= intval($notificacoes_nao_lidas) ?></span>
+                            <?php endif; ?>
+                            </div>
                         </a> <!-- NOTIFICAÇÕES -->
 
                         <a href="historico_prof.php">
@@ -298,6 +336,27 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="col-12 col-lg-4">
                     <div class="dashboard-card">
                         <h2 class="card-title"><i class="bi bi-bell-fill me-2"></i>NOTIFICAÇÃO</h2>
+                        <?php if (empty($notificacoes)): ?>
+                            <p class="text-center" style="margin-top:18px;">Nenhuma notificação recente</p>
+                        <?php else: ?>
+                            <div class="list-group" style="margin-top:10px;">
+                                <?php foreach ($notificacoes as $n): ?>
+                                    <?php
+                                        $status = (isset($n['status_notificacao']) && $n['status_notificacao'] === 'P') ? ['texto' => 'Nova', 'classe' => 'bg-primary'] : ['texto' => 'Lida', 'classe' => 'bg-secondary'];
+                                        $remetente = !empty($n['remetente_nome']) ? htmlspecialchars($n['remetente_nome']) : 'Sistema';
+                                    ?>
+                                    <div class="list-group-item d-flex justify-content-between align-items-start mb-2" style="background:#fff;border-radius:8px;">
+                                        <div>
+                                            <div class="fw-bold"><?= htmlspecialchars(mb_strimwidth($n['mensagem'], 0, 80, '...')) ?></div>
+                                            <small class="text-muted">De: <?= $remetente ?> • <?= date('d/m H:i', strtotime($n['data_envio'])) ?></small>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end">
+                                            <span class="badge <?= $status['classe'] ?> rounded-pill" style="height:26px;padding:5px 8px;align-self:center;"><?= $status['texto'] ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 

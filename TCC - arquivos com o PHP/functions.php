@@ -1,4 +1,14 @@
 <?php
+/*
+ * functions.php
+ * - Conjunto de helpers/utilitários usados pelo sistema:
+ *   - `createPasswordHash`: gera hash seguro para armazenamento de senhas.
+ *   - `verifyPassword`: verifica senha em relação ao hash salvo.
+ *   - `isPasswordStrong`: valida regras de complexidade da senha.
+ * - Observações:
+ *   - Utiliza `password_hash` e `password_verify`, funções nativas seguras do PHP.
+ */
+
 // Função para criar hash seguro da senha
 function createPasswordHash($password) {
     return password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);

@@ -11,9 +11,34 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '3';
 include('../verifica.php');
 
+/*
+ * home_insp.php
+ * - Propósito: dashboard do inspetor com resumo de notificações e empréstimos atrasados.
+ * - Observações:
+ *   - As consultas que obtêm os dados usam prepared statements e a include `includes/atrasos_query.php`
+ *     para popular a variável `$atrasos` sem gerar saída HTML (apenas dados).
+ */
 
 // Para exibir o nome
 $nomeUsuario = $_SESSION['nome_usuario'];
+// Conexão com o banco
+include __DIR__ . '/../Front-End_Admin/conect.php';
+
+// Buscar notificações direcionadas ao inspetor
+$notificacoes = [];
+$idLogado = intval($_SESSION['id_usuario']);
+if ($stmtN = $con->prepare("SELECT n.*, u.nome as remetente_nome FROM notificacao n JOIN usuario u ON n.id_remetente = u.id_usuario WHERE n.id_destinatario = ? ORDER BY n.data_envio DESC LIMIT 8")) {
+    $stmtN->bind_param('i', $idLogado);
+    $stmtN->execute();
+    $resN = $stmtN->get_result();
+    while ($r = $resN->fetch_assoc()) {
+        $notificacoes[] = $r;
+    }
+    $stmtN->close();
+}
+
+// Buscar empréstimos atrasados usando include de query (não inclui HTML nem session)
+include __DIR__ . '/../includes/atrasos_query.php';
 ?>
 
 
@@ -178,9 +203,18 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="4" class="empty-state">...</td>
-                            </tr>
+                            <?php if (!empty($notificacoes)): ?>
+                                <?php foreach ($notificacoes as $n): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($n['remetente_nome']); ?></td>
+                                        <td style="text-align:left"><?php echo nl2br(htmlspecialchars($n['mensagem'])); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="2" class="empty-state">Nenhuma notificação.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -198,9 +232,20 @@ $nomeUsuario = $_SESSION['nome_usuario'];
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="4" class="empty-state">...</td>
-                            </tr>
+                            <?php if (!empty($atrasos)): ?>
+                                <?php foreach ($atrasos as $a): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($a['nome_professor']); ?></td>
+                                        <td style="text-align:left"><?php echo htmlspecialchars($a['tipo_nome'] . ' - ' . ($a['numeracao'] ?? '')); ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($a['data_devolucao'])); ?></td>
+                                        <td><?php echo ($a['status_emprestimo'] === 'T') ? 'ATRASADO' : htmlspecialchars($a['status_emprestimo']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" class="empty-state">Nenhum atraso no momento.</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

@@ -13,11 +13,11 @@ include('../verifica.php');
 include "../Front-End_Admin/conect.php";
 include "../equip_config.php";
 
-// Consulta com JOIN para obter o nome da marca e somente TVs (tipo = 1)
 $sql = "
-    SELECT e.*, m.nome AS marca_nome
+    SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
     FROM equipamento e
     JOIN marca m ON e.id_marca = m.id_marca
+    LEFT JOIN `local` l ON e.id_local = l.id_local
     WHERE e.tipo = '1'
     ORDER BY e.numeracao ASC
 ";
@@ -40,6 +40,14 @@ while ($linha = mysqli_fetch_array($resultado)) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+
+/*
+ * equip_televisao_insp.php
+ * - Propósito: listar equipamentos do tipo 'Televisão' para inspetores.
+ * - Fluxo: valida sessão/perfil e consulta `equipamento` com joins em `marca` e `local`.
+ */
+
+// Consulta televisões
     <link rel="stylesheet" href="header_insp.css">
     <title>CEC</title>
     
@@ -300,7 +308,8 @@ while ($linha = mysqli_fetch_array($resultado)) {
                 <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars(getTipoEquipamento($tipo)) ?>">
             </div>
             <p class="card-text text-uppercase fw-bold mb-1"><?= htmlspecialchars($marca) ?></p>
-            <p class="card-text text-uppercase small mb-3"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text text-uppercase small mb-1"><?= htmlspecialchars($num) ?></p>
+            <p class="card-text small text-muted mb-3">Local: <?= htmlspecialchars($equipamentos['local_nome'] ?? 'Sem localização') ?></p>
 
             <?php if ($estado === 'disponivel'): ?>
                 <button class="btn btn-success w-100" disabled>DISPONÍVEL</button>

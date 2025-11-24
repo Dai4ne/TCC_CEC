@@ -6,3 +6,5 @@ if (alt.length) {
     alt.remove();
   });
 }
+// Nenhuma interceptação AJAX: formulários usam submissão POST tradicional
+// Mantemos apenas o comportamento de alerta já existente.
