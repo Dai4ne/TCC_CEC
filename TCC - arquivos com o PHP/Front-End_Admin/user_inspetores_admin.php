@@ -235,7 +235,7 @@ include __DIR__ . '/conect.php';
 
 </head>
 
-<body data-user-type="3">
+<body data-user-type="3" data-logged-user="<?= intval($_SESSION['id_usuario']); ?>">
     <?php 
     include '../alert/alert.php'
     ?>
@@ -331,5 +331,26 @@ include __DIR__ . '/conect.php';
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="../js/user-search.js"></script>
     <script src="../script.js"></script>
+    <!-- Modal de confirmação para exclusão de usuário -->
+    <div class="modal fade" id="excluirUsuarioModal" tabindex="-1" aria-labelledby="excluirUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" action="excluir_usuario_admin.php">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="excluirUsuarioModalLabel">Excluir Usuário</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir o usuário <strong id="excluirUsuarioNome"></strong>?</p>
+                        <input type="hidden" name="id_usuario" id="excluirUsuarioId" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

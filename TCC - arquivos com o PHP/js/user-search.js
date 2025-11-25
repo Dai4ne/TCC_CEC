@@ -49,14 +49,65 @@ function updateUserList(searchTerm = '', page = 1) {
                 date.innerHTML = `<i class="bi bi-calendar3"></i> ${user.data_registro_formatada}`;
                 meta.appendChild(date);
 
+                // Botões: ações do usuário (ex.: excluir)
+                const actions = document.createElement('div');
+                actions.className = 'd-flex align-items-center';
+
+                // Botão excluir (apenas para administradores — o tipo é determinado pelo data-user-type)
+                const btnDelete = document.createElement('button');
+                btnDelete.className = 'btn btn-sm btn-outline-danger ms-2 delete-user-btn';
+                btnDelete.type = 'button';
+                btnDelete.title = 'Excluir usuário';
+                btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
+                btnDelete.setAttribute('data-user-id', user.id_usuario || '');
+                // Se for o próprio usuário logado, não mostrar botão excluir
+                const logged = document.body && document.body.dataset && document.body.dataset.loggedUser ? document.body.dataset.loggedUser.toString() : null;
+                if (logged && user.id_usuario && user.id_usuario.toString() === logged) {
+                    btnDelete.style.display = 'none';
+                }
+                actions.appendChild(btnDelete);
+
                 row.appendChild(info);
                 row.appendChild(meta);
+                row.appendChild(actions);
 
                 userList.appendChild(row);
             });
 
             // Atualiza a paginação
             updatePagination(data.current_page, data.pages);
+
+            // Instala handlers nos botões Excluir
+            document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-user-id');
+                    const nome = (this.closest('.user-row') && this.closest('.user-row').querySelector('.user-name')) ? this.closest('.user-row').querySelector('.user-name').textContent : '';
+                    // Preencher modal
+                    const modal = document.getElementById('excluirUsuarioModal');
+                    if (modal) {
+                        modal.querySelector('#excluirUsuarioNome').textContent = nome;
+                        modal.querySelector('#excluirUsuarioId').value = id;
+                        // Show modal via bootstrap
+                        var modalInstance = new bootstrap.Modal(modal);
+                        modalInstance.show();
+                    } else {
+                        // fallback: confirmar via JS prompt
+                        if (confirm('Confirma exclusão do usuário ' + nome + '?')) {
+                            // Submeter um form dinamicamente
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = 'excluir_usuario_admin.php';
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'id_usuario';
+                            input.value = id;
+                            form.appendChild(input);
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    }
+                });
+            });
         })
         .catch(error => {
             console.error('Erro ao buscar usuários:', error);

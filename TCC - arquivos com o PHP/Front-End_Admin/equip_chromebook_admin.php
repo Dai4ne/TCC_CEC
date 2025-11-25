@@ -7,6 +7,7 @@ if (!isset($_SESSION['id_usuario'])) {
 $perfil_verifica = '1';
 include(__DIR__ . '/../verifica.php');
 include __DIR__ . '/conect.php';
+include __DIR__ . '/../equip_config.php';
 // Carregar chromebooks do banco com marca e local
 $equipamento = [];
 $sql = "SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
@@ -14,7 +15,7 @@ $sql = "SELECT e.*, m.nome AS marca_nome, l.nome AS local_nome
         JOIN marca m ON e.id_marca = m.id_marca
         LEFT JOIN `local` l ON e.id_local = l.id_local
         WHERE e.tipo = '3'
-        ORDER BY e.numeracao ASC";
+        ORDER BY (e.numeracao + 0) ASC";
 $resultado = $con->query($sql);
 if ($resultado) {
     while ($linha = $resultado->fetch_assoc()) {
@@ -256,13 +257,22 @@ if ($resultado) {
                             <?php foreach ($equipamento as $eq): ?>
                                 <div class="equipment-list-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-column">
-                                        <span class="item-details"><?php echo htmlspecialchars(($eq['descricao'] ?? strtoupper(getTipoEquipamento($eq['tipo'] ?? ''))) . ' ' . ($eq['numeracao'] ?? '')); ?></span>
+                                        <span class="item-details"><?php echo htmlspecialchars(strtoupper(getTipoEquipamento($eq['tipo'] ?? '')) . ' #' . ($eq['numeracao'] ?? '')); ?></span>
                                         <span class="item-model"><?php echo htmlspecialchars($eq['marca_nome'] ?? ''); ?></span>
                                         <small class="text-muted">Local: <?php echo htmlspecialchars($eq['local_nome'] ?? 'Sem localização'); ?></small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <span class="status-tag active-tag me-4">ATIVO</span>
-                                        <div class="more-options-icon"><i class="bi bi-three-dots"></i></div>
+                                        <button class="btn btn-sm btn-outline-secondary more-options-icon" type="button" data-bs-toggle="modal" data-bs-target="#equipDetailsModal"
+                                            data-descricao="<?= htmlspecialchars(addslashes($eq['descricao'] ?? '')) ?>"
+                                            data-numero-serie="<?= htmlspecialchars(addslashes($eq['numero_serie'] ?? '')) ?>"
+                                            data-marca="<?= htmlspecialchars(addslashes($eq['marca_nome'] ?? '')) ?>"
+                                            data-local="<?= htmlspecialchars(addslashes($eq['local_nome'] ?? 'Sem localização')) ?>"
+                                            data-disponivel="<?= intval($eq['disponivel'] ?? 1) ?>"
+                                            data-tipo-nome="<?= htmlspecialchars(getTipoEquipamento($eq['tipo'] ?? '')) ?>"
+                                            data-numeracao="<?= htmlspecialchars($eq['numeracao'] ?? '') ?>">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -278,6 +288,9 @@ if ($resultado) {
 
     </main>
 
+    <?php include __DIR__ . '/../includes/equip_details_modal.php'; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
