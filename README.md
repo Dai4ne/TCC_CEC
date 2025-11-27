@@ -9,7 +9,7 @@ Letícia Yui Matsumoto Oji<br>
 
 **INTRODUÇÃO**
 A gestão eficiente de equipamentos escolares é essencial para o funcionamento adequado das atividades pedagógicas e administrativas. Na Escola Joaquim de Moura Candelária, o controle desses materiais ainda é realizado de forma manual, o que ocasiona falhas, extravios e dificuldade de rastreamento. Esse cenário evidencia a necessidade de modernização dos processos internos por meio de uma solução digital que torne o gerenciamento mais rápido, organizado e confiável.</p>
-<p></p>Diante disso, este trabalho tem como objetivo desenvolver um sistema informatizado para o controle de equipamentos da Escola Candelária, permitindo registrar entradas, saídas, devoluções e manutenções de forma centralizada. A proposta justifica-se pela possibilidade de reduzir erros, ampliar a segurança da informação e facilitar a tomada de decisões através de relatórios e dados estruturados.<br>
+<p></p>Diante disso, este trabalho tem como objetivo desenvolver um sistema informatizado para o controle de equipamentos da Escola Candelária, permitindo registrar entradas, saídas, devoluções e manutenções de forma centralizada. A proposta justifica-se pela possibilidade de reduzir erros, ampliar a segurança da informação e facilitar a tomada de decisões através de relatórios e dados estruturados.</p><br>
 
 
 **OBJETIVO**
